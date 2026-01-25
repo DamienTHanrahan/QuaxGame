@@ -38,8 +38,8 @@ Class Game -
     class Move -
         Variable for selected position (Node etc)
     
-    displayBoard(Board board, Player)
-    updateBoard(Board board, move) : board
+    displayBoard(Board board, Player)   /// GUI 
+    updateBoard(Board board, move) : board /// GUI
     
 
 
