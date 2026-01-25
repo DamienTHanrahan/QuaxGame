@@ -1,0 +1,48 @@
+Non-UML Project Initial Overview 
+
+Class Player - 
+    
+
+    Colour colour /// white/black etc
+    
+
+    class Bot extends Player
+        class strategy 
+            getStrategy: strategy   // unsure how complex this would be but will have a go, 
+                                    // idea would be safe, neutral, aggresive etc
+        class level
+            getLevel: int level         // again possibly too difficult but could include bots of
+                                        // different strengths, easy, medium hard etc. Returns an int
+                                        // to indicate probability of making best move?
+
+
+        findPaths: list <Paths> 
+        bestMove (<Paths>, strategy, level): move
+    
+    class Human extends Player
+        getUIMove: move          // I can't see the need for any other functionality for human 
+                                 // other than reading UI but could be wrong
+
+
+Class Referee - 
+    isLegalMove: bool
+    playerToMove : Player
+    isFirstMove: bool
+
+
+Class Board - 
+                /// unsure how to build this but think Forrest's idea about using a graph is fantastic. 
+                // Currently unfamiliar with how it works but will get familiar over the next week
+
+Class Game -
+    class Move -
+        Variable for selected position (Node etc)
+    
+    displayBoard(Board board, Player)
+    updateBoard(Board board, move) : board
+    
+
+
+    
+
+                
