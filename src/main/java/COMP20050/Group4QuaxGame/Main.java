@@ -17,7 +17,6 @@ public class Main extends Application {
         primaryStage.setTitle("Title of the Window");
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        primaryStage.setTitle("Hello!");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
