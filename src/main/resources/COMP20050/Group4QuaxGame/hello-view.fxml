@@ -2,6 +2,7 @@
 
 <?import java.lang.Double?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
-
 
 <StackPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -3642,104 +3642,116 @@
             </AnchorPane>
          </center>
          <top>
-            <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="46.0" BorderPane.alignment="TOP_CENTER">
-               <children>
-                  <Label text="A">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label alignment="CENTER" text="B">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="C">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="D">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="E">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="F">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="G">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="H">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="I">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="J">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-                  <Label text="K">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <padding>
-                        <Insets top="60.0" />
-                     </padding>
-                  </Label>
-               </children>
+            <VBox alignment="CENTER" BorderPane.alignment="TOP_CENTER">
                <BorderPane.margin>
                   <Insets left="100.0" right="100.0" />
                </BorderPane.margin>
-               <padding>
-                  <Insets left="35.0" />
-               </padding>
-            </HBox>
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="50.0" prefWidth="700.0" text="Quax (Human V Human)" textAlignment="CENTER">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="80.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" spacing="46.0">
+                     <children>
+                        <Label text="A">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label alignment="CENTER" text="B">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="C">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="D">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="E">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="F">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="G">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="H">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="I">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="J">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                        <Label text="K">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="35.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
          </top>
          <right>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER_RIGHT">
@@ -3800,77 +3812,124 @@
                      </font>
                   </Label>
                </children>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
             </VBox>
          </right>
          <bottom>
-            <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" spacing="46.0" BorderPane.alignment="BOTTOM_CENTER">
-               <children>
-                  <Label text="A">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="B">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="C">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="D">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="E">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="F">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="G">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="H">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="I">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="J">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label text="K">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-               </children>
+            <VBox prefHeight="45.0" prefWidth="543.0" spacing="30.0" BorderPane.alignment="BOTTOM_CENTER">
                <BorderPane.margin>
                   <Insets left="100.0" right="100.0" />
                </BorderPane.margin>
-               <padding>
-                  <Insets bottom="150.0" left="35.0" />
-               </padding>
-            </HBox>
+               <children>
+                  <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="700.0" spacing="46.0">
+                     <children>
+                        <Label text="A">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="B">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="C">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="D">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="E">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="F">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="G">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="H">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="I">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="J">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                        <Label text="K">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="150.0" left="35.0" />
+                     </padding>
+                  </HBox>
+                  <HBox prefHeight="50.0" prefWidth="700.0" spacing="250.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <Label alignment="CENTER" text="BLACK to play" textAlignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="189.0" text="PIE RULE" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </bottom>
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="25.0" BorderPane.alignment="CENTER_LEFT">
@@ -3932,7 +3991,7 @@
                   </Label>
                </children>
                <padding>
-                  <Insets left="65.0" top="20.0" />
+                  <Insets left="70.0" />
                </padding>
             </VBox>
          </left>
