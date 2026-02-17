@@ -5,14 +5,38 @@ package COMP20050.Group4QuaxGame;
  */
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class JavaFXController
+public class BoardController
 {
+    protected static Map<String, Polygon> tiles = new HashMap<>();
+
+    // gameManager reference
+    private final GameManager gameManager = new GameManager();
+
+    // get ID on click to pass to gameManager for validation
+    @FXML
+    void getID(MouseEvent event)
+    {
+        Polygon playerNode = (Polygon) event.getSource();
+
+        // if gameManager verifies the move set the tiles color
+        if(gameManager.makeMove(playerNode))
+        {
+            playerNode.setFill(Color.BLACK);
+            // after player move get gameManager to get bot move and set its color
+            String botID = gameManager.botMove();
+            Polygon botNode = tiles.get(botID);
+            botNode.setFill(Color.WHITE);
+        }
+    }
+
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -684,28 +708,6 @@ public class JavaFXController
     private Polygon RhoJ10; // Value injected by FXMLLoader
 
 
-
-    // gameManager reference
-    private final GameManager gameManager = new GameManager();
-
-    // get ID on click to pass to gameManager for validation
-    @FXML
-    void getID(MouseEvent event)
-    {
-        Polygon node = (Polygon) event.getSource();
-        String id = node.getId();
-
-        if(gameManager.makeMove(id))
-        {
-            changeColor(node);
-        }
-    }
-
-    void changeColor(Polygon node)
-    {
-        node.setFill(Color.BLACK);
-    }
-
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert OctA01 != null : "fx:id=\"OctA01\" was not injected: check your FXML file 'hello-view.fxml'.";
@@ -929,7 +931,227 @@ public class JavaFXController
         assert RhoJ08 != null : "fx:id=\"RhoJ08\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert RhoJ09 != null : "fx:id=\"RhoJ09\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert RhoJ10 != null : "fx:id=\"RhoJ10\" was not injected: check your FXML file 'hello-view.fxml'.";
-
+        tiles.put("OctA01", OctA01);
+        tiles.put("OctA02", OctA02);
+        tiles.put("OctA03", OctA03);
+        tiles.put("OctA04", OctA04);
+        tiles.put("OctA05", OctA05);
+        tiles.put("OctA06", OctA06);
+        tiles.put("OctA07", OctA07);
+        tiles.put("OctA08", OctA08);
+        tiles.put("OctA09", OctA09);
+        tiles.put("OctA10", OctA10);
+        tiles.put("OctA11", OctA11);
+        tiles.put("OctB01", OctB01);
+        tiles.put("OctB02", OctB02);
+        tiles.put("OctB03", OctB03);
+        tiles.put("OctB04", OctB04);
+        tiles.put("OctB05", OctB05);
+        tiles.put("OctB06", OctB06);
+        tiles.put("OctB07", OctB07);
+        tiles.put("OctB08", OctB08);
+        tiles.put("OctB09", OctB09);
+        tiles.put("OctB10", OctB10);
+        tiles.put("OctB11", OctB11);
+        tiles.put("OctC01", OctC01);
+        tiles.put("OctC02", OctC02);
+        tiles.put("OctC03", OctC03);
+        tiles.put("OctC04", OctC04);
+        tiles.put("OctC05", OctC05);
+        tiles.put("OctC06", OctC06);
+        tiles.put("OctC07", OctC07);
+        tiles.put("OctC08", OctC08);
+        tiles.put("OctC09", OctC09);
+        tiles.put("OctC10", OctC10);
+        tiles.put("OctC11", OctC11);
+        tiles.put("OctD01", OctD01);
+        tiles.put("OctD02", OctD02);
+        tiles.put("OctD03", OctD03);
+        tiles.put("OctD04", OctD04);
+        tiles.put("OctD05", OctD05);
+        tiles.put("OctD06", OctD06);
+        tiles.put("OctD07", OctD07);
+        tiles.put("OctD08", OctD08);
+        tiles.put("OctD09", OctD09);
+        tiles.put("OctD10", OctD10);
+        tiles.put("OctD11", OctD11);
+        tiles.put("OctE01", OctE01);
+        tiles.put("OctE02", OctE02);
+        tiles.put("OctE03", OctE03);
+        tiles.put("OctE04", OctE04);
+        tiles.put("OctE05", OctE05);
+        tiles.put("OctE06", OctE06);
+        tiles.put("OctE07", OctE07);
+        tiles.put("OctE08", OctE08);
+        tiles.put("OctE09", OctE09);
+        tiles.put("OctE10", OctE10);
+        tiles.put("OctE11", OctE11);
+        tiles.put("OctF01", OctF01);
+        tiles.put("OctF02", OctF02);
+        tiles.put("OctF03", OctF03);
+        tiles.put("OctF04", OctF04);
+        tiles.put("OctF05", OctF05);
+        tiles.put("OctF06", OctF06);
+        tiles.put("OctF07", OctF07);
+        tiles.put("OctF08", OctF08);
+        tiles.put("OctF09", OctF09);
+        tiles.put("OctF10", OctF10);
+        tiles.put("OctF11", OctF11);
+        tiles.put("OctG01", OctG01);
+        tiles.put("OctG02", OctG02);
+        tiles.put("OctG03", OctG03);
+        tiles.put("OctG04", OctG04);
+        tiles.put("OctG05", OctG05);
+        tiles.put("OctG06", OctG06);
+        tiles.put("OctG07", OctG07);
+        tiles.put("OctG08", OctG08);
+        tiles.put("OctG09", OctG09);
+        tiles.put("OctG10", OctG10);
+        tiles.put("OctG11", OctG11);
+        tiles.put("OctH01", OctH01);
+        tiles.put("OctH02", OctH02);
+        tiles.put("OctH03", OctH03);
+        tiles.put("OctH04", OctH04);
+        tiles.put("OctH05", OctH05);
+        tiles.put("OctH06", OctH06);
+        tiles.put("OctH07", OctH07);
+        tiles.put("OctH08", OctH08);
+        tiles.put("OctH09", OctH09);
+        tiles.put("OctH10", OctH10);
+        tiles.put("OctH11", OctH11);
+        tiles.put("OctI01", OctI01);
+        tiles.put("OctI02", OctI02);
+        tiles.put("OctI03", OctI03);
+        tiles.put("OctI04", OctI04);
+        tiles.put("OctI05", OctI05);
+        tiles.put("OctI06", OctI06);
+        tiles.put("OctI07", OctI07);
+        tiles.put("OctI08", OctI08);
+        tiles.put("OctI09", OctI09);
+        tiles.put("OctI10", OctI10);
+        tiles.put("OctI11", OctI11);
+        tiles.put("OctJ01", OctJ01);
+        tiles.put("OctJ02", OctJ02);
+        tiles.put("OctJ03", OctJ03);
+        tiles.put("OctJ04", OctJ04);
+        tiles.put("OctJ05", OctJ05);
+        tiles.put("OctJ06", OctJ06);
+        tiles.put("OctJ07", OctJ07);
+        tiles.put("OctJ08", OctJ08);
+        tiles.put("OctJ09", OctJ09);
+        tiles.put("OctJ10", OctJ10);
+        tiles.put("OctJ11", OctJ11);
+        tiles.put("OctK01", OctK01);
+        tiles.put("OctK02", OctK02);
+        tiles.put("OctK03", OctK03);
+        tiles.put("OctK04", OctK04);
+        tiles.put("OctK05", OctK05);
+        tiles.put("OctK06", OctK06);
+        tiles.put("OctK07", OctK07);
+        tiles.put("OctK08", OctK08);
+        tiles.put("OctK09", OctK09);
+        tiles.put("OctK10", OctK10);
+        tiles.put("OctK11", OctK11);
+        tiles.put("RhoA01", RhoA01);
+        tiles.put("RhoA02", RhoA02);
+        tiles.put("RhoA03", RhoA03);
+        tiles.put("RhoA04", RhoA04);
+        tiles.put("RhoA05", RhoA05);
+        tiles.put("RhoA06", RhoA06);
+        tiles.put("RhoA07", RhoA07);
+        tiles.put("RhoA08", RhoA08);
+        tiles.put("RhoA09", RhoA09);
+        tiles.put("RhoA10", RhoA10);
+        tiles.put("RhoB01", RhoB01);
+        tiles.put("RhoB02", RhoB02);
+        tiles.put("RhoB03", RhoB03);
+        tiles.put("RhoB04", RhoB04);
+        tiles.put("RhoB05", RhoB05);
+        tiles.put("RhoB06", RhoB06);
+        tiles.put("RhoB07", RhoB07);
+        tiles.put("RhoB08", RhoB08);
+        tiles.put("RhoB09", RhoB09);
+        tiles.put("RhoB10", RhoB10);
+        tiles.put("RhoC01", RhoC01);
+        tiles.put("RhoC02", RhoC02);
+        tiles.put("RhoC03", RhoC03);
+        tiles.put("RhoC04", RhoC04);
+        tiles.put("RhoC05", RhoC05);
+        tiles.put("RhoC06", RhoC06);
+        tiles.put("RhoC07", RhoC07);
+        tiles.put("RhoC08", RhoC08);
+        tiles.put("RhoC09", RhoC09);
+        tiles.put("RhoC10", RhoC10);
+        tiles.put("RhoD01", RhoD01);
+        tiles.put("RhoD02", RhoD02);
+        tiles.put("RhoD03", RhoD03);
+        tiles.put("RhoD04", RhoD04);
+        tiles.put("RhoD05", RhoD05);
+        tiles.put("RhoD06", RhoD06);
+        tiles.put("RhoD07", RhoD07);
+        tiles.put("RhoD08", RhoD08);
+        tiles.put("RhoD09", RhoD09);
+        tiles.put("RhoD10", RhoD10);
+        tiles.put("RhoE01", RhoE01);
+        tiles.put("RhoE02", RhoE02);
+        tiles.put("RhoE03", RhoE03);
+        tiles.put("RhoE04", RhoE04);
+        tiles.put("RhoE05", RhoE05);
+        tiles.put("RhoE06", RhoE06);
+        tiles.put("RhoE07", RhoE07);
+        tiles.put("RhoE08", RhoE08);
+        tiles.put("RhoE09", RhoE09);
+        tiles.put("RhoE10", RhoE10);
+        tiles.put("RhoF01", RhoF01);
+        tiles.put("RhoF02", RhoF02);
+        tiles.put("RhoF03", RhoF03);
+        tiles.put("RhoF04", RhoF04);
+        tiles.put("RhoF05", RhoF05);
+        tiles.put("RhoF06", RhoF06);
+        tiles.put("RhoF07", RhoF07);
+        tiles.put("RhoF08", RhoF08);
+        tiles.put("RhoF09", RhoF09);
+        tiles.put("RhoF10", RhoF10);
+        tiles.put("RhoG01", RhoG01);
+        tiles.put("RhoG02", RhoG02);
+        tiles.put("RhoG03", RhoG03);
+        tiles.put("RhoG04", RhoG04);
+        tiles.put("RhoG05", RhoG05);
+        tiles.put("RhoG06", RhoG06);
+        tiles.put("RhoG07", RhoG07);
+        tiles.put("RhoG08", RhoG08);
+        tiles.put("RhoG09", RhoG09);
+        tiles.put("RhoG10", RhoG10);
+        tiles.put("RhoH01", RhoH01);
+        tiles.put("RhoH02", RhoH02);
+        tiles.put("RhoH03", RhoH03);
+        tiles.put("RhoH04", RhoH04);
+        tiles.put("RhoH05", RhoH05);
+        tiles.put("RhoH06", RhoH06);
+        tiles.put("RhoH07", RhoH07);
+        tiles.put("RhoH08", RhoH08);
+        tiles.put("RhoH09", RhoH09);
+        tiles.put("RhoH10", RhoH10);
+        tiles.put("RhoI01", RhoI01);
+        tiles.put("RhoI02", RhoI02);
+        tiles.put("RhoI03", RhoI03);
+        tiles.put("RhoI04", RhoI04);
+        tiles.put("RhoI05", RhoI05);
+        tiles.put("RhoI06", RhoI06);
+        tiles.put("RhoI07", RhoI07);
+        tiles.put("RhoI08", RhoI08);
+        tiles.put("RhoI09", RhoI09);
+        tiles.put("RhoI10", RhoI10);
+        tiles.put("RhoJ01", RhoJ01);
+        tiles.put("RhoJ02", RhoJ02);
+        tiles.put("RhoJ03", RhoJ03);
+        tiles.put("RhoJ04", RhoJ04);
+        tiles.put("RhoJ05", RhoJ05);
+        tiles.put("RhoJ06", RhoJ06);
+        tiles.put("RhoJ07", RhoJ07);
+        tiles.put("RhoJ08", RhoJ08);
+        tiles.put("RhoJ09", RhoJ09);
+        tiles.put("RhoJ10", RhoJ10);
     }
 
 }
