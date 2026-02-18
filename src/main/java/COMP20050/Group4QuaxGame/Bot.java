@@ -16,7 +16,7 @@ public class Bot {
     }
 
     String getRandomOctagon() {
-        int y = (int) (Math.random() * 12);
+        int y = 1 + (int) (Math.random() * 11);
         char x = (char) ('A' + (int) (Math.random() * 11));
         StringBuilder id = new StringBuilder();
         id.append("Oct");
@@ -29,7 +29,7 @@ public class Bot {
     }
 
     String getRandomRhombus() {
-        int y = (int) (Math.random() * 11);
+        int y = 1 + (int) (Math.random() * 10);
         char x = (char) ('A' + (int) (Math.random() * 10));
         StringBuilder id = new StringBuilder();
         id.append("Rho");
