@@ -44,7 +44,7 @@ public class GameManager
     }
 
     // method to check if board is full to prevent bot infinite loop
-    private boolean isBoardFull()
+    protected boolean isBoardFull()
     {
         for(Polygon p : tiles.values())
         {
