@@ -40,9 +40,12 @@ public class BoardController
             // once pause is finished allow bot to move
             pause.setOnFinished(e -> {
                 Polygon botMove = gameManager.botMove();
-                botMove.setFill(Color.WHITE);
-                // change label to display blacks turn
-                playLabel.setText("BLACK to play");
+                if(botMove != null)
+                {
+                    botMove.setFill(Color.WHITE);
+                    // change label to display blacks turn
+                    playLabel.setText("BLACK to play");
+                }
             });
             // start pause
             pause.play();

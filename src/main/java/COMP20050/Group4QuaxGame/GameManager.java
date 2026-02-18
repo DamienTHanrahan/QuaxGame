@@ -8,7 +8,7 @@ import static COMP20050.Group4QuaxGame.BoardController.tiles;
 public class GameManager
 {
     private final Bot bot = new Bot();
-    private Boolean playersTurn = true;
+    private boolean playersTurn = true;
 
     protected boolean playerMove(Polygon node)
     {
@@ -24,8 +24,13 @@ public class GameManager
         return true;
     }
 
-    public Polygon botMove()
+    protected Polygon botMove()
     {
+        if(isBoardFull())
+        {
+            return null;
+        }
+
         Polygon move;
         do
         {
@@ -37,5 +42,19 @@ public class GameManager
         playersTurn = true;
         return move;
     }
+
+    // method to check if board is full to prevent bot infinite loop
+    private boolean isBoardFull()
+    {
+        for(Polygon p : tiles.values())
+        {
+            if (p.getFill() != Color.WHITE && p.getFill() != Color.BLACK)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }
