@@ -8,11 +8,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 
 public class BoardController
 {
@@ -32,16 +35,19 @@ public class BoardController
             playerNode.setFill(Color.BLACK);
             // change label to display whites turn
             playLabel.setText("WHITE to play");
-            // add a second delay
-            // NOT WORKING TRYING TO FIX Thread.sleep(1000);
-            // after player move get gameManager to get bot move and set its color
-            Polygon botMove = gameManager.botMove();
-            botMove.setFill(Color.WHITE);
-            // change label to display blacks turn
-            playLabel.setText("BLACK to play");
+
+            PauseTransition pause = new PauseTransition(Duration.millis(650));
+            // once pause is finished allow bot to move
+            pause.setOnFinished(e -> {
+                Polygon botMove = gameManager.botMove();
+                botMove.setFill(Color.WHITE);
+                // change label to display blacks turn
+                playLabel.setText("BLACK to play");
+            });
+            // start pause
+            pause.play();
         }
     }
-
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
