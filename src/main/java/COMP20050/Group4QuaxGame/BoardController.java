@@ -31,9 +31,8 @@ public class BoardController
         {
             playerNode.setFill(Color.BLACK);
             // after player move get gameManager to get bot move and set its color
-            String botID = gameManager.botMove();
-            Polygon botNode = tiles.get(botID);
-            botNode.setFill(Color.WHITE);
+            Polygon botMove = gameManager.botMove();
+            botMove.setFill(Color.WHITE);
         }
     }
 

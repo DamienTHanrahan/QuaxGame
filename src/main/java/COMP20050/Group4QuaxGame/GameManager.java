@@ -3,6 +3,8 @@ package COMP20050.Group4QuaxGame;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+import static COMP20050.Group4QuaxGame.BoardController.tiles;
+
 public class GameManager
 {
     private final Bot bot = new Bot();
@@ -22,11 +24,18 @@ public class GameManager
         return true;
     }
 
-    public String botMove()
+    public Polygon botMove()
     {
-        String id = bot.chooseMove();
+        Polygon move;
+        do
+        {
+            String moveID = bot.chooseMove();
+            move = tiles.get(moveID);
+
+        }while (move == null || move.getFill() == Color.BLACK || move.getFill() == Color.WHITE);
+
         playersTurn = true;
-        return id;
+        return move;
     }
 
 }
