@@ -10,7 +10,7 @@ public class GameManager
     private final Bot bot = new Bot();
     private Boolean playersTurn = true;
 
-    protected boolean makeMove(Polygon node)
+    protected boolean playerMove(Polygon node)
     {
         if(!playersTurn)
         {

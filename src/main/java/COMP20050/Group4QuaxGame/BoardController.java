@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -22,17 +23,22 @@ public class BoardController
 
     // get ID on click to pass to gameManager for validation
     @FXML
-    void getID(MouseEvent event)
+    void clickToMove(MouseEvent event)
     {
         Polygon playerNode = (Polygon) event.getSource();
-
         // if gameManager verifies the move set the tiles color
-        if(gameManager.makeMove(playerNode))
+        if(gameManager.playerMove(playerNode))
         {
             playerNode.setFill(Color.BLACK);
+            // change label to display whites turn
+            playLabel.setText("WHITE to play");
+            // add a second delay
+            // NOT WORKING TRYING TO FIX Thread.sleep(1000);
             // after player move get gameManager to get bot move and set its color
             Polygon botMove = gameManager.botMove();
             botMove.setFill(Color.WHITE);
+            // change label to display blacks turn
+            playLabel.setText("BLACK to play");
         }
     }
 
@@ -705,6 +711,9 @@ public class BoardController
 
     @FXML // fx:id="RhoJ10"
     private Polygon RhoJ10; // Value injected by FXMLLoader
+
+    @FXML // fx:id="playLabel"
+    private Label playLabel; // Value injected by FXMLLoader
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
