@@ -269,7 +269,7 @@
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="189.0" text="PIE RULE" />
+                        <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="189.0" text="PIE RULE" visible="false" />
                      </children>
                   </HBox>
                </children>
