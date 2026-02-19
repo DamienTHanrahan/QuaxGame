@@ -2,7 +2,6 @@ package COMP20050.Group4QuaxGame;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -212,7 +211,7 @@ class GameManagerTest {
         Polygon tile2 = new Polygon();
         tile2.setFill(Color.ORANGE);
         Polygon tile3 = new Polygon();
-        tile3.setFill(Color.ORANGE);;
+        tile3.setFill(Color.ORANGE);
 
         // set one tile to black
         tile.setFill(Color.BLACK);
