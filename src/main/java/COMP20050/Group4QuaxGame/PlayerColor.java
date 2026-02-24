@@ -11,14 +11,19 @@ public enum PlayerColor
     // switch the color to match the javaFX color
     public Color switchToFXColor()
     {
-        return switch(this)
+        Color fxColor;
+
+        switch(this)
         {
-            case BLACK -> Color.BLACK;
-            case WHITE -> Color.WHITE;
-            default -> Color.ORANGE;
-        };
+            case BLACK -> fxColor = Color.BLACK;
+            case WHITE -> fxColor = Color.WHITE;
+            default -> fxColor = Color.ORANGE;
+        }
+
+        return fxColor;
     }
 
+    // get name of the enum for printing on turn label
     public String getDisplayName()
     {
         return this.name();

@@ -10,6 +10,7 @@ public abstract class Player
         this.playerColor = playerColor;
     }
 
+    // getter and setter for the player color
     public PlayerColor getPlayerColor()
     {
         return playerColor;

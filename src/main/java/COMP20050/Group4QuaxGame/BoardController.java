@@ -45,24 +45,33 @@ public class BoardController
             {
                 pieButton.setVisible(false);
             }
-            PauseTransition pause = new PauseTransition(Duration.millis(650));
-            // once pause is finished allow bot to move
-            pause.setOnFinished(e -> {
-                Move botMove = gameManager.botMove();
-                if(botMove != null)
-                {
-                    paintTile(botMove);
-                }
-                updateTurnLabel();
-
-                if(gameManager.turnCount != 1)
-                {
-                    pieButton.setVisible(false);
-                }
-            });
-            // start pause
-            pause.play();
+            callBotToMove();
         }
+    }
+
+    void callBotToMove()
+    {
+        PauseTransition pause = new PauseTransition(Duration.millis(650));
+        // once pause is finished allow bot to move
+        pause.setOnFinished(e -> {
+            Move botMove = gameManager.botMove();
+            if(botMove != null)
+            {
+                paintTile(botMove);
+            }
+            updateTurnLabel();
+
+            if(gameManager.getTurnCount() == 1)
+            {
+                pieButton.setVisible(true);
+            }
+            else
+            {
+                pieButton.setVisible(false);
+            }
+        });
+        // start pause
+        pause.play();
     }
 
     // paint a tile
@@ -80,6 +89,13 @@ public class BoardController
         // activate pie rule then get bot to move
         gameManager.activatePieRule();
         updateTurnLabel();
+        pieButton.setVisible(false);
+
+        // check if bot has to move now
+        if(gameManager.getCurrentPlayer() == gameManager.bot)
+        {
+            callBotToMove();
+        }
     }
 
     // update the UI label
@@ -991,6 +1007,7 @@ public class BoardController
         assert RhoJ10 != null : "fx:id=\"RhoJ10\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert pieButton != null : "fx:id=\"pieButton\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert playLabel != null : "fx:id=\"playLabel\" was not injected: check your FXML file 'hello-view.fxml'.";
+        // hashmap setup
         tiles.put("OctA01", OctA01);
         tiles.put("OctA02", OctA02);
         tiles.put("OctA03", OctA03);
@@ -1212,6 +1229,17 @@ public class BoardController
         tiles.put("RhoJ08", RhoJ08);
         tiles.put("RhoJ09", RhoJ09);
         tiles.put("RhoJ10", RhoJ10);
+        // randomly pick who starts as black and white
+        int random = (int) (Math.random() * 2);
+        if (random == 0)
+        {
+            gameManager.setUpGame(gameManager.human);
+        }
+        else
+        {
+            gameManager.setUpGame(gameManager.bot);
+            callBotToMove();
+        }
     }
 
 }

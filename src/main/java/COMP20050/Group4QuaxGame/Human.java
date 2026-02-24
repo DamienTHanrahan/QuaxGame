@@ -7,6 +7,7 @@ public class Human extends Player
         super(playerColor);
     }
 
+    // human move is done through GUI so no need for this method
     @Override
     public String chooseMove()
     {

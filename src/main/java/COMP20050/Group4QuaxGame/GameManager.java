@@ -7,13 +7,36 @@ import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
 {
-    protected final Human human = new Human(PlayerColor.BLACK);
-    protected final Bot bot = new Bot(PlayerColor.WHITE);
-    protected Player currentPlayer = human;
-    protected Player otherPlayer = bot;
+    // reference to the human and the bot
+    protected final Human human = new Human(null);
+    protected final Bot bot = new Bot(null);
+    // reference to who's turn it is
+    protected Player currentPlayer;
+    protected Player otherPlayer;
+    // boolean to prevent pie rule from being used twice
     protected boolean pieRuleUsed = false;
     int turnCount = 0;
 
+    // set up game by picking who starts first (50/50 currently in BoardController)
+    protected void setUpGame(Player startingPlayer)
+    {
+        if(startingPlayer == human)
+        {
+            currentPlayer = human;
+            otherPlayer = bot;
+            currentPlayer.setPlayerColor(PlayerColor.BLACK);
+            otherPlayer.setPlayerColor(PlayerColor.WHITE);
+        }
+        else
+        {
+            currentPlayer = bot;
+            otherPlayer = human;
+            currentPlayer.setPlayerColor(PlayerColor.BLACK);
+            otherPlayer.setPlayerColor(PlayerColor.WHITE);
+        }
+    }
+
+    // logic for the human players turn
     protected Move humanMove(Polygon node)
     {
         if(currentPlayer != human)
@@ -30,6 +53,7 @@ public class GameManager
         return move;
     }
 
+    // logic for the bots turn
     protected Move botMove()
     {
         if(currentPlayer != bot || isBoardFull())
@@ -43,13 +67,14 @@ public class GameManager
             return null;
         }
 
+        // keep picking random tile until its valid
         Polygon tile;
         do
         {
             String moveID = bot.chooseMove();
             tile = tiles.get(moveID);
 
-        }while (!validateMove(new Move(bot, tile)));
+        }while(!validateMove(new Move(bot, tile)));
 
         Move move = new Move(currentPlayer, tile);
         switchTurns();
@@ -94,7 +119,7 @@ public class GameManager
         switchTurns();
     }
 
-    // check if tile is occupied
+    // check if tile is valid
     private boolean validateMove(Move move)
     {
         if(move.getTile() == null)
@@ -105,6 +130,7 @@ public class GameManager
         return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
     }
 
+    // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
     {
         return currentPlayer;

@@ -4,6 +4,7 @@ import javafx.scene.shape.Polygon;
 
 public class Move
 {
+    // move consists of the player making the move and the tile they picked
     private final Player player;
     private final Polygon tile;
 
@@ -13,6 +14,7 @@ public class Move
         this.tile = tile;
     }
 
+    // getters for the player and the tile
     public Player getPlayer()
     {
         return player;
