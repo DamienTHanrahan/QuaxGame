@@ -11,36 +11,47 @@ public class GameManager
     protected final Bot bot = new Bot(PlayerColor.WHITE);
     protected Player currentPlayer = human;
     protected Player otherPlayer = bot;
+    protected boolean pieRuleUsed = false;
+    int turnCount = 0;
 
-    protected boolean humanMove(Polygon node)
+    protected Move humanMove(Polygon node)
     {
         if(currentPlayer != human)
         {
-            return false;
+            return null;
         }
-        if(node.getFill() == Color.BLACK || node.getFill() == Color.WHITE)
+
+        Move move = new Move(currentPlayer, node);
+        if(!validateMove(move))
         {
-            return false;
+            return null;
         }
         switchTurns();
-        return true;
+        return move;
     }
 
-    protected Polygon botMove()
+    protected Move botMove()
     {
         if(currentPlayer != bot || isBoardFull())
         {
             return null;
         }
 
-        Polygon move;
+        if(turnCount == 1 && bot.usePieRule())
+        {
+            activatePieRule();
+            return null;
+        }
+
+        Polygon tile;
         do
         {
             String moveID = bot.chooseMove();
-            move = tiles.get(moveID);
+            tile = tiles.get(moveID);
 
-        }while (move == null || move.getFill() == Color.BLACK || move.getFill() == Color.WHITE);
+        }while (!validateMove(new Move(bot, tile)));
 
+        Move move = new Move(currentPlayer, tile);
         switchTurns();
         return move;
     }
@@ -61,9 +72,48 @@ public class GameManager
     // switches turns
     private void switchTurns()
     {
+        turnCount++;
+
         Player temp = currentPlayer;
         currentPlayer = otherPlayer;
         otherPlayer = temp;
     }
+
+    // swap player colors for pie rule
+    protected void activatePieRule()
+    {
+        if(pieRuleUsed)
+        {
+            return;
+        }
+        pieRuleUsed = true;
+        PlayerColor temp = currentPlayer.getPlayerColor();
+        currentPlayer.setPlayerColor(otherPlayer.getPlayerColor());
+        otherPlayer.setPlayerColor(temp);
+
+        switchTurns();
+    }
+
+    // check if tile is occupied
+    private boolean validateMove(Move move)
+    {
+        if(move.getTile() == null)
+        {
+            return false;
+        }
+
+        return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
+    }
+
+    protected Player getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    protected int getTurnCount()
+    {
+        return turnCount;
+    }
+
 
 }

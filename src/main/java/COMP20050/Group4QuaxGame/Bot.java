@@ -46,4 +46,10 @@ public class Bot extends Player
         id.append(y);
         return id.toString();
     }
+
+    protected boolean usePieRule()
+    {
+        int rand = (int) (Math.random() * 2);
+        return (rand == 1);
+    }
 }

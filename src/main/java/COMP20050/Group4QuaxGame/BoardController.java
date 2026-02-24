@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
 
@@ -29,27 +29,65 @@ public class BoardController
     void clickToMove(MouseEvent event)
     {
         Polygon playerNode = (Polygon) event.getSource();
-        // if gameManager verifies the move set the tiles color
-        if(gameManager.humanMove(playerNode))
-        {
-            playerNode.setFill(Color.BLACK);
-            // change label to display whites turn
-            playLabel.setText("WHITE to play");
 
+        Move playerMove = gameManager.humanMove(playerNode);
+        // if gameManager verifies the move set the tiles color
+        if(playerMove != null)
+        {
+            paintTile(playerMove);
+            updateTurnLabel();
+
+            if(gameManager.getTurnCount() == 1)
+            {
+                pieButton.setVisible(true);
+            }
+            else
+            {
+                pieButton.setVisible(false);
+            }
             PauseTransition pause = new PauseTransition(Duration.millis(650));
             // once pause is finished allow bot to move
             pause.setOnFinished(e -> {
-                Polygon botMove = gameManager.botMove();
+                Move botMove = gameManager.botMove();
                 if(botMove != null)
                 {
-                    botMove.setFill(Color.WHITE);
-                    // change label to display blacks turn
-                    playLabel.setText("BLACK to play");
+                    paintTile(botMove);
+                }
+                updateTurnLabel();
+
+                if(gameManager.turnCount != 1)
+                {
+                    pieButton.setVisible(false);
                 }
             });
             // start pause
             pause.play();
         }
+    }
+
+    // paint a tile
+    void paintTile(Move move)
+    {
+        Polygon tile = move.getTile();
+        PlayerColor playerColor = move.getPlayer().getPlayerColor();
+        tile.setFill(playerColor.switchToFXColor());
+    }
+
+    // activate pie rule
+    @FXML
+    void pieButtonClicked(MouseEvent event)
+    {
+        // activate pie rule then get bot to move
+        gameManager.activatePieRule();
+        updateTurnLabel();
+    }
+
+    // update the UI label
+    @FXML
+    void updateTurnLabel()
+    {
+        PlayerColor color = gameManager.getCurrentPlayer().getPlayerColor();
+        playLabel.setText(color.getDisplayName() + " to play");
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -721,6 +759,9 @@ public class BoardController
     @FXML // fx:id="RhoJ10"
     private Polygon RhoJ10; // Value injected by FXMLLoader
 
+    @FXML // fx:id="pieButton"
+    private Button pieButton; // Value injected by FXMLLoader
+
     @FXML // fx:id="playLabel"
     private Label playLabel; // Value injected by FXMLLoader
 
@@ -948,6 +989,8 @@ public class BoardController
         assert RhoJ08 != null : "fx:id=\"RhoJ08\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert RhoJ09 != null : "fx:id=\"RhoJ09\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert RhoJ10 != null : "fx:id=\"RhoJ10\" was not injected: check your FXML file 'hello-view.fxml'.";
+        assert pieButton != null : "fx:id=\"pieButton\" was not injected: check your FXML file 'hello-view.fxml'.";
+        assert playLabel != null : "fx:id=\"playLabel\" was not injected: check your FXML file 'hello-view.fxml'.";
         tiles.put("OctA01", OctA01);
         tiles.put("OctA02", OctA02);
         tiles.put("OctA03", OctA03);

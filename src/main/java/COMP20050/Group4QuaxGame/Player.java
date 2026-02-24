@@ -10,9 +10,16 @@ public abstract class Player
         this.playerColor = playerColor;
     }
 
-    public PlayerColor getColor() {
+    public PlayerColor getPlayerColor()
+    {
         return playerColor;
     }
 
+    public void setPlayerColor(PlayerColor playerColor)
+    {
+        this.playerColor = playerColor;
+    }
+
+    // each player has its own way of choosing a move
     public abstract String chooseMove();
 }
