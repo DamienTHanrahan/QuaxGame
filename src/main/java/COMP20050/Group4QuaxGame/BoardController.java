@@ -30,7 +30,7 @@ public class BoardController
     {
         Polygon playerNode = (Polygon) event.getSource();
         // if gameManager verifies the move set the tiles color
-        if(gameManager.playerMove(playerNode))
+        if(gameManager.humanMove(playerNode))
         {
             playerNode.setFill(Color.BLACK);
             // change label to display whites turn

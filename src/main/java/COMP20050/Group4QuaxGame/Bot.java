@@ -1,9 +1,15 @@
 package COMP20050.Group4QuaxGame;
 
-public class Bot {
+public class Bot extends Player
+{
+    public Bot(PlayerColor playerColor)
+    {
+        super(playerColor);
+    }
+
     // Rudimentary bot that makes random moves. To be implemented in the future.
     // Move validation logic to gameManager, and use a loop in gameManager to keep picking tile
-    String chooseMove() {
+    public String chooseMove() {
         String move;
 
         int rand = (int) (Math.random() * 2);

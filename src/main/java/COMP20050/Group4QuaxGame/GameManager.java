@@ -7,12 +7,14 @@ import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
 {
-    private final Bot bot = new Bot();
-    private boolean playersTurn = true;
+    protected final Human human = new Human(PlayerColor.BLACK);
+    protected final Bot bot = new Bot(PlayerColor.WHITE);
+    protected Player currentPlayer = human;
+    protected Player otherPlayer = bot;
 
-    protected boolean playerMove(Polygon node)
+    protected boolean humanMove(Polygon node)
     {
-        if(!playersTurn)
+        if(currentPlayer != human)
         {
             return false;
         }
@@ -20,13 +22,13 @@ public class GameManager
         {
             return false;
         }
-        playersTurn = false;
+        switchTurns();
         return true;
     }
 
     protected Polygon botMove()
     {
-        if(isBoardFull())
+        if(currentPlayer != bot || isBoardFull())
         {
             return null;
         }
@@ -39,7 +41,7 @@ public class GameManager
 
         }while (move == null || move.getFill() == Color.BLACK || move.getFill() == Color.WHITE);
 
-        playersTurn = true;
+        switchTurns();
         return move;
     }
 
@@ -56,5 +58,12 @@ public class GameManager
         return true;
     }
 
+    // switches turns
+    private void switchTurns()
+    {
+        Player temp = currentPlayer;
+        currentPlayer = otherPlayer;
+        otherPlayer = temp;
+    }
 
 }
