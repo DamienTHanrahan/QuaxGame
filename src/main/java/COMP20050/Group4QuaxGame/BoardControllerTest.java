@@ -10,6 +10,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,6 +58,8 @@ class BoardControllerTest {
                 injected.put(field.getName(), polygon);
             } else if (field.getType() == Label.class) {
                 setField(controller, field, new Label());
+            } else if(field.getType() == Button.class){
+                setField(controller, field, new Button());
             }
         }
     }
