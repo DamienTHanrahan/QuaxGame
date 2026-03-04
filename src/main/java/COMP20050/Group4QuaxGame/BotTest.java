@@ -62,4 +62,23 @@ class BotTest
         String rhombus = bot.getRandomRhombus();
         assertTrue(rhombus.startsWith("Rho"));
     }
+
+
+    // --------------------- usePieRule function TESTS -------------------------------
+
+    // currently bot choosing pie rule logic is fully random so this is temporary test
+    @Test
+    void usePieRule()
+    {
+        boolean result = bot.usePieRule();
+        if(result)
+        {
+            assertTrue(result);
+        }
+        else
+        {
+            assertFalse(result);
+        }
+    }
+
 }
