@@ -97,6 +97,8 @@ class GameManagerTest {
     {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
+        // bot to the other player
+        gameManager.otherPlayer = gameManager.bot;
 
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
