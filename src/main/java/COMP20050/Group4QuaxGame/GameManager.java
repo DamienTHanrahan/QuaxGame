@@ -17,6 +17,17 @@ public class GameManager
     protected boolean pieRuleUsed = false;
     int turnCount = 0;
 
+    // getters for currentPlayer and turnCount
+    protected Player getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    protected int getTurnCount()
+    {
+        return turnCount;
+    }
+
     // set up game by picking who starts first (50/50 currently in BoardController)
     protected void setUpGame(Player startingPlayer)
     {
@@ -95,7 +106,7 @@ public class GameManager
     }
 
     // switches turns
-    private void switchTurns()
+    protected void switchTurns()
     {
         turnCount++;
 
@@ -107,7 +118,7 @@ public class GameManager
     // swap player colors for pie rule
     protected void activatePieRule()
     {
-        if(pieRuleUsed)
+        if(pieRuleUsed || turnCount != 1)
         {
             return;
         }
@@ -120,26 +131,13 @@ public class GameManager
     }
 
     // check if tile is valid
-    private boolean validateMove(Move move)
+    protected boolean validateMove(Move move)
     {
-        if(move.getTile() == null)
+        if(move.getTile() == null || move.getPlayer() == null)
         {
             return false;
         }
 
         return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
     }
-
-    // getters for currentPlayer and turnCount
-    protected Player getCurrentPlayer()
-    {
-        return currentPlayer;
-    }
-
-    protected int getTurnCount()
-    {
-        return turnCount;
-    }
-
-
 }

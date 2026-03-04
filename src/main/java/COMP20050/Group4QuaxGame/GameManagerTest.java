@@ -271,4 +271,321 @@ class GameManagerTest {
     }
 
 
+    // --------------------- setUpGame tests --------------------------
+
+    // check variables after we set up game with human starting
+    @Test
+    void setUpGameHumanStarts()
+    {
+        gameManager.setUpGame(gameManager.human);
+
+        // check current player and other player are correctly assigned
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.bot, gameManager.otherPlayer);
+    }
+
+    // check variables after we set up game with bot starting
+    @Test
+    void setUpGameBotStarts()
+    {
+        gameManager.setUpGame(gameManager.bot);
+
+        // check current player and other player are correctly assigned
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.human, gameManager.otherPlayer);
+    }
+
+    // check that player colors are assigned correct when human starts
+    @Test
+    void setUpGameHumanColor()
+    {
+        gameManager.setUpGame(gameManager.human);
+
+        // first player should be black
+        assertEquals(PlayerColor.BLACK, gameManager.currentPlayer.getPlayerColor());
+        // second player should be white
+        assertEquals(PlayerColor.WHITE, gameManager.otherPlayer.getPlayerColor());
+    }
+
+    // check that player colors are assigned correct when bot starts
+    @Test
+    void setUpGameBotColor()
+    {
+        gameManager.setUpGame(gameManager.bot);
+
+        // first player should be black
+        assertEquals(PlayerColor.BLACK, gameManager.currentPlayer.getPlayerColor());
+        // second player should be white
+        assertEquals(PlayerColor.WHITE, gameManager.otherPlayer.getPlayerColor());
+    }
+
+
+    // --------------------------- getCurrentPlayer test ----------------------------
+
+    // check if current player can be bot
+    @Test
+    void getCurrentPlayerHuman()
+    {
+        gameManager.currentPlayer = gameManager.human;
+
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+    }
+
+    @Test
+    void getCurrentPlayerBot()
+    {
+        gameManager.currentPlayer = gameManager.bot;
+
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+    }
+
+    // check if current player swaps after move
+    @Test
+    void getCurrentPlayerAfterMove()
+    {
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+
+        // set tile to empty
+        tile.setFill(Color.ORANGE);
+        // make valid move
+        gameManager.humanMove(tile);
+
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+    }
+
+    // check if current player doesn't change after an invalid move
+    @Test
+    void getCurrentPlayerBotAfterInvalidMove()
+    {
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+
+        // set tile to BLACK
+        tile.setFill(Color.BLACK);
+        // make an invalid move
+        gameManager.humanMove(tile);
+
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+    }
+
+
+    // -------------------------- getTurnCount tests ---------------------------------------
+
+    // test if turn count starts at zero
+    @Test
+    void getTurnCountStartsAtZero()
+    {
+        assertEquals(0, gameManager.getTurnCount());
+    }
+
+    // check turn count increases after human moves
+    @Test
+    void getTurnCountAfterHumanMove()
+    {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
+        // set tile to empty
+        tile.setFill(Color.ORANGE);
+        // human move
+        gameManager.humanMove(tile);
+
+        assertEquals(1, gameManager.getTurnCount());
+    }
+
+    // check turn count increments after bot moves
+    @Test
+    void getTurnCountAfterBotMove()
+    {
+        // set bot to current player
+        gameManager.currentPlayer = gameManager.bot;
+
+        // set tile to empty
+        tile.setFill(Color.ORANGE);
+        tiles.put("OctA01", tile);
+
+        // make bot move
+        gameManager.botMove();
+
+        assertEquals(1, gameManager.getTurnCount());
+    }
+
+    // check if turn count doesn't increment after an invalid move
+    @Test
+    void getTurnCountInvalidMove()
+    {
+        gameManager.currentPlayer = gameManager.human;
+
+        // set tile to Black
+        tile.setFill(Color.BLACK);
+        gameManager.humanMove(tile);
+
+        assertEquals(0, gameManager.getTurnCount());
+    }
+
+
+    // ----------------------- switchTurns test ----------------
+    // NOTE Validation for switch turns tested above in getCurrentPlayer and getTurnCount test cases
+
+    // check current player is bot after human moves
+    @Test
+    void switchTurnsAfterHumanMove()
+    {
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+
+        // simulate human move
+        gameManager.switchTurns();
+
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+    }
+
+    // check current player is human after bot moves
+    @Test
+    void switchTurnsAfterBotMove()
+    {
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        // simulate bot move
+        gameManager.switchTurns();
+
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+    }
+
+    // check switch turns method correctly increments turn count
+    @Test
+    void switchTurnsIncrementsTurnCount()
+    {
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        // turn count starts at 0
+        assertEquals(0, gameManager.getTurnCount());
+        // simulate move
+        gameManager.switchTurns();
+        // check it incremented
+        assertEquals(1, gameManager.getTurnCount());
+
+    }
+
+
+    // ----------------- activatePieRule tests ----------------------
+
+    // check the colors swap correctly if pie rule used on humans turn
+    @Test
+    void activatePieRuleHuman()
+    {
+        gameManager.turnCount = 1;
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        // White player is always the player that gets to use pie rule
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // call pie rule
+        gameManager.activatePieRule();
+
+        // check colors updated
+        assertEquals(PlayerColor.BLACK, gameManager.human.getPlayerColor());
+        assertEquals(PlayerColor.WHITE, gameManager.bot.getPlayerColor());
+
+    }
+
+    // check the colors swap correctly if pie rule used on bots turn
+    @Test
+    void activatePieRuleBot()
+    {
+        gameManager.turnCount = 1;
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+        // White player is always the player that gets to use pie rule
+        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
+        gameManager.human.setPlayerColor(PlayerColor.BLACK);
+
+        // call pie rule
+        gameManager.activatePieRule();
+
+        // check colors updated
+        assertEquals(PlayerColor.BLACK, gameManager.bot.getPlayerColor());
+        assertEquals(PlayerColor.WHITE, gameManager.human.getPlayerColor());
+
+    }
+
+    // check pie rule switches Turns after
+    @Test
+    void activatePieRuleSwitchesTurns()
+    {
+        gameManager.turnCount = 1;
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        gameManager.activatePieRule();
+
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.bot, gameManager.otherPlayer);
+    }
+
+    // check pie rule doesn't work if turn count isn't 1
+    @Test
+    void activatePieRuleNotOnCorrectTurn()
+    {
+        gameManager.turnCount = 5;
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        gameManager.activatePieRule();
+
+        // check the current and other players are not changed
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.human, gameManager.otherPlayer);
+    }
+
+
+    // ----------------------- validateMove test ----------------------
+
+    // test if valid move works
+    @Test
+    void validateMoveValid()
+    {
+        // set tile to empty
+        tile.setFill(Color.ORANGE);
+
+        Move validMove = new Move(gameManager.human, tile);
+
+        assertTrue(gameManager.validateMove(validMove));
+    }
+
+    // test if invalid move returns false
+    @Test
+    void validateMoveInvalid()
+    {
+        // set tile to White
+        tile.setFill(Color.WHITE);
+
+        Move invalidMove = new Move(gameManager.bot, tile);
+
+        assertFalse(gameManager.validateMove(invalidMove));
+    }
+
+    // test if no tile returns false
+    @Test
+    void validateMoveNullTile()
+    {
+        Move nullTileMove = new Move(gameManager.human, null);
+
+        assertFalse(gameManager.validateMove(nullTileMove));
+    }
+
+    // test if no player returns false
+    @Test
+    void validateMoveNullPlayer()
+    {
+        tile.setFill(Color.ORANGE);
+
+        Move nullPlayerMove = new Move(null, tile);
+
+        assertFalse(gameManager.validateMove(nullPlayerMove));
+    }
 }
