@@ -22,7 +22,7 @@ public class BoardController
     protected static Map<String, Polygon> tiles = new HashMap<>();
 
     // gameManager reference
-    private final GameManager gameManager = new GameManager();
+    protected final GameManager gameManager = new GameManager();
 
     // get ID on click to pass to gameManager for validation
     @FXML

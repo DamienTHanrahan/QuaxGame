@@ -12,11 +12,14 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class BoardControllerTest {
+
+    BoardController controller = new BoardController();
 
     @BeforeAll
     static void initJavaFx() throws Exception {
@@ -34,7 +37,7 @@ class BoardControllerTest {
     @Test
     void initialize_populatesTilesMap() throws Exception {
         BoardController.tiles.clear();
-        BoardController controller = new BoardController();
+
 
         Map<String, Polygon> injected = new HashMap<>();
         runOnFxThread(() -> {
@@ -100,4 +103,121 @@ class BoardControllerTest {
             throw new IllegalStateException("JavaFX task did not complete in time.");
         }
     }
+
+    // ------------------------------------- paintTile tests ----------------------------------------
+    // test if black player moves does fill color be set to black
+    @Test
+    void paintTileBlackPlayer()
+    {
+        // simulate black player and tile
+        Human blackPlayer = new Human(PlayerColor.BLACK);
+        Polygon tile = new Polygon();
+        tile.setFill(Color.ORANGE);
+
+        // simulate move for black
+        Move blackMove = new Move(blackPlayer, tile);
+        controller.paintTile(blackMove);
+
+        // check if tile color is updated
+        assertEquals(Color.BLACK, blackMove.getTile().getFill());
+    }
+
+    // test if black player moves does fill color be set to black
+    @Test
+    void paintTileWhitePlayer()
+    {
+        // simulate black player and tile
+        Human whitePlayer = new Human(PlayerColor.WHITE);
+        Polygon tile = new Polygon();
+        tile.setFill(Color.ORANGE);
+
+        // simulate move for black
+        Move whiteMove = new Move(whitePlayer, tile);
+        controller.paintTile(whiteMove);
+
+        // check if tile color is updated
+        assertEquals(Color.WHITE, whiteMove.getTile().getFill());
+    }
+
+    // ------------------------------- updateTurnLabel tests -----------------------
+    // check if label displays BLACK to play on start
+    @Test
+    void updateTurnLabelStartGame() throws Exception
+    {
+        controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+
+        runOnFxThread(() -> {
+            try {
+                // get label
+                Label label = new Label();
+                Field field = BoardController.class.getDeclaredField("playLabel");
+                field.setAccessible(true);
+                field.set(controller, label);
+
+                controller.updateTurnLabel();
+
+                assertEquals("BLACK to play", label.getText());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    // check if label updates to WHITE to play after black moves
+    @Test
+    void updateTurnLabelAfterBlackMove() throws Exception
+    {
+        controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+        controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+
+        runOnFxThread(() -> {
+            try {
+                // get label
+                Label label = new Label();
+                Field field = BoardController.class.getDeclaredField("playLabel");
+                field.setAccessible(true);
+                field.set(controller, label);
+
+                // simulate turn
+                controller.gameManager.switchTurns();
+                controller.updateTurnLabel();
+
+                // check label updates
+                assertEquals("WHITE to play", label.getText());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    // check if label updates to BLACK to play after white moves
+    @Test
+    void updateTurnLabelAfterWhiteMove() throws Exception
+    {
+        controller.gameManager.currentPlayer = new Human(PlayerColor.WHITE);
+        controller.gameManager.otherPlayer = new Bot(PlayerColor.BLACK);
+
+        runOnFxThread(() -> {
+            try {
+                // get label
+                Label label = new Label();
+                Field field = BoardController.class.getDeclaredField("playLabel");
+                field.setAccessible(true);
+                field.set(controller, label);
+
+                // simulate turn
+                controller.gameManager.switchTurns();
+                controller.updateTurnLabel();
+
+                // check label updates
+                assertEquals("BLACK to play", label.getText());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
 }
