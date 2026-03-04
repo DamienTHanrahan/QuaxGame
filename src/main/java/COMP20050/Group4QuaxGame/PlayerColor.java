@@ -17,7 +17,7 @@ public enum PlayerColor
         {
             case BLACK -> fxColor = Color.BLACK;
             case WHITE -> fxColor = Color.WHITE;
-            default -> fxColor = Color.ORANGE;
+            default -> fxColor = null;
         }
 
         return fxColor;
