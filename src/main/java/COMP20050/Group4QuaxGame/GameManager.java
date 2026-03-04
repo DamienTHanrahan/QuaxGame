@@ -7,39 +7,77 @@ import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
 {
-    private final Bot bot = new Bot();
-    private boolean playersTurn = true;
+    // reference to the human and the bot
+    protected final Human human = new Human(null);
+    protected final Bot bot = new Bot(null);
+    // reference to who's turn it is
+    protected Player currentPlayer;
+    protected Player otherPlayer;
+    // boolean to prevent pie rule from being used twice
+    protected boolean pieRuleUsed = false;
+    int turnCount = 0;
 
-    protected boolean playerMove(Polygon node)
+    // set up game by picking who starts first (50/50 currently in BoardController)
+    protected void setUpGame(Player startingPlayer)
     {
-        if(!playersTurn)
+        if(startingPlayer == human)
         {
-            return false;
+            currentPlayer = human;
+            otherPlayer = bot;
+            currentPlayer.setPlayerColor(PlayerColor.BLACK);
+            otherPlayer.setPlayerColor(PlayerColor.WHITE);
         }
-        if(node.getFill() == Color.BLACK || node.getFill() == Color.WHITE)
+        else
         {
-            return false;
+            currentPlayer = bot;
+            otherPlayer = human;
+            currentPlayer.setPlayerColor(PlayerColor.BLACK);
+            otherPlayer.setPlayerColor(PlayerColor.WHITE);
         }
-        playersTurn = false;
-        return true;
     }
 
-    protected Polygon botMove()
+    // logic for the human players turn
+    protected Move humanMove(Polygon node)
     {
-        if(isBoardFull())
+        if(currentPlayer != human)
         {
             return null;
         }
 
-        Polygon move;
+        Move move = new Move(currentPlayer, node);
+        if(!validateMove(move))
+        {
+            return null;
+        }
+        switchTurns();
+        return move;
+    }
+
+    // logic for the bots turn
+    protected Move botMove()
+    {
+        if(currentPlayer != bot || isBoardFull())
+        {
+            return null;
+        }
+
+        if(turnCount == 1 && bot.usePieRule())
+        {
+            activatePieRule();
+            return null;
+        }
+
+        // keep picking random tile until its valid
+        Polygon tile;
         do
         {
             String moveID = bot.chooseMove();
-            move = tiles.get(moveID);
+            tile = tiles.get(moveID);
 
-        }while (move == null || move.getFill() == Color.BLACK || move.getFill() == Color.WHITE);
+        }while(!validateMove(new Move(bot, tile)));
 
-        playersTurn = true;
+        Move move = new Move(currentPlayer, tile);
+        switchTurns();
         return move;
     }
 
@@ -54,6 +92,53 @@ public class GameManager
             }
         }
         return true;
+    }
+
+    // switches turns
+    private void switchTurns()
+    {
+        turnCount++;
+
+        Player temp = currentPlayer;
+        currentPlayer = otherPlayer;
+        otherPlayer = temp;
+    }
+
+    // swap player colors for pie rule
+    protected void activatePieRule()
+    {
+        if(pieRuleUsed)
+        {
+            return;
+        }
+        pieRuleUsed = true;
+        PlayerColor temp = currentPlayer.getPlayerColor();
+        currentPlayer.setPlayerColor(otherPlayer.getPlayerColor());
+        otherPlayer.setPlayerColor(temp);
+
+        switchTurns();
+    }
+
+    // check if tile is valid
+    private boolean validateMove(Move move)
+    {
+        if(move.getTile() == null)
+        {
+            return false;
+        }
+
+        return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
+    }
+
+    // getters for currentPlayer and turnCount
+    protected Player getCurrentPlayer()
+    {
+        return currentPlayer;
+    }
+
+    protected int getTurnCount()
+    {
+        return turnCount;
     }
 
 

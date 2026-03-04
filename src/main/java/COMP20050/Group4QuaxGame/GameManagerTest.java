@@ -25,69 +25,84 @@ class GameManagerTest {
     }
 
 
-    // -------------------- playerMove function TEST -------------------------
+    // -------------------- humanMove function TEST -------------------------
     // test if player can move on an empty tile
     @Test
-    void playerMoveOnEmptyTile()
+    void humanMoveOnEmptyTile()
     {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
 
-        boolean validMove = gameManager.playerMove(tile);
-        assertTrue(validMove);
+        Move validMove = gameManager.humanMove(tile);
+        assertNotNull(validMove);
     }
 
     // test if player can move on a tile already owned by black
     @Test
-    void playerMoveOnBlackTile()
+    void humanMoveOnBlackTile()
     {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
         // set tile to black to show owned by black
         tile.setFill(Color.BLACK);
 
-        boolean invalidMove = gameManager.playerMove(tile);
-        assertFalse(invalidMove);
+        Move invalidMove = gameManager.humanMove(tile);
+        assertNull(invalidMove);
     }
 
     // test if player can move on a tile already owned by white
     @Test
-    void playerMoveOnWhiteTile()
+    void humanMoveOnWhiteTile()
     {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
         // set tile to black to show owned by white
         tile.setFill(Color.WHITE);
 
-        boolean invalidMove = gameManager.playerMove(tile);
-        assertFalse(invalidMove);
+        Move invalidMove = gameManager.humanMove(tile);
+        assertNull(invalidMove);
     }
 
     // test if the player is able to move twice in a row
     @Test
-    void playerMoveTwiceBeforeBot()
+    void humanMoveTwiceBeforeBot()
     {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
 
         // move 1
-        boolean validMove = gameManager.playerMove(tile);
-        assertTrue(validMove);
+        Move validMove = gameManager.humanMove(tile);
+        assertNotNull(validMove);
 
         // tile 2
         Polygon tile2 = new Polygon();
         tile2.setFill(Color.ORANGE);
 
         // move 2
-        boolean invalidMove = gameManager.playerMove(tile2);
-        assertFalse(invalidMove);
+        Move invalidMove = gameManager.humanMove(tile2);
+        assertNull(invalidMove);
     }
 
     // test to check if player can move after bot
     @Test
-    void playerMoveAfterBot()
+    void humanMoveAfterBot()
     {
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
 
         // player move 1
-        gameManager.playerMove(tile);
+        gameManager.humanMove(tile);
 
         // make tile for bot to move to
         Polygon botTile = new Polygon();
@@ -102,7 +117,7 @@ class GameManagerTest {
         tile2.setFill(Color.ORANGE);
 
         // player move 2
-        assertTrue(gameManager.playerMove(tile2));
+        assertNotNull(gameManager.humanMove(tile2));
     }
 
 
@@ -112,6 +127,9 @@ class GameManagerTest {
     @Test
     void botMoveEmptyBoard()
     {
+        // set bot to current player
+        gameManager.currentPlayer = gameManager.bot;
+
         // create tiles
         Polygon tile2 = new Polygon();
 
@@ -124,16 +142,18 @@ class GameManagerTest {
         tiles.put("OctA02", tile2);
 
         // get bots move
-        Polygon botMove = gameManager.botMove();
+        Move botMove = gameManager.botMove();
 
         // check it picks any of the tiles
-        assertTrue(botMove.equals(tile) || botMove.equals(tile2));
+        assertTrue(botMove.getTile().equals(tile) || botMove.getTile().equals(tile2));
     }
 
     // test if botMove always selects an unoccupied tile
     @Test
     void botMoveUnoccupied()
     {
+        // set bot to current player
+        gameManager.currentPlayer = gameManager.bot;
 
         // create tiles
         Polygon tile2 = new Polygon();
@@ -150,15 +170,18 @@ class GameManagerTest {
         tiles.put("OctA03", tile3);
 
         // get bots move
-        Polygon botMove = gameManager.botMove();
+        Move botMove = gameManager.botMove();
 
-        assertEquals(tile3, botMove);
+        assertEquals(tile3, botMove.getTile());
     }
 
     // test that the bot returns null if there is no available tiles left
     @Test
     void botMoveFullBoard()
     {
+        // set bot to current player
+        gameManager.currentPlayer = gameManager.bot;
+
         // create tiles
         Polygon tile2 = new Polygon();
         Polygon tile3 = new Polygon();
@@ -174,7 +197,7 @@ class GameManagerTest {
         tiles.put("OctA03", tile3);
 
         // get bots move
-        Polygon botMove = gameManager.botMove();
+        Move botMove = gameManager.botMove();
 
         assertNull(botMove);
     }
