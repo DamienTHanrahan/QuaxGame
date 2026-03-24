@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.util.Duration;
 
@@ -23,6 +24,9 @@ public class BoardController
 
     // gameManager reference
     protected final GameManager gameManager = new GameManager();
+
+    private static final Color emptyOctColor = Color.web("#ffd675");
+    private static final Color emptyRhoColor = Color.web("#bcbcbc");
 
     // get ID on click to pass to gameManager for validation
     @FXML
@@ -45,33 +49,41 @@ public class BoardController
             {
                 pieButton.setVisible(false);
             }
+
+            if(gameManager.isGameOver())
+            {
+                playAgainButton.setVisible(true);
+            }
+
             callBotToMove();
         }
     }
 
-    void callBotToMove()
-    {
+    void callBotToMove() {
         PauseTransition pause = new PauseTransition(Duration.millis(650));
         // once pause is finished allow bot to move
         pause.setOnFinished(e -> {
             Move botMove = gameManager.botMove();
-            if(botMove != null)
-            {
+            if (botMove != null) {
                 paintTile(botMove);
             }
             updateTurnLabel();
 
-            if(gameManager.getTurnCount() == 1)
-            {
+            if (gameManager.getTurnCount() == 1) {
                 pieButton.setVisible(true);
-            }
-            else
-            {
+            } else {
                 pieButton.setVisible(false);
+            }
+
+            if (gameManager.isGameOver())
+            {
+                playAgainButton.setVisible(true);
             }
         });
         // start pause
         pause.play();
+
+
     }
 
     // paint a tile
@@ -104,6 +116,37 @@ public class BoardController
     {
         PlayerColor color = gameManager.getCurrentPlayer().getPlayerColor();
         playLabel.setText(color.getDisplayName() + " to play");
+    }
+
+    // reset UI of board to play again
+    @FXML
+    void playAgainButtonClicked(MouseEvent event)
+    {
+        if(gameManager.resetGame())
+        {
+            // reset tile colors
+           for(Polygon tile : tiles.values())
+           {
+               if(tile.getId().contains("Oct"))
+               {
+                   tile.setFill(emptyOctColor);
+               }
+               else
+               {
+                   tile.setFill(emptyRhoColor);
+               }
+           }
+
+           updateTurnLabel();
+
+           // check if bot moves first
+           if(gameManager.getCurrentPlayer() == gameManager.bot)
+           {
+               callBotToMove();
+           }
+
+           playAgainButton.setVisible(false);
+        }
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -778,6 +821,9 @@ public class BoardController
     @FXML // fx:id="pieButton"
     private Button pieButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="playAgainButton"
+    private Button playAgainButton; // Value injected by FXMLLoader
+
     @FXML // fx:id="playLabel"
     private Label playLabel; // Value injected by FXMLLoader
 
@@ -1006,6 +1052,7 @@ public class BoardController
         assert RhoJ09 != null : "fx:id=\"RhoJ09\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert RhoJ10 != null : "fx:id=\"RhoJ10\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert pieButton != null : "fx:id=\"pieButton\" was not injected: check your FXML file 'hello-view.fxml'.";
+        assert playAgainButton != null : "fx:id=\"playAgainButton\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert playLabel != null : "fx:id=\"playLabel\" was not injected: check your FXML file 'hello-view.fxml'.";
         // hashmap setup
         tiles.put("OctA01", OctA01);
