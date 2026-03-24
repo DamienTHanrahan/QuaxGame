@@ -3966,6 +3966,10 @@
                   <Polygon id="topBorder" layoutX="360.0" layoutY="-232.0" points="-23.81591796875, 917.599853515625, 3.375, 895.5867919921875, 3.375, -403.4131774902344, -20.6875, -440.7991638183594" rotate="90.0" scaleX="0.5" scaleY="0.5" scaleZ="0.5" stroke="BLACK" strokeType="INSIDE" />
                   <Polygon id="bottomBorder" layoutX="355.0" layoutY="437.0" points="-23.81591796875, 917.599853515625, 3.375, 895.5867919921875, 3.36541748046875, -410.0041809082031, -20.6875, -440.7991638183594" rotate="-90.0" scaleX="0.5" scaleY="0.5" scaleZ="0.5" stroke="BLACK" strokeType="INSIDE" />
                   <Polygon id="rightBorder" fill="WHITE" layoutX="690.0" layoutY="103.0" points="-23.81591796875, 917.599853515625, 3.375, 895.5867919921875, 3.375, -414.0041809082031, -20.6875, -440.7991638183594" rotate="180.0" scaleX="0.5" scaleY="0.5" scaleZ="0.5" stroke="BLACK" strokeType="INSIDE" />
+                  <Button fx:id="playAgainButton" layoutX="249.0" layoutY="304.0" mnemonicParsing="false" onMouseClicked="#playAgainButtonClicked" prefHeight="70.0" prefWidth="191.0" text="Play Again?" underline="true" visible="false">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
          </center>

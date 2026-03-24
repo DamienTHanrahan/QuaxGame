@@ -17,6 +17,8 @@ public class GameManager
     protected boolean pieRuleUsed = false;
     int turnCount = 0;
 
+    private boolean gameOver = false;
+
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
     {
@@ -31,6 +33,10 @@ public class GameManager
     // set up game by picking who starts first (50/50 currently in BoardController)
     protected void setUpGame(Player startingPlayer)
     {
+        turnCount = 0;
+        pieRuleUsed = false;
+        gameOver = false;
+
         if(startingPlayer == human)
         {
             currentPlayer = human;
@@ -50,7 +56,7 @@ public class GameManager
     // logic for the human players turn
     protected Move humanMove(Polygon node)
     {
-        if(currentPlayer != human)
+        if(currentPlayer != human || isGameOver())
         {
             return null;
         }
@@ -67,7 +73,7 @@ public class GameManager
     // logic for the bots turn
     protected Move botMove()
     {
-        if(currentPlayer != bot || isBoardFull())
+        if(currentPlayer != bot || isGameOver())
         {
             return null;
         }
@@ -140,4 +146,31 @@ public class GameManager
 
         return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
     }
+
+    public boolean isGameOver()
+    {
+        return (gameOver || isBoardFull());
+    }
+
+    protected boolean resetGame()
+    {
+
+        if(!isGameOver())
+        {
+            return false;
+        }
+
+        int random = (int) (Math.random() * 2);
+        if (random == 0)
+        {
+            setUpGame(human);
+        }
+        else
+        {
+            setUpGame(bot);
+        }
+
+        return true;
+    }
+
 }
