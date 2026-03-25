@@ -17,7 +17,7 @@ public class GameManager
     protected boolean pieRuleUsed = false;
     int turnCount = 0;
 
-    private boolean gameOver = false;
+    protected boolean gameOver = false;
 
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
@@ -80,7 +80,7 @@ public class GameManager
 
         if(turnCount == 1 && bot.usePieRule())
         {
-            activatePieRule();
+            activatePieRule(bot);
             return null;
         }
 
@@ -122,9 +122,9 @@ public class GameManager
     }
 
     // swap player colors for pie rule
-    protected void activatePieRule()
+    protected void activatePieRule(Player playerWhoUsedPieRule)
     {
-        if(pieRuleUsed || turnCount != 1)
+        if(pieRuleUsed || turnCount != 1 || playerWhoUsedPieRule != currentPlayer)
         {
             return;
         }

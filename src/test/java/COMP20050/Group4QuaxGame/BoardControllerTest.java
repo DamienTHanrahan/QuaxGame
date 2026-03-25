@@ -1,7 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -57,6 +56,7 @@ class BoardControllerTest {
         for (Field field : BoardController.class.getDeclaredFields()) {
             if (field.getType() == Polygon.class) {
                 Polygon polygon = new Polygon();
+                polygon.setId(field.getName());
                 setField(controller, field, polygon);
                 injected.put(field.getName(), polygon);
             } else if (field.getType() == Label.class) {
@@ -213,6 +213,74 @@ class BoardControllerTest {
 
                 // check label updates
                 assertEquals("BLACK to play", label.getText());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    // ------------------------------ pieButtonClicked ---------------------------------
+
+    // test if the button disappears after clicked
+    @Test
+    void hidePieRuleButtonAfterClicked() throws Exception {
+        runOnFxThread(() -> {
+            try {
+                // get button
+                Button button = new Button();
+                Field field = BoardController.class.getDeclaredField("pieButton");
+                field.setAccessible(true);
+                field.set(controller, button);
+
+                // get label required for method as calls update label
+                Label label = new Label();
+                Field field2 = BoardController.class.getDeclaredField("playLabel");
+                field2.setAccessible(true);
+                field2.set(controller, label);
+
+                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+                button.setVisible(true);
+                controller.pieButtonClicked(null);
+
+                assertFalse(button.isVisible());
+
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+
+    // ------------------------------ playAgainButtonClicked ---------------------------------
+
+    // test if the button disappears after clicked
+    @Test
+    void hidePlayAgainButtonAfterClicked() throws Exception {
+        runOnFxThread(() -> {
+            try {
+                // get button
+                Button button = new Button();
+                Field field = BoardController.class.getDeclaredField("playAgainButton");
+                field.setAccessible(true);
+                field.set(controller, button);
+
+                // get label required as method calls update label
+                Label label = new Label();
+                Field field2 = BoardController.class.getDeclaredField("playLabel");
+                field2.setAccessible(true);
+                field2.set(controller, label);
+
+
+                // simulate end game to make button visible
+                controller.gameManager.gameOver = true;
+                button.setVisible(true);
+                controller.playAgainButtonClicked(null);
+
+                assertFalse(button.isVisible());
+
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
