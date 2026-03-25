@@ -33,6 +33,9 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
 
+        // add tile to map
+        tiles.put("OctA01", tile);
+
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
 
@@ -47,6 +50,9 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
 
+        // add tile to map
+        tiles.put("OctA01", tile);
+
         // set tile to black to show owned by black
         tile.setFill(Color.BLACK);
 
@@ -60,6 +66,9 @@ class GameManagerTest {
     {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
+
+        // add tile to map
+        tiles.put("OctA01", tile);
 
         // set tile to black to show owned by white
         tile.setFill(Color.WHITE);
@@ -78,6 +87,9 @@ class GameManagerTest {
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
 
+        // add tile to map
+        tiles.put("OctA01", tile);
+
         // move 1
         Move validMove = gameManager.humanMove(tile);
         assertNotNull(validMove);
@@ -85,6 +97,8 @@ class GameManagerTest {
         // tile 2
         Polygon tile2 = new Polygon();
         tile2.setFill(Color.ORANGE);
+        // add tile2 to map
+        tiles.put("OctA02", tile2);
 
         // move 2
         Move invalidMove = gameManager.humanMove(tile2);
@@ -102,6 +116,8 @@ class GameManagerTest {
 
         // set tile color to be orange to pretend it's empty (i.e. not black or white)
         tile.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA01", tile);
 
         // player move 1
         gameManager.humanMove(tile);
@@ -109,7 +125,7 @@ class GameManagerTest {
         // make tile for bot to move to
         Polygon botTile = new Polygon();
         botTile.setFill(Color.ORANGE);
-        tiles.put("OctA01", botTile);
+        tiles.put("OctA02", botTile);
 
         // bot move
         gameManager.botMove();
@@ -117,6 +133,8 @@ class GameManagerTest {
         // tile 2
         Polygon tile2 = new Polygon();
         tile2.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA03", tile2);
 
         // player move 2
         assertNotNull(gameManager.humanMove(tile2));
@@ -348,6 +366,8 @@ class GameManagerTest {
 
         // set tile to empty
         tile.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA01", tile);
         // make valid move
         gameManager.humanMove(tile);
 
@@ -363,6 +383,8 @@ class GameManagerTest {
 
         // set tile to BLACK
         tile.setFill(Color.BLACK);
+        // add tile to map
+        tiles.put("OctA01", tile);
         // make an invalid move
         gameManager.humanMove(tile);
 
@@ -388,6 +410,8 @@ class GameManagerTest {
 
         // set tile to empty
         tile.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA01", tile);
         // human move
         gameManager.humanMove(tile);
 
@@ -419,6 +443,8 @@ class GameManagerTest {
 
         // set tile to Black
         tile.setFill(Color.BLACK);
+        // add tile to map
+        tiles.put("OctA01", tile);
         gameManager.humanMove(tile);
 
         assertEquals(0, gameManager.getTurnCount());
@@ -485,7 +511,7 @@ class GameManagerTest {
         gameManager.bot.setPlayerColor(PlayerColor.BLACK);
 
         // call pie rule
-        gameManager.activatePieRule();
+        gameManager.activatePieRule(gameManager.human);
 
         // check colors updated
         assertEquals(PlayerColor.BLACK, gameManager.human.getPlayerColor());
@@ -505,7 +531,7 @@ class GameManagerTest {
         gameManager.human.setPlayerColor(PlayerColor.BLACK);
 
         // call pie rule
-        gameManager.activatePieRule();
+        gameManager.activatePieRule(gameManager.bot);
 
         // check colors updated
         assertEquals(PlayerColor.BLACK, gameManager.bot.getPlayerColor());
@@ -521,7 +547,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.bot;
         gameManager.otherPlayer = gameManager.human;
 
-        gameManager.activatePieRule();
+        gameManager.activatePieRule(gameManager.bot);
 
         assertEquals(gameManager.human, gameManager.getCurrentPlayer());
         assertEquals(gameManager.bot, gameManager.otherPlayer);
@@ -535,11 +561,41 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.bot;
         gameManager.otherPlayer = gameManager.human;
 
-        gameManager.activatePieRule();
+        gameManager.activatePieRule(gameManager.bot);
 
         // check the current and other players are not changed
         assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
         assertEquals(gameManager.human, gameManager.otherPlayer);
+    }
+
+    // check if pie rule doesn't work if the human uses it when not his turn
+    @Test
+    void humanActivatePieRuleNotOnHisTurn()
+    {
+        gameManager.turnCount = 1;
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        gameManager.activatePieRule(gameManager.human);
+
+        // check the current and other players are not changed
+        assertEquals(gameManager.bot, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.human, gameManager.otherPlayer);
+    }
+
+    // check if pie rule doesn't work if the human uses it when not his turn
+    @Test
+    void botActivatePieRuleNotOnHisTurn()
+    {
+        gameManager.turnCount = 1;
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+
+        gameManager.activatePieRule(gameManager.bot);
+
+        // check the current and other players are not changed
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+        assertEquals(gameManager.bot, gameManager.otherPlayer);
     }
 
 
@@ -551,6 +607,8 @@ class GameManagerTest {
     {
         // set tile to empty
         tile.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA01", tile);
 
         Move validMove = new Move(gameManager.human, tile);
 
@@ -563,6 +621,8 @@ class GameManagerTest {
     {
         // set tile to White
         tile.setFill(Color.WHITE);
+        // add tile to map
+        tiles.put("OctA01", tile);
 
         Move invalidMove = new Move(gameManager.bot, tile);
 
@@ -583,9 +643,163 @@ class GameManagerTest {
     void validateMoveNullPlayer()
     {
         tile.setFill(Color.ORANGE);
+        // add tile to map
+        tiles.put("OctA01", tile);
 
         Move nullPlayerMove = new Move(null, tile);
 
         assertFalse(gameManager.validateMove(nullPlayerMove));
     }
+
+
+
+    // ----------------------- isGameOver test ----------------------
+
+    // test if game is over on black winning move
+    @Test
+    void isGameOverOnBlackWinningMove()
+    {
+        // TODO
+    }
+
+    // test if game is over on white winning move
+    @Test
+    void isGameOverOnWhiteWinningMove()
+    {
+        // TODO
+    }
+
+    // test if game is not over on a non-winning move
+    @Test
+    void isGameOverNonWinningMove()
+    {
+        // TODO
+    }
+
+    // test if game is not over on empty board
+    @Test
+    void isGameOverEmptyBoard()
+    {
+        // add tile to map
+        tiles.put("OctA01", tile);
+
+        // set tile color to be orange to pretend it's empty (i.e. not black or white)
+        tile.setFill(Color.ORANGE);
+
+        assertFalse(gameManager.isGameOver());
+    }
+
+    // test if game is over on full board
+    @Test
+    void isGameOverFullBoard()
+    {
+        // add tile to map
+        tiles.put("OctA01", tile);
+
+        // set tile color to be black to pretend the board in this case 1 tile is full
+        tile.setFill(Color.BLACK);
+
+        assertTrue(gameManager.isGameOver());
+    }
+
+    // test if human is unable to make a valid move on game over
+    @Test
+    void humanTriesMoveOnGameOver()
+    {
+        // set gameOver to true to simulate scenario
+        gameManager.gameOver = true;
+
+        // set human to current player
+        gameManager.currentPlayer = gameManager.human;
+
+        // add tile to map
+        tiles.put("OctA01", tile);
+
+        // set tile color to be orange to pretend it's empty (i.e. not black or white)
+        tile.setFill(Color.ORANGE);
+
+        Move invalidMove = gameManager.humanMove(tile);
+        assertNull(invalidMove);
+    }
+
+    // test if bot is unable to make a valid move on game over
+    @Test
+    void botTriesMoveOnGameOver()
+    {
+        // set gameOver to true to simulate scenario
+        gameManager.gameOver = true;
+
+        // set human to current player
+        gameManager.currentPlayer = gameManager.bot;
+
+        // add tile to map
+        tiles.put("OctA01", tile);
+
+        // set tile color to be orange to pretend it's empty (i.e. not black or white)
+        tile.setFill(Color.ORANGE);
+
+        Move invalidMove = gameManager.botMove();
+        assertNull(invalidMove);
+    }
+
+
+    // ----------------------- resetGame tests ----------------------
+
+    // test resetting game works once game is over
+    @Test
+    void resetGameOnGameOver()
+    {
+        // simulate game is over
+        gameManager.gameOver = true;
+
+        assertTrue(gameManager.resetGame());
+    }
+
+    // test resetting game not allowed if game is not over
+    @Test
+    void resetGameNotFinished()
+    {
+        // simulate game still ongoing
+        gameManager.gameOver = false;
+        tiles.put("OctA01", tile);
+        tile.setFill(Color.ORANGE);
+
+        assertFalse(gameManager.resetGame());
+    }
+
+    // test if turn count resets
+    @Test
+    void resetGameTurnCount()
+    {
+        gameManager.turnCount = 5;
+        gameManager.gameOver = true;
+
+        gameManager.resetGame();
+
+        assertEquals(0, gameManager.turnCount);
+    }
+
+    // test if pie rule used boolean resets
+    @Test
+    void resetGamePieRuleUsed()
+    {
+        gameManager.pieRuleUsed = true;
+        gameManager.gameOver = true;
+
+        gameManager.resetGame();
+
+        assertFalse(gameManager.pieRuleUsed);
+    }
+
+    // test if game over boolean resets
+    @Test
+    void resetGameGameOverBoolean()
+    {
+        gameManager.gameOver = true;
+
+        gameManager.resetGame();
+
+        assertFalse(gameManager.gameOver);
+    }
+
 }

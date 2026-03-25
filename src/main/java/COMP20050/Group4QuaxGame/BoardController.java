@@ -99,7 +99,7 @@ public class BoardController
     void pieButtonClicked(MouseEvent event)
     {
         // activate pie rule then get bot to move
-        gameManager.activatePieRule();
+        gameManager.activatePieRule(gameManager.human);
         updateTurnLabel();
         pieButton.setVisible(false);
 
