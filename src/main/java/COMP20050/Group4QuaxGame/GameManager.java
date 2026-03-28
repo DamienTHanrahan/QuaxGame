@@ -1,12 +1,12 @@
 package COMP20050.Group4QuaxGame;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
 {
+    Board board = new Board();
     // reference to the human and the bot
     protected final Human human = new Human(null);
     protected final Bot bot = new Bot(null);
@@ -37,35 +37,40 @@ public class GameManager
         pieRuleUsed = false;
         gameOver = false;
 
+        for(Node node : board.nodeMap.values())
+        {
+            node.setOwner(PlayerColor.EMPTY);
+        }
+
         if(startingPlayer == human)
         {
             currentPlayer = human;
             otherPlayer = bot;
-            currentPlayer.setPlayerColor(PlayerColor.BLACK);
-            otherPlayer.setPlayerColor(PlayerColor.WHITE);
         }
         else
         {
             currentPlayer = bot;
             otherPlayer = human;
-            currentPlayer.setPlayerColor(PlayerColor.BLACK);
-            otherPlayer.setPlayerColor(PlayerColor.WHITE);
         }
+        currentPlayer.setPlayerColor(PlayerColor.BLACK);
+        otherPlayer.setPlayerColor(PlayerColor.WHITE);
     }
 
     // logic for the human players turn
-    protected Move humanMove(Polygon node)
+    protected Move humanMove(Polygon tile)
     {
         if(currentPlayer != human || isGameOver())
         {
             return null;
         }
 
-        Move move = new Move(currentPlayer, node);
+        Node node = board.getNode(tile.getId());
+        Move move = new Move(currentPlayer, tile, node);
         if(!validateMove(move))
         {
             return null;
         }
+        node.setOwner(currentPlayer.getPlayerColor());
         switchTurns();
         return move;
     }
@@ -86,14 +91,17 @@ public class GameManager
 
         // keep picking random tile until its valid
         Polygon tile;
+        Node node;
         do
         {
             String moveID = bot.chooseMove();
             tile = tiles.get(moveID);
+            node = board.getNode(moveID);
 
-        }while(!validateMove(new Move(bot, tile)));
+        }while(!validateMove(new Move(bot, tile, node)));
 
-        Move move = new Move(currentPlayer, tile);
+        Move move = new Move(currentPlayer, tile, node);
+        node.setOwner(currentPlayer.getPlayerColor());
         switchTurns();
         return move;
     }
@@ -101,9 +109,9 @@ public class GameManager
     // method to check if board is full to prevent bot infinite loop
     protected boolean isBoardFull()
     {
-        for(Polygon p : tiles.values())
+        for(Node node : board.nodeMap.values())
         {
-            if (p.getFill() != Color.WHITE && p.getFill() != Color.BLACK)
+            if (node.getOwner() == PlayerColor.EMPTY)
             {
                 return false;
             }
@@ -139,12 +147,12 @@ public class GameManager
     // check if tile is valid
     protected boolean validateMove(Move move)
     {
-        if(move.getTile() == null || move.getPlayer() == null)
+        if(move.getTile() == null || move.getPlayer() == null || move.getNode() == null)
         {
             return false;
         }
 
-        return move.getTile().getFill() != Color.BLACK && move.getTile().getFill() != Color.WHITE;
+        return move.getNode().getOwner() == PlayerColor.EMPTY;
     }
 
     public boolean isGameOver()

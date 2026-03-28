@@ -7,11 +7,13 @@ public class Move
     // move consists of the player making the move and the tile they picked
     private final Player player;
     private final Polygon tile;
+    private final Node node;
 
-    public Move(Player player, Polygon tile)
+    public Move(Player player, Polygon tile, Node node)
     {
         this.player = player;
         this.tile = tile;
+        this.node = node;
     }
 
     // getters for the player and the tile
@@ -23,5 +25,9 @@ public class Move
     public Polygon getTile()
     {
         return tile;
+    }
+
+    public Node getNode() {
+        return node;
     }
 }
