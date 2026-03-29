@@ -8,6 +8,10 @@ public class Board
 {
     static final int NUM_OF_ROWS = 11;
     protected final Map<String, Node> nodeMap = new HashMap<>();
+    protected ArrayList<Node> topRow = new ArrayList<>();
+    protected ArrayList<Node> bottomRow = new ArrayList<>();
+    protected ArrayList<Node> leftRow = new ArrayList<>();
+    protected ArrayList<Node> rightRow = new ArrayList<>();
 
     public Board()
     {
@@ -34,6 +38,25 @@ public class Board
                 // make the node with id and add it to map
                 Node newNode = new Node(id);
                 nodeMap.put(id, newNode);
+
+                // add to array list of edge rows if needed
+                if(row == 1)
+                {
+                    topRow.add(newNode);
+                }
+                if(row == NUM_OF_ROWS)
+                {
+                    bottomRow.add(newNode);
+                }
+                if(col == 'A')
+                {
+                    leftRow.add(newNode);
+                }
+                if(col == 'K')
+                {
+                    rightRow.add(newNode);
+                }
+
             }
         }
 

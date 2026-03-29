@@ -2,6 +2,8 @@ package COMP20050.Group4QuaxGame;
 
 import javafx.scene.shape.Polygon;
 
+import java.util.ArrayList;
+
 import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
@@ -18,6 +20,7 @@ public class GameManager
     int turnCount = 0;
 
     protected boolean gameOver = false;
+    private Player winner;
 
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
@@ -36,6 +39,7 @@ public class GameManager
         turnCount = 0;
         pieRuleUsed = false;
         gameOver = false;
+        winner = null;
 
         for(Node node : board.nodeMap.values())
         {
@@ -71,6 +75,11 @@ public class GameManager
             return null;
         }
         node.setOwner(currentPlayer.getPlayerColor());
+        if(checkWinner(currentPlayer.getPlayerColor()))
+        {
+            gameOver = true;
+            setWinner(currentPlayer);
+        }
         switchTurns();
         return move;
     }
@@ -102,6 +111,12 @@ public class GameManager
 
         Move move = new Move(currentPlayer, tile, node);
         node.setOwner(currentPlayer.getPlayerColor());
+
+        if(checkWinner(currentPlayer.getPlayerColor()))
+        {
+            gameOver = true;
+            setWinner(currentPlayer);
+        }
         switchTurns();
         return move;
     }
@@ -181,4 +196,76 @@ public class GameManager
         return true;
     }
 
+    // check for winner given the player color
+    protected boolean checkWinner(PlayerColor playerColor)
+    {
+        ArrayList<Node> startingNodes;
+        ArrayList<Node> endingNodes;
+
+        // match starting and ending node based on player colors win conditions
+        if(playerColor == PlayerColor.BLACK)
+        {
+            startingNodes = board.topRow;
+            endingNodes = board.bottomRow;
+        }
+        else if(playerColor == PlayerColor.WHITE)
+        {
+            startingNodes = board.leftRow;
+            endingNodes = board.rightRow;
+        }
+        else
+        {
+            return false;
+        }
+
+        // for each of the nodes in the starting list if it matches the player color try traverse board to an ending node
+        for(Node startNode : startingNodes)
+        {
+            if(startNode.getOwner() == playerColor)
+            {
+                ArrayList<Node> visitedNodes = new ArrayList<>();
+                if(canTraverseBoard(startNode, endingNodes, visitedNodes, playerColor))
+                {
+                    return true;
+                }
+            }
+        }
+        // no winning path found
+        return false;
+    }
+
+    // helper method for checkWinner to check if you can traverse board to reach a node in the ending node list
+    private boolean canTraverseBoard(Node currentNode, ArrayList<Node> endingNodes, ArrayList<Node> visitedNodes, PlayerColor playerColor)
+    {
+        // check if the current node is in the ending node list
+        if(endingNodes.contains(currentNode))
+        {
+            return true;
+        }
+        // mark current node as visited
+        visitedNodes.add(currentNode);
+        // check for each of its neighbours if it is a new node not visited before and matches the player color
+        for(Node neighbour : currentNode.getNeighbours())
+        {
+            if(neighbour.getOwner() == playerColor && !visitedNodes.contains(neighbour))
+            {
+                if(canTraverseBoard(neighbour, endingNodes, visitedNodes, playerColor))
+                {
+                    return true;
+                }
+            }
+        }
+        // if node is not an end node and no neighbours left to explore that match player color
+        return false;
+    }
+
+    protected Player getWinner()
+    {
+        return winner;
+    }
+
+    private void setWinner(Player winner)
+    {
+        this.winner = winner;
+    }
 }
