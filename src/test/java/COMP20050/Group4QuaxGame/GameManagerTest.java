@@ -14,7 +14,7 @@ class GameManagerTest {
     private GameManager gameManager;
 
 
-    // clear the tiles hash map before each
+    // clear all tiles and node owners each test
     @BeforeEach
     void clearTiles()
     {
@@ -41,7 +41,7 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
 
-        // add tile to map
+        // add empty tile
         Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
 
         Move validMove = gameManager.humanMove(tile);
@@ -171,6 +171,7 @@ class GameManagerTest {
         // set bot to current player
         gameManager.currentPlayer = gameManager.bot;
 
+        // set all nodes owner to black to mimic full board
         for(Node node : gameManager.board.nodeMap.values())
         {
             node.setOwner(PlayerColor.BLACK);
@@ -189,10 +190,11 @@ class GameManagerTest {
     @Test
     void isBoardFullEmptyBoard()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
-        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
-        Polygon tile3 = createTile("OctA03", PlayerColor.EMPTY);
-
+        // set all nodes owner to empty
+        for(Node node : gameManager.board.nodeMap.values())
+        {
+            node.setOwner(PlayerColor.EMPTY);
+        }
         assertFalse(gameManager.isBoardFull());
     }
 
@@ -211,10 +213,11 @@ class GameManagerTest {
     @Test
     void isBoardFullFilledBoard()
     {
-        // create tiles
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
-        Polygon tile2 = createTile("OctA01", PlayerColor.BLACK);
-        Polygon tile3 = createTile("OctA01", PlayerColor.BLACK);
+        // set all nodes owner to black to mimic full board
+        for(Node node : gameManager.board.nodeMap.values())
+        {
+            node.setOwner(PlayerColor.BLACK);
+        }
 
         assertTrue(gameManager.isBoardFull());
     }
@@ -360,7 +363,7 @@ class GameManagerTest {
     {
         gameManager.currentPlayer = gameManager.human;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
         gameManager.humanMove(tile);
 
         assertEquals(0, gameManager.getTurnCount());
@@ -588,7 +591,11 @@ class GameManagerTest {
     @Test
     void isGameOverEmptyBoard()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        // set all nodes to empty owner
+        for(Node node : gameManager.board.nodeMap.values())
+        {
+            node.setOwner(PlayerColor.EMPTY);
+        }
 
         assertFalse(gameManager.isGameOver());
     }
@@ -597,7 +604,11 @@ class GameManagerTest {
     @Test
     void isGameOverFullBoard()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
+        // set all nodes owner to black
+        for(Node node : gameManager.board.nodeMap.values())
+        {
+            node.setOwner(PlayerColor.BLACK);
+        }
 
         assertTrue(gameManager.isGameOver());
     }
