@@ -25,11 +25,29 @@ public class BoardGraph {
         for (int i = 0; i < octagons.length; i++) {
             for (int j = 0; j < octagons[i].length; j++) {
                 octagons[i][j] = new Node(i, j, PlayerColor.EMPTY);
+                StringBuilder sb = new StringBuilder();
+                sb.append("Oct");
+                sb.append((char) (i + 65));
+                if(j+1 < 10) {
+                    sb.append("0");
+                }
+                sb.append(j+1);
+                octagons[i][j].setID(sb.toString());
+                nodes.put(sb.toString(), octagons[i][j]);
             }
         }
         for (int i = 0; i < rhombi.length; i++) {
             for (int j = 0; j < rhombi[i].length; j++) {
                 rhombi[i][j] = new Node(i, j, PlayerColor.EMPTY);
+                StringBuilder sb = new StringBuilder();
+                sb.append("Rho");
+                sb.append((char) (i + 65));
+                if(j+1 < 10) {
+                    sb.append("0");
+                }
+                sb.append(j+1);
+                rhombi[i][j].setID(sb.toString());
+                nodes.put(sb.toString(), rhombi[i][j]);
             }
         }
         for (int i = 0; i < octagons.length; i++) {
@@ -68,7 +86,17 @@ public class BoardGraph {
         }
     }
 
-
+    public void syncColors() {
+        Map<String, PlayerColor> colorMap = BoardState.getColorMap();
+        for (Map.Entry<String, PlayerColor> entry : colorMap.entrySet()) {
+            String name = entry.getKey();
+            PlayerColor color = entry.getValue();
+            if (nodes.containsKey(name)) {
+                nodes.get(name).setColor(color);
+                System.out.println("Updated color of " + name + " to " + color);
+            }
+        }
+    }
 
     private void connect(Node node1, Node node2) {
         node1.getNeighbours().add(node2);

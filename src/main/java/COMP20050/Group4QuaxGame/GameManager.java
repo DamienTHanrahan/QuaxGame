@@ -3,6 +3,8 @@ package COMP20050.Group4QuaxGame;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+import java.util.*;
+
 import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
@@ -18,6 +20,8 @@ public class GameManager
     int turnCount = 0;
 
     protected boolean gameOver = false;
+
+    BoardGraph boardGraph = new BoardGraph();
 
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
@@ -66,6 +70,12 @@ public class GameManager
         {
             return null;
         }
+        BoardState.declareMove(move);
+        boardGraph.syncColors();
+        if(detectWin(boardGraph, currentPlayer.getPlayerColor())) {
+            System.out.println("Player " + currentPlayer.getPlayerColor() + " wins!");
+            gameOver = true;
+        }
         switchTurns();
         return move;
     }
@@ -94,6 +104,12 @@ public class GameManager
         }while(!validateMove(new Move(bot, tile)));
 
         Move move = new Move(currentPlayer, tile);
+        BoardState.declareMove(move);
+        boardGraph.syncColors();
+        if(detectWin(boardGraph, currentPlayer.getPlayerColor())) {
+            System.out.println("Player " + currentPlayer.getPlayerColor() + " wins!");
+            gameOver  = true;
+        }
         switchTurns();
         return move;
     }
@@ -132,7 +148,6 @@ public class GameManager
         PlayerColor temp = currentPlayer.getPlayerColor();
         currentPlayer.setPlayerColor(otherPlayer.getPlayerColor());
         otherPlayer.setPlayerColor(temp);
-
         switchTurns();
     }
 
@@ -154,7 +169,7 @@ public class GameManager
 
     protected boolean resetGame()
     {
-
+        BoardState.reset();
         if(!isGameOver())
         {
             return false;
@@ -172,4 +187,40 @@ public class GameManager
 
         return true;
     }
+
+    public boolean detectWin(BoardGraph graph, PlayerColor color) {
+        Queue<Node> queue = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+
+        Node startNode;
+        Node endNode;
+
+        if (color == PlayerColor.WHITE) {
+            startNode = graph.whiteLeft;
+            endNode = graph.whiteRight;
+        } else {
+            startNode = graph.blackUp;
+            endNode = graph.blackDown;
+        }
+
+        queue.add(startNode);
+        visited.add(startNode);
+
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+
+            if (currentNode == endNode) {
+                return true;
+            }
+
+            for (Node neighbour : currentNode.getNeighbours()) {
+                if (neighbour.getColor() == color && !visited.contains(neighbour)) {
+                    visited.add(neighbour);
+                    queue.add(neighbour);
+                }
+            }
+        }
+        return false;
+    }
+
 }

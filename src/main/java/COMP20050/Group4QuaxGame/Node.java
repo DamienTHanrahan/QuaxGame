@@ -7,13 +7,13 @@ public class Node {
         private int y;
         private PlayerColor color;
         private ArrayList<Node> neighbours;
-        private boolean visited;
+        private String id;
 
         public Node (int x, int y, PlayerColor color) {
             this.x = x;
             this.y = y;
             this.color = color;
-            visited = false;
+            neighbours = new ArrayList<Node>();
         }
 
         public int getX() {
@@ -22,6 +22,14 @@ public class Node {
 
         public int getY() {
             return y;
+        }
+
+        public void setID (String id) {
+            this.id = id;
+        }
+
+        public String getID () {
+            return id;
         }
 
         public PlayerColor getColor() {
@@ -38,14 +46,6 @@ public class Node {
 
         public void setNeighbours (ArrayList<Node> neighbours) {
             this.neighbours = neighbours;
-        }
-
-        public boolean isVisited() {
-            return visited;
-        }
-
-        public void setVisited (boolean visited) {
-            this.visited = visited;
         }
 
         public int getCost(PlayerColor query) {
