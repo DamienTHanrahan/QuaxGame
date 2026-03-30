@@ -68,12 +68,12 @@ public class BoardGraph {
         }
 
         for (int i = 0; i < octagons.length; i++) {
-            connect(whiteLeft, octagons[i][0]);
-            connect(whiteRight, octagons[i][octagons[i].length - 1]);
+            connect(whiteLeft, octagons[0][i]);
+            connect(whiteRight, octagons[octagons[i].length - 1][i]);
         }
         for (int j = 0; j < octagons[0].length; j++) {
-            connect(blackUp, octagons[0][j]);
-            connect(blackDown, octagons[octagons.length - 1][j]);
+            connect(blackUp, octagons[j][0]);
+            connect(blackDown, octagons[j][octagons.length - 1]);
         }
 
         for (int i = 0; i < rhombi.length; i++) {
@@ -93,7 +93,6 @@ public class BoardGraph {
             PlayerColor color = entry.getValue();
             if (nodes.containsKey(name)) {
                 nodes.get(name).setColor(color);
-                System.out.println("Updated color of " + name + " to " + color);
             }
         }
     }

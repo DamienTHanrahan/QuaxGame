@@ -205,16 +205,16 @@ public class GameManager
 
         queue.add(startNode);
         visited.add(startNode);
-
+        System.out.println();
         while (!queue.isEmpty()) {
             Node currentNode = queue.poll();
 
             if (currentNode == endNode) {
                 return true;
             }
-
             for (Node neighbour : currentNode.getNeighbours()) {
                 if (neighbour.getColor() == color && !visited.contains(neighbour)) {
+                    System.out.println(neighbour.getID());
                     visited.add(neighbour);
                     queue.add(neighbour);
                 }
