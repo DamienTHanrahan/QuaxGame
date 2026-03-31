@@ -2,7 +2,7 @@ package COMP20050.Group4QuaxGame;
 
 import javafx.scene.shape.Polygon;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
@@ -21,6 +21,8 @@ public class GameManager
 
     protected boolean gameOver = false;
     private Player winner;
+
+    BoardGraph boardGraph = new BoardGraph();
 
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
@@ -155,7 +157,6 @@ public class GameManager
         PlayerColor temp = currentPlayer.getPlayerColor();
         currentPlayer.setPlayerColor(otherPlayer.getPlayerColor());
         otherPlayer.setPlayerColor(temp);
-
         switchTurns();
     }
 
@@ -177,7 +178,8 @@ public class GameManager
 
     protected boolean resetGame()
     {
-
+        BoardState.reset();
+        boardGraph = new BoardGraph();
         if(!isGameOver())
         {
             return false;

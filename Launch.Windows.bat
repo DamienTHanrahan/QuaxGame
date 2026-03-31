@@ -1,0 +1,1 @@
+java --enable-native-access=ALL-UNNAMED -jar QuaxGame-1.0-SNAPSHOT.jar
