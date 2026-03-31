@@ -1,9 +1,11 @@
 COMP20050\Group4QuaxGame\Main.class
 COMP20050\Group4QuaxGame\Bot.class
+COMP20050\Group4QuaxGame\Node.class
 COMP20050\Group4QuaxGame\Move.class
 COMP20050\Group4QuaxGame\Human.class
 COMP20050\Group4QuaxGame\Player.class
 COMP20050\Group4QuaxGame\Launcher.class
 COMP20050\Group4QuaxGame\GameManager.class
 COMP20050\Group4QuaxGame\PlayerColor.class
+COMP20050\Group4QuaxGame\Board.class
 COMP20050\Group4QuaxGame\BoardController.class
