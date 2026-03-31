@@ -22,8 +22,6 @@ public class GameManager
     protected boolean gameOver = false;
     private Player winner;
 
-    BoardGraph boardGraph = new BoardGraph();
-
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
     {
@@ -179,7 +177,6 @@ public class GameManager
     protected boolean resetGame()
     {
         BoardState.reset();
-        boardGraph = new BoardGraph();
         if(!isGameOver())
         {
             return false;
