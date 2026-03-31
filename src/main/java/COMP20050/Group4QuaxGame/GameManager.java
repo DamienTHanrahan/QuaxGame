@@ -197,46 +197,41 @@ public class GameManager
     // check for winner given the player color
     protected boolean checkWinner(PlayerColor playerColor)
     {
-        ArrayList<Node> startingNodes;
-        ArrayList<Node> endingNodes;
+        Node startNode;
+        Node endNode;
 
         // match starting and ending node based on player colors win conditions
         if(playerColor == PlayerColor.BLACK)
         {
-            startingNodes = board.topRow;
-            endingNodes = board.bottomRow;
+            startNode = board.topRow;
+            endNode = board.bottomRow;
         }
         else if(playerColor == PlayerColor.WHITE)
         {
-            startingNodes = board.leftRow;
-            endingNodes = board.rightRow;
+            startNode = board.leftRow;
+            endNode = board.rightRow;
         }
         else
         {
             return false;
         }
 
-        // for each of the nodes in the starting list if it matches the player color try traverse board to an ending node
-        for(Node startNode : startingNodes)
+        // try traverse board from start to end to check for win
+        ArrayList<Node> visitedNodes = new ArrayList<>();
+        if(canTraverseBoard(startNode, endNode, visitedNodes, playerColor))
         {
-            if(startNode.getOwner() == playerColor)
-            {
-                ArrayList<Node> visitedNodes = new ArrayList<>();
-                if(canTraverseBoard(startNode, endingNodes, visitedNodes, playerColor))
-                {
-                    return true;
-                }
-            }
+            return true;
         }
+
         // no winning path found
         return false;
     }
 
     // helper method for checkWinner to check if you can traverse board to reach a node in the ending node list
-    private boolean canTraverseBoard(Node currentNode, ArrayList<Node> endingNodes, ArrayList<Node> visitedNodes, PlayerColor playerColor)
+    private boolean canTraverseBoard(Node currentNode, Node endingNode, ArrayList<Node> visitedNodes, PlayerColor playerColor)
     {
-        // check if the current node is in the ending node list
-        if(endingNodes.contains(currentNode))
+        // check if the current node is the end node
+        if(currentNode == endingNode)
         {
             return true;
         }
@@ -247,7 +242,7 @@ public class GameManager
         {
             if(neighbour.getOwner() == playerColor && !visitedNodes.contains(neighbour))
             {
-                if(canTraverseBoard(neighbour, endingNodes, visitedNodes, playerColor))
+                if(canTraverseBoard(neighbour, endingNode, visitedNodes, playerColor))
                 {
                     return true;
                 }
