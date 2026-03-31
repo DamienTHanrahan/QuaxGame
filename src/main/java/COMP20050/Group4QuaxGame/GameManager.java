@@ -170,6 +170,7 @@ public class GameManager
     protected boolean resetGame()
     {
         BoardState.reset();
+        boardGraph = new BoardGraph();
         if(!isGameOver())
         {
             return false;
