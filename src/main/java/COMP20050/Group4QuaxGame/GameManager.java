@@ -176,7 +176,6 @@ public class GameManager
 
     protected boolean resetGame()
     {
-        BoardState.reset();
         if(!isGameOver())
         {
             return false;
