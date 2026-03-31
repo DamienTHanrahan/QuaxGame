@@ -8,13 +8,17 @@ public class Board
 {
     static final int NUM_OF_ROWS = 11;
     protected final Map<String, Node> nodeMap = new HashMap<>();
-    protected ArrayList<Node> topRow = new ArrayList<>();
-    protected ArrayList<Node> bottomRow = new ArrayList<>();
-    protected ArrayList<Node> leftRow = new ArrayList<>();
-    protected ArrayList<Node> rightRow = new ArrayList<>();
+    protected Node topRow = new Node("topRow");
+    protected Node bottomRow = new Node("bottomRow");
+    protected Node leftRow = new Node("leftRow");
+    protected Node rightRow = new Node("rightRow");
 
     public Board()
     {
+        topRow.setOwner(PlayerColor.BLACK);
+        bottomRow.setOwner(PlayerColor.BLACK);
+        leftRow.setOwner(PlayerColor.WHITE);
+        rightRow.setOwner(PlayerColor.WHITE);
         constructNodeMap();
     }
 
@@ -39,22 +43,26 @@ public class Board
                 Node newNode = new Node(id);
                 nodeMap.put(id, newNode);
 
-                // add to array list of edge rows if needed
+                // if it's an outer row/col node connect to our ghost nodes for win detection
                 if(row == 1)
                 {
-                    topRow.add(newNode);
+                    topRow.addNeighbour(newNode);
+                    newNode.addNeighbour(topRow);
                 }
                 if(row == NUM_OF_ROWS)
                 {
-                    bottomRow.add(newNode);
+                    bottomRow.addNeighbour(newNode);
+                    newNode.addNeighbour(bottomRow);
                 }
                 if(col == 'A')
                 {
-                    leftRow.add(newNode);
+                    leftRow.addNeighbour(newNode);
+                    newNode.addNeighbour(leftRow);
                 }
                 if(col == 'K')
                 {
-                    rightRow.add(newNode);
+                    rightRow.addNeighbour(newNode);
+                    newNode.addNeighbour(rightRow);
                 }
 
             }
