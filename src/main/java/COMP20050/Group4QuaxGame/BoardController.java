@@ -115,7 +115,21 @@ public class BoardController
     void updateTurnLabel()
     {
         PlayerColor color = gameManager.getCurrentPlayer().getPlayerColor();
-        playLabel.setText(color.getDisplayName() + " to play");
+        // if game is over and there's a winner set the text to display who won
+        if(gameManager.isGameOver() && gameManager.getWinner() != null)
+        {
+            playLabel.setText(gameManager.getWinner().getPlayerColor() + " wins");
+        }
+        // otherwise if game is over but winner remains null then we now board is full so display draw
+        else if(gameManager.isGameOver() && gameManager.getWinner() == null)
+        {
+            playLabel.setText("Draw");
+        }
+        // otherwise game still on so display whose turn it is
+        else
+        {
+            playLabel.setText(color.getDisplayName() + " to play");
+        }
     }
 
     // reset UI of board to play again

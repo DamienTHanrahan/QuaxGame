@@ -115,7 +115,7 @@ class BoardControllerTest {
         tile.setFill(Color.ORANGE);
 
         // simulate move for black
-        Move blackMove = new Move(blackPlayer, tile);
+        Move blackMove = new Move(blackPlayer, tile, new Node("OctA01"));
         controller.paintTile(blackMove);
 
         // check if tile color is updated
@@ -132,7 +132,7 @@ class BoardControllerTest {
         tile.setFill(Color.ORANGE);
 
         // simulate move for black
-        Move whiteMove = new Move(whitePlayer, tile);
+        Move whiteMove = new Move(whitePlayer, tile, new Node("OctA01"));
         controller.paintTile(whiteMove);
 
         // check if tile color is updated

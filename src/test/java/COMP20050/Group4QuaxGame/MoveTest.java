@@ -11,6 +11,7 @@ class MoveTest
     Bot bot = new Bot(PlayerColor.WHITE);
 
     Polygon tile = new Polygon();
+    Node node = new Node("OctA01");
 
 
     // ----------------- getPlayer tests -----------------
@@ -19,7 +20,7 @@ class MoveTest
     @Test
     void getPlayerHuman()
     {
-        Move humanMove = new Move(human, tile);
+        Move humanMove = new Move(human, tile, node);
 
         assertEquals(human, humanMove.getPlayer());
     }
@@ -28,7 +29,7 @@ class MoveTest
     @Test
     void getPlayerBot()
     {
-        Move botMove = new Move(bot, tile);
+        Move botMove = new Move(bot, tile, node);
 
         assertEquals(bot, botMove.getPlayer());
     }
@@ -39,8 +40,19 @@ class MoveTest
     @Test
     void getTile()
     {
-        Move move = new Move(human, tile);
+        Move move = new Move(human, tile, node);
 
         assertEquals(tile, move.getTile());
+    }
+
+    // ----------------- getNode tests -----------------
+
+    // get node from a move
+    @Test
+    void getNode()
+    {
+        Move move = new Move(human, tile, node);
+
+        assertEquals(node, move.getNode());
     }
 }
