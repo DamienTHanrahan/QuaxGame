@@ -31,6 +31,10 @@ public class Node {
 
     public void addNeighbour(Node node)
     {
-        neighbours.add(node);
+        // add it to list if it isn't already added
+        if(!neighbours.contains(node))
+        {
+            neighbours.add(node);
+        }
     }
 }
