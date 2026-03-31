@@ -29,7 +29,7 @@ public class Board
     }
 
     // build map of all nodes
-    private void constructNodeMap()
+    protected void constructNodeMap()
     {
         // construct octagon nodes
         for (char col = 'A'; col <= 'K'; col++)
@@ -87,7 +87,7 @@ public class Board
     }
 
     // construct neighbours for each node
-    private void constructNeighbours()
+    protected void constructNeighbours()
     {
         // construct octagon nodes neighbours
         for (char col = 'A'; col <= 'K'; col++)
@@ -131,7 +131,7 @@ public class Board
     }
 
     // add neighbour to Array list based on it's ID
-    private void linkNeighbour(Node node, String neighbourID)
+    protected void linkNeighbour(Node node, String neighbourID)
     {
         Node neighbour = nodeMap.get(neighbourID);
         // if the neighbour exists add it to list
@@ -142,7 +142,7 @@ public class Board
     }
 
     // build string to match Octagon ID
-    private String formatOctagonID(char col, int row)
+    protected String formatOctagonID(char col, int row)
     {
         String id = "Oct" + col;
         if(row < 10)
@@ -157,7 +157,7 @@ public class Board
     }
 
     // build string to match Rhombus ID
-    private String formatRhombusID(char col, int row)
+    protected String formatRhombusID(char col, int row)
     {
         String id = "Rho" + col;
         if(row < 10)
@@ -172,7 +172,7 @@ public class Board
     }
 
     // get list of all neighbours for an octagon node
-    private ArrayList<String> getOctagonNodeNeighbours(char col, int row)
+    protected ArrayList<String> getOctagonNodeNeighbours(char col, int row)
     {
         ArrayList<String> neighbourIDList = new ArrayList<>();
 
@@ -192,7 +192,7 @@ public class Board
     }
 
     // get list of all neighbours for a rhombus node
-    private ArrayList<String> getRhombusNodeNeighbours(char col, int row)
+    protected ArrayList<String> getRhombusNodeNeighbours(char col, int row)
     {
         ArrayList<String> neighbourIDList = new ArrayList<>();
 
