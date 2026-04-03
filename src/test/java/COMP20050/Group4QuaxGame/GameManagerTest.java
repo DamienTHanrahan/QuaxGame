@@ -617,6 +617,132 @@ class GameManagerTest {
         assertNotNull(move);
         assertTrue(gameManager.isGameOver());
     }
+    @Test
+    
+    void isGameOverOnHumanWhitePlayingCentreTile()
+    {
+        // Test if game is over if line completed by playing a now edge tile
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // Build an almost-complete White path from left to right on row 6
+        // Leave OctE06 empty so the non-edge final move can trigger win detection.
+        for (char col = 'A'; col <= 'D'; col++)
+        {
+            String id = String.format("Oct%c06", col);
+            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+        }
+        for (char col = 'E'; col <= 'K'; col++)
+        {
+            String id = String.format("Oct%c06", col);
+            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+        }
+
+        // Winning move: complete the connection to playing centre tile
+        Polygon winningTile = createTile("OctE06", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertTrue(gameManager.isGameOver());
+    }
+
+    void isGameOverOnHumanBlackPlayingCentreTile()
+    {
+        // Test if game is over if line completed by playing a now edge tile
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.BLACK);
+        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
+
+        // Build an almost-complete Black path from top to bottom on row 6
+        // Leave OctD06 empty so the non-edge final move can trigger win detection.
+        for (int row = 1; row <= 5; row++)
+        {
+            String id = String.format("OctD%02d", row);
+            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+        }
+        for (int row = '7'; row <= 11; row++)
+        {
+            String id = String.format("OctD%02d", row);
+            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+        }
+
+        // Winning move: complete the connection to playing centre tile
+        Polygon winningTile = createTile("OctD06", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertTrue(gameManager.isGameOver());
+    }
+
+    void isGameOverOnBotBlackPlayingCentreTile()
+    {
+        // Test if game is over if line completed by playing a now edge tile
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // Build an almost-complete Black path from top to bottom on row 6
+        // Leave OctD06 empty so the non-edge final move can trigger win detection.
+        for (int row = 1; row <= 5; row++)
+        {
+            String id = String.format("OctD%02d", row);
+            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+        }
+        for (int row = '7'; row <= 11; row++)
+        {
+            String id = String.format("OctD%02d", row);
+            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+        }
+
+        // Force bot black move
+        Polygon winningTile = createTile("OctD06", PlayerColor.BLACK);
+    
+
+        
+        assertTrue(gameManager.isGameOver());
+    }
+
+     @Test
+    
+    void isGameOverWithMultiColourConnection()
+    {
+        // Test that game isn't over if a line connects two sides with both colours
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // Build an almost-complete White path from left to right on row 6
+        // Leave OctE06 empty so the non-edge final move can trigger win detection.
+        for (char col = 'A'; col <= 'J'; col++)
+        {
+            String id = String.format("Oct%c06", col);
+
+            if (col%2 == 0){
+
+                gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+            }
+            else {
+
+                gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+
+            }
+        }
+        
+
+        // Winning move: complete the connection to playing centre tile
+        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertFalse(gameManager.isGameOver());
+    }
+
+    
 
     // test if game is not over on a non-winning move
     @Test
