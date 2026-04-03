@@ -570,21 +570,78 @@ class GameManagerTest {
     @Test
     void isGameOverOnBlackWinningMove()
     {
-        // TODO
+        // Human plays Black for this test
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.BLACK);
+        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
+
+        // Build an almost-complete Black path from top to bottom in column A
+        // Leave OctA11 empty so the final move can trigger win detection.
+        for (int row = 1; row <= 10; row++)
+        {
+            String id = String.format("OctA%02d", row);
+            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+        }
+
+        // Winning move: complete the connection to bottomRow
+        Polygon winningTile = createTile("OctA11", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertTrue(gameManager.isGameOver());
     }
 
     // test if game is over on white winning move
     @Test
     void isGameOverOnWhiteWinningMove()
     {
-        // TODO
+        // Human plays White for this test
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // Build an almost-complete White path from left to right on row 6
+        // Leave OctK06 empty so the final move can trigger win detection.
+        for (char col = 'A'; col <= 'J'; col++)
+        {
+            String id = String.format("Oct%c06", col);
+            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+        }
+
+        // Winning move: complete the connection to rightRow
+        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertTrue(gameManager.isGameOver());
     }
 
     // test if game is not over on a non-winning move
     @Test
     void isGameOverNonWinningMove()
     {
-        // TODO
+        // Human plays White for this test
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        gameManager.human.setPlayerColor(PlayerColor.WHITE);
+        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+
+        // Build an almost-complete White path from left to right on row 6
+        // Leave OctK06 empty so the final move can trigger win detection.
+        for (char col = 'A'; col <= 'F'; col++)
+        {
+            String id = String.format("Oct%c06", col);
+            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+        }
+
+        // Winning move: complete the connection to rightRow
+        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Move move = gameManager.humanMove(winningTile);
+
+        assertNotNull(move);
+        assertFalse(gameManager.isGameOver());
     }
 
     // test if game is not over on empty board
