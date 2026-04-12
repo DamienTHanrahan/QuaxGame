@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -832,6 +833,9 @@ public class BoardController
     @FXML // fx:id="RhoJ10"
     private Polygon RhoJ10; // Value injected by FXMLLoader
 
+    @FXML // fx:id="botEnabledBox"
+    private CheckBox botEnabledBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="pieButton"
     private Button pieButton; // Value injected by FXMLLoader
 
@@ -840,6 +844,9 @@ public class BoardController
 
     @FXML // fx:id="playLabel"
     private Label playLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="strategyButton"
+    private Button strategyButton; // Value injected by FXMLLoader
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
