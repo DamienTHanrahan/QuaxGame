@@ -282,7 +282,7 @@
                         </Label>
                         <Button fx:id="strategyButton" mnemonicParsing="false" onMouseClicked="#pieButtonClicked" prefHeight="53.0" prefWidth="120.0" text="SHOW STRATEGY" visible="false" />
                         <Button fx:id="pieButton" mnemonicParsing="false" onMouseClicked="#pieButtonClicked" prefHeight="53.0" prefWidth="120.0" text="PIE RULE" visible="false" />
-                        <CheckBox fx:id="botEnabledBox" mnemonicParsing="false" selected="true" text="BOT ENABLED">
+                        <CheckBox fx:id="botEnabledBox" mnemonicParsing="false" onAction="#botEnabledBoxClicked" selected="true" text="BOT ENABLED">
                            <HBox.margin>
                               <Insets top="15.0" />
                            </HBox.margin>

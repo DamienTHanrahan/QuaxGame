@@ -60,7 +60,16 @@ public class BoardController
         }
     }
 
-    void callBotToMove() {
+    void callBotToMove()
+    {
+        if(!gameManager.isBotEnabled())
+        {
+            gameManager.switchTurns();
+
+            updateTurnLabel();
+            return;
+        }
+
         PauseTransition pause = new PauseTransition(Duration.millis(650));
         // once pause is finished allow bot to move
         pause.setOnFinished(e -> {
@@ -131,6 +140,15 @@ public class BoardController
         {
             playLabel.setText(color.getDisplayName() + " to play");
         }
+
+        if(gameManager.isBotEnabled())
+        {
+            botEnabledBox.selectedProperty().set(true);
+        }
+        else
+        {
+            botEnabledBox.selectedProperty().set(false);
+        }
     }
 
     // reset UI of board to play again
@@ -162,6 +180,23 @@ public class BoardController
 
            playAgainButton.setVisible(false);
         }
+    }
+
+    @FXML
+    void botEnabledBoxClicked()
+    {
+        if(botEnabledBox.isSelected())
+        {
+            gameManager.setBotEnabled(true);
+            gameManager.currentPlayer = gameManager.bot;
+            gameManager.otherPlayer = gameManager.human;
+            callBotToMove();
+        }
+        else
+        {
+            gameManager.setBotEnabled(false);
+        }
+        updateTurnLabel();
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
