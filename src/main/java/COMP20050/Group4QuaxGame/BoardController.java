@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -59,7 +60,16 @@ public class BoardController
         }
     }
 
-    void callBotToMove() {
+    void callBotToMove()
+    {
+        if(!gameManager.isBotEnabled())
+        {
+            gameManager.switchTurns();
+
+            updateTurnLabel();
+            return;
+        }
+
         PauseTransition pause = new PauseTransition(Duration.millis(650));
         // once pause is finished allow bot to move
         pause.setOnFinished(e -> {
@@ -130,6 +140,15 @@ public class BoardController
         {
             playLabel.setText(color.getDisplayName() + " to play");
         }
+
+        if(gameManager.isBotEnabled())
+        {
+            botEnabledBox.selectedProperty().set(true);
+        }
+        else
+        {
+            botEnabledBox.selectedProperty().set(false);
+        }
     }
 
     // reset UI of board to play again
@@ -161,6 +180,23 @@ public class BoardController
 
            playAgainButton.setVisible(false);
         }
+    }
+
+    @FXML
+    void botEnabledBoxClicked()
+    {
+        if(botEnabledBox.isSelected())
+        {
+            gameManager.setBotEnabled(true);
+            gameManager.currentPlayer = gameManager.bot;
+            gameManager.otherPlayer = gameManager.human;
+            callBotToMove();
+        }
+        else
+        {
+            gameManager.setBotEnabled(false);
+        }
+        updateTurnLabel();
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -832,6 +868,9 @@ public class BoardController
     @FXML // fx:id="RhoJ10"
     private Polygon RhoJ10; // Value injected by FXMLLoader
 
+    @FXML // fx:id="botEnabledBox"
+    private CheckBox botEnabledBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="pieButton"
     private Button pieButton; // Value injected by FXMLLoader
 
@@ -840,6 +879,9 @@ public class BoardController
 
     @FXML // fx:id="playLabel"
     private Label playLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="strategyButton"
+    private Button strategyButton; // Value injected by FXMLLoader
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

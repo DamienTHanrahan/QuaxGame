@@ -22,6 +22,7 @@ public class GameManager
     protected boolean gameOver = false;
     private Player winner;
 
+    protected boolean botEnabled = true;
     // getters for currentPlayer and turnCount
     protected Player getCurrentPlayer()
     {
@@ -40,6 +41,7 @@ public class GameManager
         pieRuleUsed = false;
         gameOver = false;
         winner = null;
+        botEnabled = true;
 
         for(Node node : board.nodeMap.values())
         {
@@ -260,5 +262,15 @@ public class GameManager
     private void setWinner(Player winner)
     {
         this.winner = winner;
+    }
+
+    protected boolean isBotEnabled()
+    {
+        return botEnabled;
+    }
+
+    protected void setBotEnabled(boolean botEnabled)
+    {
+        this.botEnabled = botEnabled;
     }
 }
