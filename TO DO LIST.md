@@ -1,15 +1,18 @@
 # TO DO LIST:
 
+### SPRINT 4: DUE FRIDAY
+#### CODE:
+* Strategic Bot tile placement
+* Test cases for strategy bot placement
+* Show Strategy feature (dev mode)
+* test cases for show strategy button
+* Feature to disable and enable bot (dev mode)
+* test cases for disable/enable bot
 
-
-### SPRINT 3: DUE FRIDAY
-
-* rework win detection to single node per side based -- DONE RONAN
-* Sprint 3 feature and development document - WIP (google doc shared) 
-* Test cases for win detection in gameManager (white win, black win, vertical white doesn't win, horizontal black doesn't win, and more that i can't think of unfinished chain etc)
-* Test cases for Board and Node class -- DONE RONAN
-
-
+#### GENERAL:
+* Update User Guide
+* Update Development & Testing Doc
+* Rebuild New Version of jar
 
 ### ZIP FOLDER
 
