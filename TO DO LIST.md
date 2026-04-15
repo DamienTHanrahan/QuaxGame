@@ -2,17 +2,17 @@
 
 ### SPRINT 4: DUE FRIDAY
 #### CODE:
-* Strategic Bot tile placement
-* Test cases for strategy bot placement
-* Show Strategy feature (dev mode)
-* test cases for show strategy button
-* Feature to disable and enable bot (dev mode)
-* test cases for disable/enable bot
+* Strategic Bot tile placement                 - Damien
+* Test cases for strategy bot placement        - Damien  
+* Show Strategy feature (dev mode)             - Forrest
+* test cases for show strategy button          - Forrest 
+* Feature to disable and enable bot (dev mode) - Ronan 
+* test cases for disable/enable bot            - Ronan 
 
 #### GENERAL:
-* Update User Guide
-* Update Development & Testing Doc
-* Rebuild New Version of jar
+* Update User Guide                            - Ronan
+* Update Development & Testing Doc             - Ronan 
+* Rebuild New Version of jar                   - WHOMEVER SUBMITTING 
 
 ### ZIP FOLDER
 
