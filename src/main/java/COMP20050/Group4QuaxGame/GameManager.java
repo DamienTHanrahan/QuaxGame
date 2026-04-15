@@ -94,6 +94,12 @@ public class GameManager
             return null;
         }
 
+        if(!isBotEnabled())
+        {
+            switchTurns();
+            return null;
+        }
+
         if(turnCount == 1 && bot.usePieRule())
         {
             activatePieRule(bot);
