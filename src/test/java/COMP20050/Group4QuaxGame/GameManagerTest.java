@@ -20,6 +20,7 @@ class GameManagerTest {
     {
         gameManager = new GameManager();
         tiles.clear();
+        gameManager.setBotEnabled(true);
     }
 
     // helper function for creating fake tiles to demo
@@ -183,6 +184,69 @@ class GameManagerTest {
         assertNull(botMove);
     }
 
+    // bot can move freely when enabled
+    @Test
+    void botMoveBotEnabled()
+    {
+        gameManager.setBotEnabled(true);
+        gameManager.currentPlayer = gameManager.bot;
+        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+
+        Move botMove = gameManager.botMove();
+        // bot enabled so should be valid move
+        assertNotNull(botMove);
+    }
+
+    // bot not allowed to move if its disabled
+    @Test
+    void botMoveBotDisabled()
+    {
+        gameManager.setBotEnabled(false);
+        gameManager.currentPlayer = gameManager.bot;
+        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+
+        Move botMove = gameManager.botMove();
+        // bot disabled so should be invalid
+        assertNull(botMove);
+    }
+
+    // bot disabled and tries move should switch turns
+    @Test
+    void botMoveBotDisabledSwitchesTurns()
+    {
+        gameManager.setBotEnabled(false);
+        gameManager.currentPlayer = gameManager.bot;
+        gameManager.otherPlayer = gameManager.human;
+
+        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        // bot disabled so invalid move
+        Move botMove = gameManager.botMove();
+
+        // current player should now be human
+        assertEquals(gameManager.human, gameManager.getCurrentPlayer());
+    }
+
+    // bot disabled and tries move should switch turns
+    @Test
+    void botMoveAfterHumanEnablesBot() throws InterruptedException {
+        // disable bot and set human as current player
+        gameManager.setBotEnabled(false);
+        gameManager.currentPlayer = gameManager.human;
+        gameManager.otherPlayer = gameManager.bot;
+        // avoids pie rule interfering
+        gameManager.turnCount = 5;
+
+        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        // set bot enabled and simulate human move
+        gameManager.setBotEnabled(true);
+        gameManager.humanMove(tile);
+
+        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
+        // bot should now be able to move
+        Move botMove = gameManager.botMove();
+        assertNotNull(botMove);
+    }
+
 
 
     // -------------------- isBoardFull function TEST -------------------------
@@ -269,6 +333,14 @@ class GameManagerTest {
         assertEquals(PlayerColor.BLACK, gameManager.currentPlayer.getPlayerColor());
         // second player should be white
         assertEquals(PlayerColor.WHITE, gameManager.otherPlayer.getPlayerColor());
+    }
+
+    // test if bot is enabled by default on game set up
+    @Test
+    void setUpGameBotEnabledByDefault()
+    {
+        gameManager.setUpGame(gameManager.bot);
+        assertTrue(gameManager.isBotEnabled());
     }
 
 
@@ -885,6 +957,52 @@ class GameManagerTest {
         gameManager.resetGame();
 
         assertFalse(gameManager.gameOver);
+    }
+
+    // test if bot is enabled at start of every game
+    @Test
+    void resetGameBotEnabled()
+    {
+        gameManager.botEnabled = false;
+        gameManager.gameOver = true;
+        gameManager.resetGame();
+        assertTrue(gameManager.botEnabled);
+    }
+
+
+    // ------------------------ isBotEnabled / setBotEnabled tests
+    // set botEnabled false
+    @Test
+    void setBotEnabledFalse()
+    {
+        gameManager.botEnabled = true;
+        gameManager.setBotEnabled(false);
+        assertFalse(gameManager.botEnabled);
+    }
+
+    // set botEnabled true
+    @Test
+    void setBotEnabledTrue()
+    {
+        gameManager.botEnabled = false;
+        gameManager.setBotEnabled(true);
+        assertTrue(gameManager.botEnabled);
+    }
+
+    @Test
+    void isBotEnabledFalse()
+    {
+        gameManager.botEnabled = true;
+        gameManager.setBotEnabled(false);
+        assertFalse(gameManager.isBotEnabled());
+    }
+
+    @Test
+    void isBotEnabledTrue()
+    {
+        gameManager.botEnabled = false;
+        gameManager.setBotEnabled(true);
+        assertTrue(gameManager.isBotEnabled());
     }
 
 }
