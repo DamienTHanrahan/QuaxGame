@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -63,6 +64,8 @@ class BoardControllerTest {
                 setField(controller, field, new Label());
             } else if(field.getType() == Button.class){
                 setField(controller, field, new Button());
+            } else if(field.getType() == CheckBox.class){
+                setField(controller, field, new CheckBox());
             }
         }
     }
@@ -154,6 +157,17 @@ class BoardControllerTest {
                 field.setAccessible(true);
                 field.set(controller, label);
 
+                // get other labels and stuff needed for method as calls update label
+                CheckBox checkBox = new CheckBox();
+                Field field3 = BoardController.class.getDeclaredField("botEnabledBox");
+                field3.setAccessible(true);
+                field3.set(controller, checkBox);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
                 controller.updateTurnLabel();
 
                 assertEquals("BLACK to play", label.getText());
@@ -178,6 +192,17 @@ class BoardControllerTest {
                 Field field = BoardController.class.getDeclaredField("playLabel");
                 field.setAccessible(true);
                 field.set(controller, label);
+
+                // get other labels and stuff needed for method as calls update label
+                CheckBox checkBox = new CheckBox();
+                Field field3 = BoardController.class.getDeclaredField("botEnabledBox");
+                field3.setAccessible(true);
+                field3.set(controller, checkBox);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
 
                 // simulate turn
                 controller.gameManager.switchTurns();
@@ -207,6 +232,17 @@ class BoardControllerTest {
                 field.setAccessible(true);
                 field.set(controller, label);
 
+                // get other labels and stuff needed for method as calls update label
+                CheckBox checkBox = new CheckBox();
+                Field field3 = BoardController.class.getDeclaredField("botEnabledBox");
+                field3.setAccessible(true);
+                field3.set(controller, checkBox);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
                 // simulate turn
                 controller.gameManager.switchTurns();
                 controller.updateTurnLabel();
@@ -233,11 +269,21 @@ class BoardControllerTest {
                 field.setAccessible(true);
                 field.set(controller, button);
 
-                // get label required for method as calls update label
+                // get other labels and stuff needed for method as calls update label
                 Label label = new Label();
                 Field field2 = BoardController.class.getDeclaredField("playLabel");
                 field2.setAccessible(true);
                 field2.set(controller, label);
+
+                CheckBox checkBox = new CheckBox();
+                Field field3 = BoardController.class.getDeclaredField("botEnabledBox");
+                field3.setAccessible(true);
+                field3.set(controller, checkBox);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
 
                 controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
                 controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
@@ -273,6 +319,16 @@ class BoardControllerTest {
                 field2.setAccessible(true);
                 field2.set(controller, label);
 
+                CheckBox checkBox = new CheckBox();
+                Field field3 = BoardController.class.getDeclaredField("botEnabledBox");
+                field3.setAccessible(true);
+                field3.set(controller, checkBox);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
 
                 // simulate end game to make button visible
                 controller.gameManager.gameOver = true;
@@ -282,6 +338,132 @@ class BoardControllerTest {
                 assertFalse(button.isVisible());
 
 
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+
+    // --------------------------- botEnabledBoxClicked  ----------------------------------------------
+    // check when click box it enables bot
+    @Test
+    void botEnabledBoxEnableBot() throws Exception
+    {
+        runOnFxThread(() -> {
+            try {
+                // set players
+                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+
+                // enable dev mode
+                BoardController.DEV_MODE = true;
+                // get the checkBox
+                CheckBox botEnabledBox = new CheckBox();
+                Field field = BoardController.class.getDeclaredField("botEnabledBox");
+                field.setAccessible(true);
+                field.set(controller, botEnabledBox);
+
+                // get other UI elements needed as updateLabel needs them
+                Label label = new Label();
+                Field field2 = BoardController.class.getDeclaredField("playLabel");
+                field2.setAccessible(true);
+                field2.set(controller, label);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
+                // simulate button clicked when bot disabled
+                controller.gameManager.botEnabled = false;
+                botEnabledBox.setSelected(true);
+                controller.botEnabledBoxClicked();
+
+                // bot should now be enabled
+                assertTrue(controller.gameManager.isBotEnabled());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    // check when click box it disables bot
+    @Test
+    void botEnabledBoxDisableBot() throws Exception {
+        runOnFxThread(() -> {
+            try {
+                // set players
+                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+
+                // enable dev mode
+                BoardController.DEV_MODE = true;
+                // get the checkBox
+                CheckBox botEnabledBox = new CheckBox();
+                Field field = BoardController.class.getDeclaredField("botEnabledBox");
+                field.setAccessible(true);
+                field.set(controller, botEnabledBox);
+
+                // get other UI elements needed as updateLabel needs them
+                Label label = new Label();
+                Field field2 = BoardController.class.getDeclaredField("playLabel");
+                field2.setAccessible(true);
+                field2.set(controller, label);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
+                // simulate button clicked when bot enabled
+                controller.gameManager.botEnabled = true;
+                botEnabledBox.setSelected(false);
+                controller.botEnabledBoxClicked();
+
+                // bot should now be disabled
+                assertFalse(controller.gameManager.isBotEnabled());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    // check the box is no update happens when dev mode is false
+    @Test
+    void botEnabledBoxDevModeFalse() throws Exception {
+        runOnFxThread(() -> {
+            try {
+                // set players
+                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+
+                // disable dev mode
+                BoardController.DEV_MODE = false;
+                // get the checkBox
+                CheckBox botEnabledBox = new CheckBox();
+                Field field = BoardController.class.getDeclaredField("botEnabledBox");
+                field.setAccessible(true);
+                field.set(controller, botEnabledBox);
+
+                // get other UI elements needed as updateLabel needs them
+                Label label = new Label();
+                Field field2 = BoardController.class.getDeclaredField("playLabel");
+                field2.setAccessible(true);
+                field2.set(controller, label);
+
+                Button button2 = new Button();
+                Field field4 = BoardController.class.getDeclaredField("strategyButton");
+                field4.setAccessible(true);
+                field4.set(controller, button2);
+
+                // simulate button clicked when bot enabled
+                controller.gameManager.botEnabled = true;
+                botEnabledBox.setSelected(false);
+                controller.botEnabledBoxClicked();
+
+                // Dev mode false so bot should still be enabled
+                assertTrue(controller.gameManager.isBotEnabled());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
