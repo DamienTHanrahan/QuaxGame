@@ -138,10 +138,12 @@ public class BoardController
         if(gameManager.getCurrentPlayer() == gameManager.human && DEV_MODE)
         {
             botEnabledBox.setVisible(true);
+            strategyButton.setVisible(true);
         }
         else
         {
             botEnabledBox.setVisible(false);
+            strategyButton.setVisible(false);
         }
 
         if(gameManager.isBotEnabled())
