@@ -29,6 +29,8 @@ public class BoardController
     private static final Color emptyOctColor = Color.web("#ffd675");
     private static final Color emptyRhoColor = Color.web("#bcbcbc");
 
+    public static boolean DEV_MODE = Boolean.getBoolean("devMode");
+
     // get ID on click to pass to gameManager for validation
     @FXML
     void clickToMove(MouseEvent event)
@@ -62,14 +64,6 @@ public class BoardController
 
     void callBotToMove()
     {
-        if(!gameManager.isBotEnabled())
-        {
-            gameManager.switchTurns();
-
-            updateTurnLabel();
-            return;
-        }
-
         PauseTransition pause = new PauseTransition(Duration.millis(650));
         // once pause is finished allow bot to move
         pause.setOnFinished(e -> {
@@ -141,6 +135,15 @@ public class BoardController
             playLabel.setText(color.getDisplayName() + " to play");
         }
 
+        if(gameManager.getCurrentPlayer() == gameManager.human && DEV_MODE)
+        {
+            botEnabledBox.setVisible(true);
+        }
+        else
+        {
+            botEnabledBox.setVisible(false);
+        }
+
         if(gameManager.isBotEnabled())
         {
             botEnabledBox.selectedProperty().set(true);
@@ -185,18 +188,25 @@ public class BoardController
     @FXML
     void botEnabledBoxClicked()
     {
+        if(!DEV_MODE)
+        {
+            return;
+        }
         if(botEnabledBox.isSelected())
         {
             gameManager.setBotEnabled(true);
-            gameManager.currentPlayer = gameManager.bot;
-            gameManager.otherPlayer = gameManager.human;
-            callBotToMove();
         }
         else
         {
             gameManager.setBotEnabled(false);
         }
         updateTurnLabel();
+    }
+
+    @FXML
+    void showStrategyButtonClicked()
+    {
+        System.out.println("showStrategyButtonClicked");
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -1332,6 +1342,17 @@ public class BoardController
         tiles.put("RhoJ08", RhoJ08);
         tiles.put("RhoJ09", RhoJ09);
         tiles.put("RhoJ10", RhoJ10);
+        // display or hide dev tools based on if dev mode is enabled
+        if(DEV_MODE)
+        {
+            botEnabledBox.setVisible(true);
+            strategyButton.setVisible(true);
+        }
+        else
+        {
+            botEnabledBox.setVisible(false);
+            strategyButton.setVisible(false);
+        }
         // randomly pick who starts as black and white
         int random = (int) (Math.random() * 2);
         if (random == 0)
