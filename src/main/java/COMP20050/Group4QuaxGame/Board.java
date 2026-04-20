@@ -205,4 +205,32 @@ public class Board
         return neighbourIDList;
     }
 
+
+    protected ArrayList<Node> getAllNodes(){
+
+        ArrayList<Node> allNodes = new ArrayList<>(nodeMap.values());
+        allNodes.add(bottomRow);
+        allNodes.add(topRow);
+        allNodes.add(leftRow);
+        allNodes.add(rightRow);
+
+        return allNodes;
+
+
+    }
+
+    protected ArrayList<Node> getEmptyNodes(){
+
+        ArrayList<Node> emptyNodes = new ArrayList<>();
+
+        for (Node node : nodeMap.values()){
+
+            if (node.getOwner() == PlayerColor.EMPTY){
+                emptyNodes.add(node);
+            }
+        }
+
+        return emptyNodes;
+    }
+
 }
