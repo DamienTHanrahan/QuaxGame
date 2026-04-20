@@ -2,23 +2,23 @@ package COMP20050.Group4QuaxGame;
 
 public abstract class Player
 {
-    // each player has a color
-    protected PlayerColor playerColor;
+    // each player has a colour
+    protected PlayerColour playerColour;
 
-    public Player(PlayerColor playerColor)
+    public Player(PlayerColour playerColour)
     {
-        this.playerColor = playerColor;
+        this.playerColour = playerColour;
     }
 
-    // getter and setter for the player color
-    public PlayerColor getPlayerColor()
+    // getter and setter for the player colour
+    public PlayerColour getPlayerColour()
     {
-        return playerColor;
+        return playerColour;
     }
 
-    public void setPlayerColor(PlayerColor playerColor)
+    public void setPlayerColour(PlayerColour playerColour)
     {
-        this.playerColor = playerColor;
+        this.playerColour = playerColour;
     }
 
     // each player has its own way of choosing a move

@@ -42,7 +42,7 @@ class NodeTest
     {
         Node newTile = new Node("OctB01");
 
-        assertEquals(PlayerColor.EMPTY, newTile.getOwner());
+        assertEquals(PlayerColour.EMPTY, newTile.getOwner());
     }
 
     // --------------- setOwner tests -----------------
@@ -50,16 +50,16 @@ class NodeTest
     @Test
     void setOwnerBlack()
     {
-        octagon.setOwner(PlayerColor.BLACK);
-        assertEquals(PlayerColor.BLACK, octagon.getOwner());
+        octagon.setOwner(PlayerColour.BLACK);
+        assertEquals(PlayerColour.BLACK, octagon.getOwner());
     }
 
     // test we can set owner to white
     @Test
     void setOwnerWhite()
     {
-        rhombus.setOwner(PlayerColor.WHITE);
-        assertEquals(PlayerColor.WHITE, rhombus.getOwner());
+        rhombus.setOwner(PlayerColour.WHITE);
+        assertEquals(PlayerColour.WHITE, rhombus.getOwner());
     }
 
 

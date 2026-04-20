@@ -1,6 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Colour;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,12 +24,12 @@ class GameManagerTest {
     }
 
     // helper function for creating fake tiles to demo
-    private Polygon createTile(String id, PlayerColor playerColor)
+    private Polygon createTile(String id, PlayerColour playerColour)
     {
         Polygon tile = new Polygon();
         tile.setId(id);
         tiles.put(id, tile);
-        gameManager.board.getNode(id).setOwner(playerColor);
+        gameManager.board.getNode(id).setOwner(playerColour);
         return tile;
     }
 
@@ -43,7 +43,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
 
         // add empty tile
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move validMove = gameManager.humanMove(tile);
         assertNotNull(validMove);
@@ -57,7 +57,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
 
         // add tile to map
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
+        Polygon tile = createTile("OctA01", PlayerColour.BLACK);
 
         Move invalidMove = gameManager.humanMove(tile);
         assertNull(invalidMove);
@@ -71,7 +71,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
 
         // add tile to map
-        Polygon tile = createTile("OctA01", PlayerColor.WHITE);
+        Polygon tile = createTile("OctA01", PlayerColour.WHITE);
 
         Move invalidMove = gameManager.humanMove(tile);
         assertNull(invalidMove);
@@ -85,14 +85,14 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
 
         // add tile to map
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         // move 1
         Move validMove = gameManager.humanMove(tile);
         assertNotNull(validMove);
 
         // add tile2 to map
-        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
+        Polygon tile2 = createTile("OctA02", PlayerColour.EMPTY);
 
         // move 2
         Move invalidMove = gameManager.humanMove(tile2);
@@ -109,19 +109,19 @@ class GameManagerTest {
         gameManager.otherPlayer = gameManager.bot;
 
         // add tile to map
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         // player move 1
         gameManager.humanMove(tile);
 
         // make tile for bot to move to
-        Polygon botTile = createTile("OctA02", PlayerColor.EMPTY);
+        Polygon botTile = createTile("OctA02", PlayerColour.EMPTY);
 
         // bot move
         gameManager.botMove();
 
         // tile 3
-        Polygon tile3 = createTile("OctA03", PlayerColor.EMPTY);
+        Polygon tile3 = createTile("OctA03", PlayerColour.EMPTY);
 
         // player move 2
         assertNotNull(gameManager.humanMove(tile3));
@@ -138,8 +138,8 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.bot;
 
         // create tiles
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
-        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
+        Polygon tile2 = createTile("OctA02", PlayerColour.EMPTY);
 
         // get bots move
         Move botMove = gameManager.botMove();
@@ -155,9 +155,9 @@ class GameManagerTest {
         // set bot to current player
         gameManager.currentPlayer = gameManager.bot;
 
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
-        Polygon tile2 = createTile("OctA02", PlayerColor.BLACK);
-        Polygon tile3 = createTile("OctA03", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.BLACK);
+        Polygon tile2 = createTile("OctA02", PlayerColour.BLACK);
+        Polygon tile3 = createTile("OctA03", PlayerColour.EMPTY);
 
         // get bots move
         Move botMove = gameManager.botMove();
@@ -175,7 +175,7 @@ class GameManagerTest {
         // set all nodes owner to black to mimic full board
         for(Node node : gameManager.board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.BLACK);
+            node.setOwner(PlayerColour.BLACK);
         }
 
         // get bots move
@@ -190,7 +190,7 @@ class GameManagerTest {
     {
         gameManager.setBotEnabled(true);
         gameManager.currentPlayer = gameManager.bot;
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move botMove = gameManager.botMove();
         // bot enabled so should be valid move
@@ -203,7 +203,7 @@ class GameManagerTest {
     {
         gameManager.setBotEnabled(false);
         gameManager.currentPlayer = gameManager.bot;
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move botMove = gameManager.botMove();
         // bot disabled so should be invalid
@@ -218,7 +218,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.bot;
         gameManager.otherPlayer = gameManager.human;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
         // bot disabled so invalid move
         Move botMove = gameManager.botMove();
 
@@ -236,12 +236,12 @@ class GameManagerTest {
         // avoids pie rule interfering
         gameManager.turnCount = 5;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
         // set bot enabled and simulate human move
         gameManager.setBotEnabled(true);
         gameManager.humanMove(tile);
 
-        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
+        Polygon tile2 = createTile("OctA02", PlayerColour.EMPTY);
         // bot should now be able to move
         Move botMove = gameManager.botMove();
         assertNotNull(botMove);
@@ -257,7 +257,7 @@ class GameManagerTest {
         // set all nodes owner to empty
         for(Node node : gameManager.board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.EMPTY);
+            node.setOwner(PlayerColour.EMPTY);
         }
         assertFalse(gameManager.isBoardFull());
     }
@@ -266,9 +266,9 @@ class GameManagerTest {
     @Test
     void isBoardFullMixedBoard()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
-        Polygon tile2 = createTile("OctA02", PlayerColor.EMPTY);
-        Polygon tile3 = createTile("OctA03", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.BLACK);
+        Polygon tile2 = createTile("OctA02", PlayerColour.EMPTY);
+        Polygon tile3 = createTile("OctA03", PlayerColour.EMPTY);
 
         assertFalse(gameManager.isBoardFull());
     }
@@ -280,7 +280,7 @@ class GameManagerTest {
         // set all nodes owner to black to mimic full board
         for(Node node : gameManager.board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.BLACK);
+            node.setOwner(PlayerColour.BLACK);
         }
 
         assertTrue(gameManager.isBoardFull());
@@ -311,28 +311,28 @@ class GameManagerTest {
         assertEquals(gameManager.human, gameManager.otherPlayer);
     }
 
-    // check that player colors are assigned correct when human starts
+    // check that player colours are assigned correct when human starts
     @Test
-    void setUpGameHumanColor()
+    void setUpGameHumanColour()
     {
         gameManager.setUpGame(gameManager.human);
 
         // first player should be black
-        assertEquals(PlayerColor.BLACK, gameManager.currentPlayer.getPlayerColor());
+        assertEquals(PlayerColour.BLACK, gameManager.currentPlayer.getPlayerColour());
         // second player should be white
-        assertEquals(PlayerColor.WHITE, gameManager.otherPlayer.getPlayerColor());
+        assertEquals(PlayerColour.WHITE, gameManager.otherPlayer.getPlayerColour());
     }
 
-    // check that player colors are assigned correct when bot starts
+    // check that player colours are assigned correct when bot starts
     @Test
-    void setUpGameBotColor()
+    void setUpGameBotColour()
     {
         gameManager.setUpGame(gameManager.bot);
 
         // first player should be black
-        assertEquals(PlayerColor.BLACK, gameManager.currentPlayer.getPlayerColor());
+        assertEquals(PlayerColour.BLACK, gameManager.currentPlayer.getPlayerColour());
         // second player should be white
-        assertEquals(PlayerColor.WHITE, gameManager.otherPlayer.getPlayerColor());
+        assertEquals(PlayerColour.WHITE, gameManager.otherPlayer.getPlayerColour());
     }
 
     // test if bot is enabled by default on game set up
@@ -370,7 +370,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
         // make valid move
         gameManager.humanMove(tile);
 
@@ -384,7 +384,7 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
 
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
+        Polygon tile = createTile("OctA01", PlayerColour.BLACK);
         // make an invalid move
         gameManager.humanMove(tile);
 
@@ -408,7 +408,7 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
         // human move
         gameManager.humanMove(tile);
 
@@ -422,7 +422,7 @@ class GameManagerTest {
         // set bot to current player
         gameManager.currentPlayer = gameManager.bot;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
         // make bot move
         gameManager.botMove();
 
@@ -435,7 +435,7 @@ class GameManagerTest {
     {
         gameManager.currentPlayer = gameManager.human;
 
-        Polygon tile = createTile("OctA01", PlayerColor.BLACK);
+        Polygon tile = createTile("OctA01", PlayerColour.BLACK);
         gameManager.humanMove(tile);
 
         assertEquals(0, gameManager.getTurnCount());
@@ -490,7 +490,7 @@ class GameManagerTest {
 
     // ----------------- activatePieRule tests ----------------------
 
-    // check the colors swap correctly if pie rule used on humans turn
+    // check the colours swap correctly if pie rule used on humans turn
     @Test
     void activatePieRuleHuman()
     {
@@ -498,19 +498,19 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
         // White player is always the player that gets to use pie rule
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // call pie rule
         gameManager.activatePieRule(gameManager.human);
 
-        // check colors updated
-        assertEquals(PlayerColor.BLACK, gameManager.human.getPlayerColor());
-        assertEquals(PlayerColor.WHITE, gameManager.bot.getPlayerColor());
+        // check colours updated
+        assertEquals(PlayerColour.BLACK, gameManager.human.getPlayerColour());
+        assertEquals(PlayerColour.WHITE, gameManager.bot.getPlayerColour());
 
     }
 
-    // check the colors swap correctly if pie rule used on bots turn
+    // check the colours swap correctly if pie rule used on bots turn
     @Test
     void activatePieRuleBot()
     {
@@ -518,15 +518,15 @@ class GameManagerTest {
         gameManager.currentPlayer = gameManager.bot;
         gameManager.otherPlayer = gameManager.human;
         // White player is always the player that gets to use pie rule
-        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
-        gameManager.human.setPlayerColor(PlayerColor.BLACK);
+        gameManager.bot.setPlayerColour(PlayerColour.WHITE);
+        gameManager.human.setPlayerColour(PlayerColour.BLACK);
 
         // call pie rule
         gameManager.activatePieRule(gameManager.bot);
 
-        // check colors updated
-        assertEquals(PlayerColor.BLACK, gameManager.bot.getPlayerColor());
-        assertEquals(PlayerColor.WHITE, gameManager.human.getPlayerColor());
+        // check colours updated
+        assertEquals(PlayerColour.BLACK, gameManager.bot.getPlayerColour());
+        assertEquals(PlayerColour.WHITE, gameManager.human.getPlayerColour());
 
     }
 
@@ -596,7 +596,7 @@ class GameManagerTest {
     @Test
     void validateMoveValid()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move validMove = new Move(gameManager.human, tile, gameManager.board.getNode("OctA01"));
 
@@ -607,7 +607,7 @@ class GameManagerTest {
     @Test
     void validateMoveInvalid()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.WHITE);
+        Polygon tile = createTile("OctA01", PlayerColour.WHITE);
 
         Move invalidMove = new Move(gameManager.bot, tile, gameManager.board.getNode("OctA01"));
 
@@ -627,7 +627,7 @@ class GameManagerTest {
     @Test
     void validateMoveNullPlayer()
     {
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move nullPlayerMove = new Move(null, tile, gameManager.board.getNode("OctA01"));
 
@@ -645,19 +645,19 @@ class GameManagerTest {
         // Human plays Black for this test
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.BLACK);
-        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
+        gameManager.human.setPlayerColour(PlayerColour.BLACK);
+        gameManager.bot.setPlayerColour(PlayerColour.WHITE);
 
         // Build an almost-complete Black path from top to bottom in column A
         // Leave OctA11 empty so the final move can trigger win detection.
         for (int row = 1; row <= 10; row++)
         {
             String id = String.format("OctA%02d", row);
-            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+            gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
         }
 
         // Winning move: complete the connection to bottomRow
-        Polygon winningTile = createTile("OctA11", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctA11", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -671,19 +671,19 @@ class GameManagerTest {
         // Human plays White for this test
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // Build an almost-complete White path from left to right on row 6
         // Leave OctK06 empty so the final move can trigger win detection.
         for (char col = 'A'; col <= 'J'; col++)
         {
             String id = String.format("Oct%c06", col);
-            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+            gameManager.board.getNode(id).setOwner(PlayerColour.WHITE);
         }
 
         // Winning move: complete the connection to rightRow
-        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctK06", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -696,24 +696,24 @@ class GameManagerTest {
         // Test if game is over if line completed by playing a now edge tile
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // Build an almost-complete White path from left to right on row 6
         // Leave OctE06 empty so the non-edge final move can trigger win detection.
         for (char col = 'A'; col <= 'D'; col++)
         {
             String id = String.format("Oct%c06", col);
-            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+            gameManager.board.getNode(id).setOwner(PlayerColour.WHITE);
         }
         for (char col = 'E'; col <= 'K'; col++)
         {
             String id = String.format("Oct%c06", col);
-            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+            gameManager.board.getNode(id).setOwner(PlayerColour.WHITE);
         }
 
         // Winning move: complete the connection to playing centre tile
-        Polygon winningTile = createTile("OctE06", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctE06", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -725,24 +725,24 @@ class GameManagerTest {
         // Test if game is over if line completed by playing a now edge tile
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.BLACK);
-        gameManager.bot.setPlayerColor(PlayerColor.WHITE);
+        gameManager.human.setPlayerColour(PlayerColour.BLACK);
+        gameManager.bot.setPlayerColour(PlayerColour.WHITE);
 
         // Build an almost-complete Black path from top to bottom on row 6
         // Leave OctD06 empty so the non-edge final move can trigger win detection.
         for (int row = 1; row <= 5; row++)
         {
             String id = String.format("OctD%02d", row);
-            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+            gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
         }
         for (int row = '7'; row <= 11; row++)
         {
             String id = String.format("OctD%02d", row);
-            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+            gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
         }
 
         // Winning move: complete the connection to playing centre tile
-        Polygon winningTile = createTile("OctD06", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctD06", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -754,24 +754,24 @@ class GameManagerTest {
         // Test if game is over if line completed by playing a now edge tile
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // Build an almost-complete Black path from top to bottom on row 6
         // Leave OctD06 empty so the non-edge final move can trigger win detection.
         for (int row = 1; row <= 5; row++)
         {
             String id = String.format("OctD%02d", row);
-            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+            gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
         }
         for (int row = '7'; row <= 11; row++)
         {
             String id = String.format("OctD%02d", row);
-            gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+            gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
         }
 
         // Force bot black move
-        Polygon winningTile = createTile("OctD06", PlayerColor.BLACK);
+        Polygon winningTile = createTile("OctD06", PlayerColour.BLACK);
     
 
         
@@ -785,8 +785,8 @@ class GameManagerTest {
         // Test that game isn't over if a line connects two sides with both colours
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // Build an almost-complete White path from left to right on row 6
         // Leave OctE06 empty so the non-edge final move can trigger win detection.
@@ -796,18 +796,18 @@ class GameManagerTest {
 
             if (col%2 == 0){
 
-                gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+                gameManager.board.getNode(id).setOwner(PlayerColour.WHITE);
             }
             else {
 
-                gameManager.board.getNode(id).setOwner(PlayerColor.BLACK);
+                gameManager.board.getNode(id).setOwner(PlayerColour.BLACK);
 
             }
         }
         
 
         // Winning move: complete the connection to playing centre tile
-        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctK06", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -823,19 +823,19 @@ class GameManagerTest {
         // Human plays White for this test
         gameManager.currentPlayer = gameManager.human;
         gameManager.otherPlayer = gameManager.bot;
-        gameManager.human.setPlayerColor(PlayerColor.WHITE);
-        gameManager.bot.setPlayerColor(PlayerColor.BLACK);
+        gameManager.human.setPlayerColour(PlayerColour.WHITE);
+        gameManager.bot.setPlayerColour(PlayerColour.BLACK);
 
         // Build an almost-complete White path from left to right on row 6
         // Leave OctK06 empty so the final move can trigger win detection.
         for (char col = 'A'; col <= 'F'; col++)
         {
             String id = String.format("Oct%c06", col);
-            gameManager.board.getNode(id).setOwner(PlayerColor.WHITE);
+            gameManager.board.getNode(id).setOwner(PlayerColour.WHITE);
         }
 
         // Winning move: complete the connection to rightRow
-        Polygon winningTile = createTile("OctK06", PlayerColor.EMPTY);
+        Polygon winningTile = createTile("OctK06", PlayerColour.EMPTY);
         Move move = gameManager.humanMove(winningTile);
 
         assertNotNull(move);
@@ -849,7 +849,7 @@ class GameManagerTest {
         // set all nodes to empty owner
         for(Node node : gameManager.board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.EMPTY);
+            node.setOwner(PlayerColour.EMPTY);
         }
 
         assertFalse(gameManager.isGameOver());
@@ -862,7 +862,7 @@ class GameManagerTest {
         // set all nodes owner to black
         for(Node node : gameManager.board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.BLACK);
+            node.setOwner(PlayerColour.BLACK);
         }
 
         assertTrue(gameManager.isGameOver());
@@ -878,7 +878,7 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.human;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move invalidMove = gameManager.humanMove(tile);
         assertNull(invalidMove);
@@ -894,7 +894,7 @@ class GameManagerTest {
         // set human to current player
         gameManager.currentPlayer = gameManager.bot;
 
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         Move invalidMove = gameManager.botMove();
         assertNull(invalidMove);
@@ -919,7 +919,7 @@ class GameManagerTest {
     {
         // simulate game still ongoing
         gameManager.gameOver = false;
-        Polygon tile = createTile("OctA01", PlayerColor.EMPTY);
+        Polygon tile = createTile("OctA01", PlayerColour.EMPTY);
 
         assertFalse(gameManager.resetGame());
     }

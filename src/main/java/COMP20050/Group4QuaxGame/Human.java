@@ -2,9 +2,9 @@ package COMP20050.Group4QuaxGame;
 
 public class Human extends Player
 {
-    public Human(PlayerColor playerColor)
+    public Human(PlayerColour playerColour)
     {
-        super(playerColor);
+        super(playerColour);
     }
 
     // human move is done through GUI so no need for this method

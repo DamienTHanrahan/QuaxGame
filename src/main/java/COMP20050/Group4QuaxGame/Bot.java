@@ -2,9 +2,9 @@ package COMP20050.Group4QuaxGame;
 
 public class Bot extends Player
 {
-    public Bot(PlayerColor playerColor)
+    public Bot(PlayerColour playerColour)
     {
-        super(playerColor);
+        super(playerColour);
     }
 
     // Rudimentary bot that makes random moves. To be implemented in the future.

@@ -45,7 +45,7 @@ public class GameManager
 
         for(Node node : board.nodeMap.values())
         {
-            node.setOwner(PlayerColor.EMPTY);
+            node.setOwner(PlayerColour.EMPTY);
         }
 
         if(startingPlayer == human)
@@ -58,8 +58,8 @@ public class GameManager
             currentPlayer = bot;
             otherPlayer = human;
         }
-        currentPlayer.setPlayerColor(PlayerColor.BLACK);
-        otherPlayer.setPlayerColor(PlayerColor.WHITE);
+        currentPlayer.setPlayerColour(PlayerColour.BLACK);
+        otherPlayer.setPlayerColour(PlayerColour.WHITE);
     }
 
     // logic for the human players turn
@@ -76,8 +76,8 @@ public class GameManager
         {
             return null;
         }
-        node.setOwner(currentPlayer.getPlayerColor());
-        if(checkWinner(currentPlayer.getPlayerColor()))
+        node.setOwner(currentPlayer.getPlayerColour());
+        if(checkWinner(currentPlayer.getPlayerColour()))
         {
             gameOver = true;
             setWinner(currentPlayer);
@@ -118,9 +118,9 @@ public class GameManager
         }while(!validateMove(new Move(bot, tile, node)));
 
         Move move = new Move(currentPlayer, tile, node);
-        node.setOwner(currentPlayer.getPlayerColor());
+        node.setOwner(currentPlayer.getPlayerColour());
 
-        if(checkWinner(currentPlayer.getPlayerColor()))
+        if(checkWinner(currentPlayer.getPlayerColour()))
         {
             gameOver = true;
             setWinner(currentPlayer);
@@ -134,7 +134,7 @@ public class GameManager
     {
         for(Node node : board.nodeMap.values())
         {
-            if (node.getOwner() == PlayerColor.EMPTY)
+            if (node.getOwner() == PlayerColour.EMPTY)
             {
                 return false;
             }
@@ -152,7 +152,7 @@ public class GameManager
         otherPlayer = temp;
     }
 
-    // swap player colors for pie rule
+    // swap player colours for pie rule
     protected void activatePieRule(Player playerWhoUsedPieRule)
     {
         if(pieRuleUsed || turnCount != 1 || playerWhoUsedPieRule != currentPlayer)
@@ -160,9 +160,9 @@ public class GameManager
             return;
         }
         pieRuleUsed = true;
-        PlayerColor temp = currentPlayer.getPlayerColor();
-        currentPlayer.setPlayerColor(otherPlayer.getPlayerColor());
-        otherPlayer.setPlayerColor(temp);
+        PlayerColour temp = currentPlayer.getPlayerColour();
+        currentPlayer.setPlayerColour(otherPlayer.getPlayerColour());
+        otherPlayer.setPlayerColour(temp);
         switchTurns();
     }
 
@@ -174,7 +174,7 @@ public class GameManager
             return false;
         }
 
-        return move.getNode().getOwner() == PlayerColor.EMPTY;
+        return move.getNode().getOwner() == PlayerColour.EMPTY;
     }
 
     public boolean isGameOver()
@@ -202,19 +202,19 @@ public class GameManager
         return true;
     }
 
-    // check for winner given the player color
-    protected boolean checkWinner(PlayerColor playerColor)
+    // check for winner given the player colour
+    protected boolean checkWinner(PlayerColour playerColour)
     {
         Node startNode;
         Node endNode;
 
-        // match starting and ending node based on player colors win conditions
-        if(playerColor == PlayerColor.BLACK)
+        // match starting and ending node based on player colours win conditions
+        if(playerColour == PlayerColour.BLACK)
         {
             startNode = board.topRow;
             endNode = board.bottomRow;
         }
-        else if(playerColor == PlayerColor.WHITE)
+        else if(playerColour == PlayerColour.WHITE)
         {
             startNode = board.leftRow;
             endNode = board.rightRow;
@@ -226,7 +226,7 @@ public class GameManager
 
         // try traverse board from start to end to check for win
         ArrayList<Node> visitedNodes = new ArrayList<>();
-        if(canTraverseBoard(startNode, endNode, visitedNodes, playerColor))
+        if(canTraverseBoard(startNode, endNode, visitedNodes, playerColour))
         {
             return true;
         }
@@ -236,7 +236,7 @@ public class GameManager
     }
 
     // helper method for checkWinner to check if you can traverse board to reach a node in the ending node list
-    private boolean canTraverseBoard(Node currentNode, Node endingNode, ArrayList<Node> visitedNodes, PlayerColor playerColor)
+    private boolean canTraverseBoard(Node currentNode, Node endingNode, ArrayList<Node> visitedNodes, PlayerColour playerColour)
     {
         // check if the current node is the end node
         if(currentNode == endingNode)
@@ -245,18 +245,18 @@ public class GameManager
         }
         // mark current node as visited
         visitedNodes.add(currentNode);
-        // check for each of its neighbours if it is a new node not visited before and matches the player color
+        // check for each of its neighbours if it is a new node not visited before and matches the player colour
         for(Node neighbour : currentNode.getNeighbours())
         {
-            if(neighbour.getOwner() == playerColor && !visitedNodes.contains(neighbour))
+            if(neighbour.getOwner() == playerColour && !visitedNodes.contains(neighbour))
             {
-                if(canTraverseBoard(neighbour, endingNode, visitedNodes, playerColor))
+                if(canTraverseBoard(neighbour, endingNode, visitedNodes, playerColour))
                 {
                     return true;
                 }
             }
         }
-        // if node is not an end node and no neighbours left to explore that match player color
+        // if node is not an end node and no neighbours left to explore that match player colour
         return false;
     }
 

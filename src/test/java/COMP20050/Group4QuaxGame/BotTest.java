@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BotTest
 {
-    Bot bot = new Bot(PlayerColor.WHITE);
+    Bot bot = new Bot(PlayerColour.WHITE);
 
 
 

@@ -15,10 +15,10 @@ public class Board
 
     public Board()
     {
-        topRow.setOwner(PlayerColor.BLACK);
-        bottomRow.setOwner(PlayerColor.BLACK);
-        leftRow.setOwner(PlayerColor.WHITE);
-        rightRow.setOwner(PlayerColor.WHITE);
+        topRow.setOwner(PlayerColour.BLACK);
+        bottomRow.setOwner(PlayerColour.BLACK);
+        leftRow.setOwner(PlayerColour.WHITE);
+        rightRow.setOwner(PlayerColour.WHITE);
         constructNodeMap();
     }
 
@@ -225,12 +225,21 @@ public class Board
 
         for (Node node : nodeMap.values()){
 
-            if (node.getOwner() == PlayerColor.EMPTY){
+            if (node.getOwner() == PlayerColour.EMPTY){
                 emptyNodes.add(node);
             }
         }
 
         return emptyNodes;
+    }
+
+
+    protected Node getCheapestPath (PlayerColour colour){
+
+        if ()
+
+    }
+
     }
 
 }
