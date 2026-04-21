@@ -23,6 +23,7 @@ public class Bot extends Player
 
     protected void setStrategy(Strategy strategy){
         this.strategy = strategy;
+        System.out.println("Strategy set to: " + strategy);
     }
 
     protected Strategy getStrategy(){
@@ -41,11 +42,32 @@ public class Bot extends Player
         else{oppColour = PlayerColour.WHITE; }
         int botPath = board.getCheapestPath(colour);
         int oppPath = board.getCheapestPath(oppColour);
+        int scoreDifference = botPath - oppPath;
         double bestScore = 0.0;
         ArrayList<Node> bestNodes = new ArrayList<>();
-        
-        
-        
+
+        // select strategy depending on who is currently winning (shortest path to win)
+        if(scoreDifference >= 3)
+        {
+            setStrategy(Strategy.STONEWALL);
+        }
+        else if(scoreDifference >= 1)
+        {
+            setStrategy(Strategy.DEFENSIVE);
+        }
+        else if(scoreDifference <= -3)
+        {
+            setStrategy(Strategy.AGGRESSIVE);
+        }
+        else if(scoreDifference == -1)
+        {
+            setStrategy(Strategy.ATTACKING);
+        }
+        else
+        {
+            setStrategy(Strategy.NEUTRAL);
+        }
+
         for (Node node: board.getEmptyNodes()){
 
             node.setOwner(colour);
