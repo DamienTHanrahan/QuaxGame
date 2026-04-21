@@ -26,8 +26,8 @@ public class BoardController
     // gameManager reference
     protected final GameManager gameManager = new GameManager();
 
-    private static final Colour emptyOctColour = Colour.web("#ffd675");
-    private static final Colour emptyRhoColour = Colour.web("#bcbcbc");
+    private static final Color emptyOctColour = Color.web("#ffd675");
+    private static final Color emptyRhoColour = Color.web("#bcbcbc");
 
     public static boolean DEV_MODE = Boolean.getBoolean("devMode");
 

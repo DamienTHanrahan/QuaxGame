@@ -106,16 +106,15 @@ public class GameManager
             return null;
         }
 
-        // keep picking random tile until its valid
+        
         Polygon tile;
         Node node;
-        do
-        {
-            String moveID = bot.chooseMove();
+        
+            String moveID = bot.chooseMove(board, currentPlayer.getPlayerColour());
             tile = tiles.get(moveID);
             node = board.getNode(moveID);
 
-        }while(!validateMove(new Move(bot, tile, node)));
+        
 
         Move move = new Move(currentPlayer, tile, node);
         node.setOwner(currentPlayer.getPlayerColour());

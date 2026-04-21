@@ -14,7 +14,7 @@ class PlayerColourTest
     void switchToFXColourBlack()
     {
         PlayerColour playerColour = PlayerColour.BLACK;
-        assertEquals(Colour.BLACK, playerColour.switchToFXColour());
+        assertEquals(Color.BLACK, playerColour.switchToFXColour());
     }
 
     // test white player colour returns javaFX white
@@ -22,7 +22,7 @@ class PlayerColourTest
     void switchToFXColourWhite()
     {
         PlayerColour playerColour = PlayerColour.WHITE;
-        assertEquals(Colour.WHITE, playerColour.switchToFXColour());
+        assertEquals(Color.WHITE, playerColour.switchToFXColour());
     }
 
     // test empty player colour returns null

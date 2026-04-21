@@ -122,7 +122,7 @@ class BoardControllerTest {
         controller.paintTile(blackMove);
 
         // check if tile colour is updated
-        assertEquals(Colour.BLACK, blackMove.getTile().getFill());
+        assertEquals(Color.BLACK, blackMove.getTile().getFill());
     }
 
     // test if black player moves does fill colour be set to black
@@ -139,7 +139,7 @@ class BoardControllerTest {
         controller.paintTile(whiteMove);
 
         // check if tile colour is updated
-        assertEquals(Colour.WHITE, whiteMove.getTile().getFill());
+        assertEquals(Color.WHITE, whiteMove.getTile().getFill());
     }
 
     // ------------------------------- updateTurnLabel tests -----------------------

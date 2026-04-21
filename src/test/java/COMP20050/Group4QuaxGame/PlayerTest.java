@@ -9,8 +9,8 @@ class PlayerTest
     Player player = new Player(PlayerColour.EMPTY)
     {
         // for testing purpose this always will return OCTA01
-        @Override
-        public String chooseMove()
+        
+        public String chooseMove(Board board, PlayerColour colour)
         {
             return "OCTA01";
         }
