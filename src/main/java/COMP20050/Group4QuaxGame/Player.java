@@ -21,6 +21,5 @@ public abstract class Player
         this.playerColour = playerColour;
     }
 
-    // each player has its own way of choosing a move
-    public abstract String chooseMove();
-}
+}    // each player has its own way of choosing a move
+ 

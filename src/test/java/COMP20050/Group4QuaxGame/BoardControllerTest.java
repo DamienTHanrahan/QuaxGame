@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Colour;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -115,14 +115,14 @@ class BoardControllerTest {
         // simulate black player and tile
         Human blackPlayer = new Human(PlayerColour.BLACK);
         Polygon tile = new Polygon();
-        tile.setFill(Colour.ORANGE);
+        tile.setFill(Color.ORANGE);
 
         // simulate move for black
         Move blackMove = new Move(blackPlayer, tile, new Node("OctA01"));
         controller.paintTile(blackMove);
 
         // check if tile colour is updated
-        assertEquals(Colour.BLACK, blackMove.getTile().getFill());
+        assertEquals(Color.BLACK, blackMove.getTile().getFill());
     }
 
     // test if black player moves does fill colour be set to black
@@ -132,14 +132,14 @@ class BoardControllerTest {
         // simulate black player and tile
         Human whitePlayer = new Human(PlayerColour.WHITE);
         Polygon tile = new Polygon();
-        tile.setFill(Colour.ORANGE);
+        tile.setFill(Color.ORANGE);
 
         // simulate move for black
         Move whiteMove = new Move(whitePlayer, tile, new Node("OctA01"));
         controller.paintTile(whiteMove);
 
         // check if tile colour is updated
-        assertEquals(Colour.WHITE, whiteMove.getTile().getFill());
+        assertEquals(Color.WHITE, whiteMove.getTile().getFill());
     }
 
     // ------------------------------- updateTurnLabel tests -----------------------

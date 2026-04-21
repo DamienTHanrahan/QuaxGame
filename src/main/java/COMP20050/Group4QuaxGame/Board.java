@@ -1,8 +1,10 @@
 package COMP20050.Group4QuaxGame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.HashSet;
 
 public class Board
 {
@@ -234,12 +236,117 @@ public class Board
     }
 
 
-    protected Node getCheapestPath (PlayerColour colour){
+    protected int getCheapestPath (PlayerColour colour){
 
-        if ()
+        Map<Node, Integer> price = new HashMap<>();
+        Map<Node, Integer> pathPrice = new HashMap<>();
+        Map<Node, Integer> toEvaluate = new HashMap<>();
+        HashSet<Node> evaluated = new HashSet<>();
+        PlayerColour opponentColour = null;
+        Node startNode = null;
+        Node endNode = null;
+        Node currentMin = null;
+        
+        
+        if (colour == PlayerColour.WHITE){
+            startNode = leftRow;
+            endNode = rightRow;
+            opponentColour = PlayerColour.BLACK;
+        }
+        else if (colour == PlayerColour.BLACK){
+            startNode = topRow;
+            endNode = bottomRow;
+            opponentColour = PlayerColour.WHITE;
+        }
+
+
+        // set each distance to a max value so that initially all will be correctly updated
+        // set cost of bot colour to 0, empty to 1, and opponent colour to a large value
+        for (Node node : getAllNodes()){
+
+            if (node.getOwner() == colour) {
+                
+                price.put(node, 0);
+            }
+            else if (node.getOwner() == PlayerColour.EMPTY) {
+                price.put(node, 1);
+            }
+            
+
+            // initialise the path prices, costs 0 to reach startNode and max values to be altered to reach all other nodes
+            if (node == startNode) {
+                pathPrice.put(node, 0);
+            }
+            else {
+
+                pathPrice.put(node, Integer.MAX_VALUE);
+
+            }
+
+
+
+            
+        }
+
+        toEvaluate.put(startNode, pathPrice.get(startNode));
+
+        // evaluating a path will add its neighbours to be evaluated. once evaluated remove and add to evaluated
+        // so we use while loop while toEvaluate isn't empty 
+
+        while (!toEvaluate.isEmpty()) {
+
+            // each time evaluate the neighbours of path in toEvaluate with lowest current price cost
+
+            currentMin = getCurrentMin(toEvaluate);
+            for (Node neighbour : currentMin.getNeighbours()){
+
+                
+                if (neighbour.getOwner() == opponentColour){
+                    continue;
+                }
+                
+                
+                if (pathPrice.get(neighbour) > pathPrice.get(currentMin) + price.get(neighbour)){
+
+                    pathPrice.put(neighbour, pathPrice.get(currentMin) + price.get(neighbour));
+                }
+            // once all neighbours path prices have been checked or altered, check if each neighbour has been evaluated already
+            //  If not in evaluated don't check if already in toEvaluate as we want most updated value in toEvaluate,
+            // just update it
+
+
+                if (!evaluated.contains(neighbour)) {
+                    toEvaluate.put(neighbour, pathPrice.get(neighbour));
+                }
+            }
+
+            // when done checking all neighbours, currentMin need not be evaluated again. remove from toEvaluate and add to
+            // evaluated
+
+            evaluated.add(currentMin);
+            toEvaluate.remove(currentMin);
+
+            
+            
+
+
+
+        }
+
+        return pathPrice.get(endNode);
 
     }
 
+    // return the key in a hashmap that has the smallest value, helper method for getCheapestPath
+
+    private Node getCurrentMin (Map <Node, Integer> toEvaluate) {
+
+
+        return Collections.min(toEvaluate.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
+
+
+
+    
 
 }

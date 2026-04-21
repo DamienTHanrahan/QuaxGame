@@ -1,4 +1,5 @@
 package COMP20050.Group4QuaxGame;
+import java.util.ArrayList;
 
 public class Bot extends Player
 {
@@ -7,8 +8,79 @@ public class Bot extends Player
         super(playerColour);
     }
 
+    protected enum Strategy {
+
+        AGGRESSIVE,
+        ATTACKING,
+        NEUTRAL,
+        DEFENSIVE,
+        STONEWALL
+    }
+    
+    
+
+    private Strategy strategy = Strategy.NEUTRAL;
+
+    protected void setStrategy(Strategy strategy){
+        this.strategy = strategy;
+    }
+
+    protected Strategy getStrategy(){
+
+        return strategy;
+    }
+
     // Rudimentary bot that makes random moves. To be implemented in the future.
-    public String chooseMove() {
+    
+    public String chooseMove(Board board, PlayerColour colour) {
+        
+        
+        String move;
+        PlayerColour oppColour = null;
+        if (colour == PlayerColour.WHITE) {oppColour = PlayerColour.BLACK;}
+        else{oppColour = PlayerColour.WHITE; }
+        int botPath = board.getCheapestPath(colour);
+        int oppPath = board.getCheapestPath(oppColour);
+        double bestScore = 0.0;
+        ArrayList<Node> bestNodes = new ArrayList<>();
+        
+        
+        
+        for (Node node: board.getEmptyNodes()){
+
+            node.setOwner(colour);
+
+            // calculate improvements to bot in terms of improved path and decrease in opponents path 
+            // order swaped for oppScore to ensure positive value.
+            int botScore = botPath - board.getCheapestPath(colour);
+            int oppScore = board.getCheapestPath(oppColour) - oppPath; 
+
+            double moveScore = getScore(botScore, oppScore, strategy);
+
+            if (moveScore == bestScore) {
+                
+                bestNodes.add(node);
+            }
+            else if(moveScore > bestScore){
+                bestScore = moveScore;
+                bestNodes.clear();
+                bestNodes.add(node);
+            }
+
+
+        node.setOwner(PlayerColour.EMPTY);
+
+        }
+
+       // bestNodes contains all the nodes with best possible score. Pick one at random
+            move = bestNodes.get((int)(Math.random() * bestNodes.size())).getId();
+        // return the coordinates of the move
+        return move;
+        
+    }
+    
+    
+    public String chooseRandomMove() {
         String move;
 
         int rand = (int) (Math.random() * 2);
@@ -57,5 +129,33 @@ public class Bot extends Player
     {
         int rand = (int) (Math.random() * 2);
         return (rand == 1);
+    }
+
+    
+
+    protected double getScore(int myScore, int oppScore, Strategy strategy) {
+
+        double score = 0;
+        
+        switch(strategy) {
+
+            case AGGRESSIVE:
+                score = (0.9 * myScore) + (0.1 * oppScore);
+                break;
+            case ATTACKING:
+                score = (0.7 * myScore) + (0.3 * oppScore);
+                break;
+            case NEUTRAL:
+                score = (0.5 * myScore) + (0.5 * oppScore);
+                break;
+            case DEFENSIVE:
+                score = (0.3 * myScore) + (0.7 * oppScore);
+                break;
+            case STONEWALL:
+                score = (0.1 * myScore) + (0.9 * oppScore);
+                break;
+
+        }
+        return score;
     }
 }

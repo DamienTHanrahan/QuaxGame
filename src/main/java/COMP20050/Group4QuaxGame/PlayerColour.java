@@ -1,6 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import javafx.scene.paint.Colour;
+import javafx.scene.paint.Color;
 
 public enum PlayerColour
 {
@@ -9,14 +9,14 @@ public enum PlayerColour
     WHITE;
 
     // switch the colour to match the javaFX colour
-    public Colour switchToFXColour()
+    public Color switchToFXColour()
     {
-        Colour fxColour;
+        Color fxColour;
 
         switch(this)
         {
-            case BLACK -> fxColour = Colour.BLACK;
-            case WHITE -> fxColour = Colour.WHITE;
+            case BLACK -> fxColour = Color.BLACK;
+            case WHITE -> fxColour = Color.WHITE;
             default -> fxColour = null;
         }
 

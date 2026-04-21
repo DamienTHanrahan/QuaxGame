@@ -8,7 +8,7 @@ public class Human extends Player
     }
 
     // human move is done through GUI so no need for this method
-    @Override
+    
     public String chooseMove()
     {
         return null;
