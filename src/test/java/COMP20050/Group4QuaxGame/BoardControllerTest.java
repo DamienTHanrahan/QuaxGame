@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Colour;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -115,7 +115,7 @@ class BoardControllerTest {
         // simulate black player and tile
         Human blackPlayer = new Human(PlayerColour.BLACK);
         Polygon tile = new Polygon();
-        tile.setFill(Color.ORANGE);
+        tile.setFill(Colour.ORANGE);
 
         // simulate move for black
         Move blackMove = new Move(blackPlayer, tile, new Node("OctA01"));
@@ -132,7 +132,7 @@ class BoardControllerTest {
         // simulate black player and tile
         Human whitePlayer = new Human(PlayerColour.WHITE);
         Polygon tile = new Polygon();
-        tile.setFill(Color.ORANGE);
+        tile.setFill(Colour.ORANGE);
 
         // simulate move for black
         Move whiteMove = new Move(whitePlayer, tile, new Node("OctA01"));

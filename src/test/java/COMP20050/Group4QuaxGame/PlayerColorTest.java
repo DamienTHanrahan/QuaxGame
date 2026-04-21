@@ -1,6 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Colour;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

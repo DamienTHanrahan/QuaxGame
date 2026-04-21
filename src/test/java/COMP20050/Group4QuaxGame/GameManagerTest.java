@@ -1,6 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import javafx.scene.paint.Color;
+import javafx.scene.paint.Colour;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
