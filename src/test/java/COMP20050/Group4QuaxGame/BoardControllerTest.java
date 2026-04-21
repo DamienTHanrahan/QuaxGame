@@ -108,12 +108,12 @@ class BoardControllerTest {
     }
 
     // ------------------------------------- paintTile tests ----------------------------------------
-    // test if black player moves does fill color be set to black
+    // test if black player moves does fill colour be set to black
     @Test
     void paintTileBlackPlayer()
     {
         // simulate black player and tile
-        Human blackPlayer = new Human(PlayerColor.BLACK);
+        Human blackPlayer = new Human(PlayerColour.BLACK);
         Polygon tile = new Polygon();
         tile.setFill(Color.ORANGE);
 
@@ -121,16 +121,16 @@ class BoardControllerTest {
         Move blackMove = new Move(blackPlayer, tile, new Node("OctA01"));
         controller.paintTile(blackMove);
 
-        // check if tile color is updated
+        // check if tile colour is updated
         assertEquals(Color.BLACK, blackMove.getTile().getFill());
     }
 
-    // test if black player moves does fill color be set to black
+    // test if black player moves does fill colour be set to black
     @Test
     void paintTileWhitePlayer()
     {
         // simulate black player and tile
-        Human whitePlayer = new Human(PlayerColor.WHITE);
+        Human whitePlayer = new Human(PlayerColour.WHITE);
         Polygon tile = new Polygon();
         tile.setFill(Color.ORANGE);
 
@@ -138,7 +138,7 @@ class BoardControllerTest {
         Move whiteMove = new Move(whitePlayer, tile, new Node("OctA01"));
         controller.paintTile(whiteMove);
 
-        // check if tile color is updated
+        // check if tile colour is updated
         assertEquals(Color.WHITE, whiteMove.getTile().getFill());
     }
 
@@ -147,7 +147,7 @@ class BoardControllerTest {
     @Test
     void updateTurnLabelStartGame() throws Exception
     {
-        controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
+        controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
 
         runOnFxThread(() -> {
             try {
@@ -182,8 +182,8 @@ class BoardControllerTest {
     @Test
     void updateTurnLabelAfterBlackMove() throws Exception
     {
-        controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
-        controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+        controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
+        controller.gameManager.otherPlayer = new Bot(PlayerColour.WHITE);
 
         runOnFxThread(() -> {
             try {
@@ -221,8 +221,8 @@ class BoardControllerTest {
     @Test
     void updateTurnLabelAfterWhiteMove() throws Exception
     {
-        controller.gameManager.currentPlayer = new Human(PlayerColor.WHITE);
-        controller.gameManager.otherPlayer = new Bot(PlayerColor.BLACK);
+        controller.gameManager.currentPlayer = new Human(PlayerColour.WHITE);
+        controller.gameManager.otherPlayer = new Bot(PlayerColour.BLACK);
 
         runOnFxThread(() -> {
             try {
@@ -285,8 +285,8 @@ class BoardControllerTest {
                 field4.setAccessible(true);
                 field4.set(controller, button2);
 
-                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
-                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+                controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColour.WHITE);
                 button.setVisible(true);
                 controller.pieButtonClicked(null);
 
@@ -353,8 +353,8 @@ class BoardControllerTest {
         runOnFxThread(() -> {
             try {
                 // set players
-                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
-                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+                controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColour.WHITE);
 
                 // enable dev mode
                 BoardController.DEV_MODE = true;
@@ -394,8 +394,8 @@ class BoardControllerTest {
         runOnFxThread(() -> {
             try {
                 // set players
-                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
-                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+                controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColour.WHITE);
 
                 // enable dev mode
                 BoardController.DEV_MODE = true;
@@ -435,8 +435,8 @@ class BoardControllerTest {
         runOnFxThread(() -> {
             try {
                 // set players
-                controller.gameManager.currentPlayer = new Human(PlayerColor.BLACK);
-                controller.gameManager.otherPlayer = new Bot(PlayerColor.WHITE);
+                controller.gameManager.currentPlayer = new Human(PlayerColour.BLACK);
+                controller.gameManager.otherPlayer = new Bot(PlayerColour.WHITE);
 
                 // disable dev mode
                 BoardController.DEV_MODE = false;

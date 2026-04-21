@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class Node {
     private final String id;
-    private PlayerColor owner;
+    private PlayerColour owner;
     private final ArrayList<Node> neighbours;
 
     public Node(String id) {
         this.id = id;
-        this.owner = PlayerColor.EMPTY;
+        this.owner = PlayerColour.EMPTY;
         this.neighbours = new ArrayList<>();
     }
 
@@ -17,11 +17,11 @@ public class Node {
         return id;
     }
 
-    public PlayerColor getOwner() {
+    public PlayerColour getOwner() {
         return owner;
     }
 
-    public void setOwner(PlayerColor owner) {
+    public void setOwner(PlayerColour owner) {
         this.owner = owner;
     }
 

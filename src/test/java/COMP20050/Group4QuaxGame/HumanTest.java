@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HumanTest
 {
-    Human human = new Human(PlayerColor.BLACK);
+    Human human = new Human(PlayerColour.BLACK);
 
     // Player chooses move through UI so this method is unused and should always return null
     @Test
@@ -15,11 +15,11 @@ class HumanTest
         assertNull(human.chooseMove());
     }
 
-    // test if human can change color
+    // test if human can change colour
     @Test
-    void changePlayerColor()
+    void changePlayerColour()
     {
-        human.setPlayerColor(PlayerColor.WHITE);
-        assertEquals(PlayerColor.WHITE, human.getPlayerColor());
+        human.setPlayerColour(PlayerColour.WHITE);
+        assertEquals(PlayerColour.WHITE, human.getPlayerColour());
     }
 }

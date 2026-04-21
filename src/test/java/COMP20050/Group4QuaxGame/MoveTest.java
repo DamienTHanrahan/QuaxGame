@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoveTest
 {
-    Human human = new Human(PlayerColor.BLACK);
-    Bot bot = new Bot(PlayerColor.WHITE);
+    Human human = new Human(PlayerColour.BLACK);
+    Bot bot = new Bot(PlayerColour.WHITE);
 
     Polygon tile = new Polygon();
     Node node = new Node("OctA01");

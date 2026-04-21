@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BotTest
 {
-    Bot bot = new Bot(PlayerColor.WHITE);
+    Bot bot = new Bot(PlayerColour.WHITE);
+    Board board = new Board();
 
 
 
@@ -15,7 +16,7 @@ class BotTest
     @Test
     void testChooseMove()
     {
-        String move = bot.chooseMove();
+        String move = bot.chooseMove(board, PlayerColour.WHITE);
         assertTrue(move.startsWith("Oct") || move.startsWith("Rho"));
     }
 
@@ -23,7 +24,7 @@ class BotTest
     @Test
     void testChooseMoveHasValidXCoordinates()
     {
-        String move = bot.chooseMove();
+        String move = bot.chooseMove(board, PlayerColour.WHITE);
         assertTrue(move.contains("A") || move.contains("B") || move.contains("C") || move.contains("D") || move.contains("E")
                 || move.contains("F") || move.contains("G") || move.contains("H") || move.contains("I") || move.contains("J")
                 || move.contains("K"));
@@ -34,7 +35,7 @@ class BotTest
     @Test
     void testChooseMoveHasValidYCoordinates()
     {
-        String move = bot.chooseMove();
+        String move = bot.chooseMove(board, PlayerColour.WHITE);
         assertTrue(move.endsWith("01") || move.endsWith("02") || move.endsWith("03") || move.endsWith("04") || move.endsWith("05")
                 || move.endsWith("06") || move.endsWith("07") || move.endsWith("08") || move.endsWith("09") || move.endsWith("10")
                 || move.endsWith("11"));

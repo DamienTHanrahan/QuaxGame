@@ -5,59 +5,59 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerColorTest
+class PlayerColourTest
 {
-    // ---------------------------  switchToFXColor tests ----------------------------------
+    // ---------------------------  switchToFXColour tests ----------------------------------
 
-    // test black player color returns javaFX black
+    // test black player colour returns javaFX black
     @Test
-    void switchToFXColorBlack()
+    void switchToFXColourBlack()
     {
-        PlayerColor playerColor = PlayerColor.BLACK;
-        assertEquals(Color.BLACK, playerColor.switchToFXColor());
+        PlayerColour playerColour = PlayerColour.BLACK;
+        assertEquals(Color.BLACK, playerColour.switchToFXColour());
     }
 
-    // test white player color returns javaFX white
+    // test white player colour returns javaFX white
     @Test
-    void switchToFXColorWhite()
+    void switchToFXColourWhite()
     {
-        PlayerColor playerColor = PlayerColor.WHITE;
-        assertEquals(Color.WHITE, playerColor.switchToFXColor());
+        PlayerColour playerColour = PlayerColour.WHITE;
+        assertEquals(Color.WHITE, playerColour.switchToFXColour());
     }
 
-    // test empty player color returns null
+    // test empty player colour returns null
     @Test
-    void switchToFXColorEmpty()
+    void switchToFXColourEmpty()
     {
-        PlayerColor playerColor = PlayerColor.EMPTY;
-        assertNull(playerColor.switchToFXColor());
+        PlayerColour playerColour = PlayerColour.EMPTY;
+        assertNull(playerColour.switchToFXColour());
     }
 
 
     // ---------------------------  getDisplayName tests ----------------------------------
 
-    // test black player color returns string "BLACK"
+    // test black player colour returns string "BLACK"
     @Test
     void getDisplayNameBlack()
     {
-        PlayerColor playerColor = PlayerColor.BLACK;
-        assertEquals("BLACK", playerColor.getDisplayName());
+        PlayerColour playerColour = PlayerColour.BLACK;
+        assertEquals("BLACK", playerColour.getDisplayName());
     }
 
-    // test white player color returns string "WHITE"
+    // test white player colour returns string "WHITE"
     @Test
     void getDisplayNameWhite()
     {
-        PlayerColor playerColor = PlayerColor.WHITE;
-        assertEquals("WHITE", playerColor.getDisplayName());
+        PlayerColour playerColour = PlayerColour.WHITE;
+        assertEquals("WHITE", playerColour.getDisplayName());
     }
 
-    // test empty player color returns string "EMPTY"
+    // test empty player colour returns string "EMPTY"
     @Test
     void getDisplayNameEmpty()
     {
-        PlayerColor playerColor = PlayerColor.EMPTY;
-        assertEquals("EMPTY", playerColor.getDisplayName());
+        PlayerColour playerColour = PlayerColour.EMPTY;
+        assertEquals("EMPTY", playerColour.getDisplayName());
     }
 
 }

@@ -15,28 +15,28 @@ class BoardTest
     void boardTopRowBlack()
     {
         Board boardTop = new Board();
-        assertEquals(PlayerColor.BLACK, boardTop.topRow.getOwner());
+        assertEquals(PlayerColour.BLACK, boardTop.topRow.getOwner());
     }
     // test if creating new board sets ghost node on bottom row to black
     @Test
     void boardBottomRowBlack()
     {
         Board boardBottom = new Board();
-        assertEquals(PlayerColor.BLACK, boardBottom.bottomRow.getOwner());
+        assertEquals(PlayerColour.BLACK, boardBottom.bottomRow.getOwner());
     }
     // test if creating new board sets ghost node on left row to white
     @Test
     void boardLeftRowWhite()
     {
         Board boardLeft = new Board();
-        assertEquals(PlayerColor.WHITE, boardLeft.leftRow.getOwner());
+        assertEquals(PlayerColour.WHITE, boardLeft.leftRow.getOwner());
     }
     // test if creating new board sets ghost node on right row to white
     @Test
     void boardRightRowWhite()
     {
         Board boardRight = new Board();
-        assertEquals(PlayerColor.WHITE, boardRight.rightRow.getOwner());
+        assertEquals(PlayerColour.WHITE, boardRight.rightRow.getOwner());
     }
 
 

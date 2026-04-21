@@ -26,8 +26,8 @@ public class BoardController
     // gameManager reference
     protected final GameManager gameManager = new GameManager();
 
-    private static final Color emptyOctColor = Color.web("#ffd675");
-    private static final Color emptyRhoColor = Color.web("#bcbcbc");
+    private static final Color emptyOctColour = Color.web("#ffd675");
+    private static final Color emptyRhoColour = Color.web("#bcbcbc");
 
     public static boolean DEV_MODE = Boolean.getBoolean("devMode");
 
@@ -38,7 +38,7 @@ public class BoardController
         Polygon playerNode = (Polygon) event.getSource();
 
         Move playerMove = gameManager.humanMove(playerNode);
-        // if gameManager verifies the move set the tiles color
+        // if gameManager verifies the move set the tiles colour
         if(playerMove != null)
         {
             paintTile(playerMove);
@@ -94,8 +94,8 @@ public class BoardController
     void paintTile(Move move)
     {
         Polygon tile = move.getTile();
-        PlayerColor playerColor = move.getPlayer().getPlayerColor();
-        tile.setFill(playerColor.switchToFXColor());
+        PlayerColour playerColour = move.getPlayer().getPlayerColour();
+        tile.setFill(playerColour.switchToFXColour());
     }
 
     // activate pie rule
@@ -118,11 +118,11 @@ public class BoardController
     @FXML
     void updateTurnLabel()
     {
-        PlayerColor color = gameManager.getCurrentPlayer().getPlayerColor();
+        PlayerColour colour = gameManager.getCurrentPlayer().getPlayerColour();
         // if game is over and there's a winner set the text to display who won
         if(gameManager.isGameOver() && gameManager.getWinner() != null)
         {
-            playLabel.setText(gameManager.getWinner().getPlayerColor() + " wins");
+            playLabel.setText(gameManager.getWinner().getPlayerColour() + " wins");
         }
         // otherwise if game is over but winner remains null then we now board is full so display draw
         else if(gameManager.isGameOver() && gameManager.getWinner() == null)
@@ -132,7 +132,7 @@ public class BoardController
         // otherwise game still on so display whose turn it is
         else
         {
-            playLabel.setText(color.getDisplayName() + " to play");
+            playLabel.setText(colour.getDisplayName() + " to play");
         }
 
         if(gameManager.getCurrentPlayer() == gameManager.human && DEV_MODE)
@@ -162,16 +162,16 @@ public class BoardController
     {
         if(gameManager.resetGame())
         {
-            // reset tile colors
+            // reset tile colours
            for(Polygon tile : tiles.values())
            {
                if(tile.getId().contains("Oct"))
                {
-                   tile.setFill(emptyOctColor);
+                   tile.setFill(emptyOctColour);
                }
                else
                {
-                   tile.setFill(emptyRhoColor);
+                   tile.setFill(emptyRhoColour);
                }
            }
 

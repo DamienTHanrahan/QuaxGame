@@ -6,67 +6,67 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest
 {
-    Player player = new Player(PlayerColor.EMPTY)
+    Player player = new Player(PlayerColour.EMPTY)
     {
         // for testing purpose this always will return OCTA01
-        @Override
-        public String chooseMove()
+        
+        public String chooseMove(Board board, PlayerColour colour)
         {
             return "OCTA01";
         }
     };
 
-    // --------------------------- getPlayerColor tests ------------------------
+    // --------------------------- getPlayerColour tests ------------------------
     @Test
-    void getPlayerColorBlack()
+    void getPlayerColourBlack()
     {
-        player.playerColor = PlayerColor.BLACK;
+        player.playerColour = PlayerColour.BLACK;
 
-        assertEquals(PlayerColor.BLACK, player.getPlayerColor());
+        assertEquals(PlayerColour.BLACK, player.getPlayerColour());
     }
 
     @Test
-    void getPlayerColorWhite()
+    void getPlayerColourWhite()
     {
-        player.playerColor = PlayerColor.WHITE;
+        player.playerColour = PlayerColour.WHITE;
 
-        assertEquals(PlayerColor.WHITE, player.getPlayerColor());
+        assertEquals(PlayerColour.WHITE, player.getPlayerColour());
     }
 
     @Test
-    void getPlayerColorEmpty()
+    void getPlayerColourEmpty()
     {
-        player.playerColor = PlayerColor.EMPTY;
+        player.playerColour = PlayerColour.EMPTY;
 
-        assertEquals(PlayerColor.EMPTY, player.getPlayerColor());
+        assertEquals(PlayerColour.EMPTY, player.getPlayerColour());
     }
 
 
-    // --------------------------- setPlayerColor tests ------------------------
+    // --------------------------- setPlayerColour tests ------------------------
     @Test
-    void setPlayerColorBlack()
+    void setPlayerColourBlack()
     {
-        player.setPlayerColor(PlayerColor.BLACK);
+        player.setPlayerColour(PlayerColour.BLACK);
 
-        assertEquals(PlayerColor.BLACK, player.getPlayerColor());
-
-    }
-
-    @Test
-    void setPlayerColorWhite()
-    {
-        player.setPlayerColor(PlayerColor.WHITE);
-
-        assertEquals(PlayerColor.WHITE, player.getPlayerColor());
+        assertEquals(PlayerColour.BLACK, player.getPlayerColour());
 
     }
 
     @Test
-    void setPlayerColorEmpty()
+    void setPlayerColourWhite()
     {
-        player.setPlayerColor(PlayerColor.EMPTY);
+        player.setPlayerColour(PlayerColour.WHITE);
 
-        assertEquals(PlayerColor.EMPTY, player.getPlayerColor());
+        assertEquals(PlayerColour.WHITE, player.getPlayerColour());
+
+    }
+
+    @Test
+    void setPlayerColourEmpty()
+    {
+        player.setPlayerColour(PlayerColour.EMPTY);
+
+        assertEquals(PlayerColour.EMPTY, player.getPlayerColour());
 
     }
 }
