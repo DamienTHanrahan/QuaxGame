@@ -500,6 +500,21 @@ class BoardControllerTest {
                 throw new RuntimeException(e);
             }
 
+            Label botStratLabel = new Label();
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try
+            {
+                field.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon blackPathEmptyTile = tile("OctA01", Color.web("#ffd675"));
             Polygon whitePathEmptyTile = tile("RhoA01", Color.web("#bcbcbc"));
             Polygon occupiedTile = tile("OctA02", Color.web("#123456"));
@@ -548,6 +563,21 @@ class BoardControllerTest {
                 throw new RuntimeException(e);
             }
 
+            Label botStratLabel = new Label();
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try
+            {
+                field.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon octTile = tile("OctB01", Color.web("#ffd675"));
             Polygon rhoTile = tile("RhoB01", Color.web("#bcbcbc"));
 
@@ -591,6 +621,21 @@ class BoardControllerTest {
                 throw new RuntimeException(e);
             }
 
+            Label botStratLabel = new Label();
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try
+            {
+                field.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon untouchedTile = tile("OctC01", Color.web("#aa33aa"));
             BoardController.tiles.put("OctC01", untouchedTile);
 
@@ -626,6 +671,22 @@ class BoardControllerTest {
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
+
+            Label botStratLabel = new Label();
+            Field field2 = null;
+            try {
+                field2 = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field2.setAccessible(true);
+            try
+            {
+                field2.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             assertEquals("SHOW STRATEGY", strategyButton.getText() );
         });
     }
@@ -652,6 +713,22 @@ class BoardControllerTest {
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
+
+            Label botStratLabel = new Label();
+            Field field2 = null;
+            try {
+                field2 = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field2.setAccessible(true);
+            try
+            {
+                field2.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             controller.showStrategyButtonClicked();
             assertEquals("HIDE STRATEGY", strategyButton.getText() );
         });
@@ -679,6 +756,22 @@ class BoardControllerTest {
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
+
+            Label botStratLabel = new Label();
+            Field field2 = null;
+            try {
+                field2 = BoardController.class.getDeclaredField("botStratLabel");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field2.setAccessible(true);
+            try
+            {
+                field2.set(controller, botStratLabel);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             // if method works text should change however as dev mode is false it should stay the same
             controller.showStrategyButtonClicked();
             assertEquals("SHOW STRATEGY", strategyButton.getText() );

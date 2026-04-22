@@ -218,9 +218,12 @@ public class BoardController
         if(showStrategyToggled)
         {
             strategyButton.setText("SHOW STRATEGY");
+            botStratLabel.setVisible(false);
         }
         else
         {
+            botStratLabel.setVisible(true);
+            botStratLabel.setText("BOT STRATEGY: " + gameManager.bot.getStrategy());
             strategyButton.setText("HIDE STRATEGY");
         }
         Stack<Node> black = Board.getPath(PlayerColour.BLACK);
@@ -944,6 +947,9 @@ public class BoardController
 
     @FXML // fx:id="strategyButton"
     private Button strategyButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="botStratLabel"
+    private Label botStratLabel; // Value injected by FXMLLoader
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

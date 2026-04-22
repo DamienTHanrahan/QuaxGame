@@ -23,7 +23,6 @@ public class Bot extends Player
 
     protected void setStrategy(Strategy strategy){
         this.strategy = strategy;
-        System.out.println("Strategy set to: " + strategy);
     }
 
     protected Strategy getStrategy(){
