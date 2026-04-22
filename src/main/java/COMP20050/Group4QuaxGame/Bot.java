@@ -31,7 +31,7 @@ public class Bot extends Player
         return strategy;
     }
 
-    // Rudimentary bot that makes random moves. To be implemented in the future.
+    // A more sophisticated bot with intelligent path searching
     
     public String chooseMove(Board board, PlayerColour colour) {
         
@@ -75,7 +75,7 @@ public class Bot extends Player
             // calculate improvements to bot in terms of improved path and decrease in opponents path 
             // order swaped for oppScore to ensure positive value.
             int botScore = botPath - board.getCheapestPath(colour);
-            int oppScore = board.getCheapestPath(oppColour) - oppPath; 
+            int oppScore = board.getCheapestPath(oppColour) - oppPath;
 
             double moveScore = getScore(botScore, oppScore, strategy);
 

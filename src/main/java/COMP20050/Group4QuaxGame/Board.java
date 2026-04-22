@@ -1,10 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.HashSet;
+import java.util.*;
 
 public class Board
 {
@@ -14,6 +10,8 @@ public class Board
     protected Node bottomRow = new Node("bottomRow");
     protected Node leftRow = new Node("leftRow");
     protected Node rightRow = new Node("rightRow");
+    protected static Stack<Node> blackPath = new Stack<>();
+    protected static Stack<Node> whitePath = new Stack<>();
 
     public Board()
     {
@@ -194,8 +192,7 @@ public class Board
     }
 
     // get list of all neighbours for a rhombus node
-    protected ArrayList<String> getRhombusNodeNeighbours(char col, int row)
-    {
+    protected ArrayList<String> getRhombusNodeNeighbours(char col, int row) {
         ArrayList<String> neighbourIDList = new ArrayList<>();
 
         // Octagons: (Top left, Bottom left, Top right, Bottom Right
@@ -207,7 +204,6 @@ public class Board
         return neighbourIDList;
     }
 
-
     protected ArrayList<Node> getAllNodes(){
 
         ArrayList<Node> allNodes = new ArrayList<>(nodeMap.values());
@@ -217,8 +213,6 @@ public class Board
         allNodes.add(rightRow);
 
         return allNodes;
-
-
     }
 
     protected ArrayList<Node> getEmptyNodes(){
@@ -235,18 +229,17 @@ public class Board
         return emptyNodes;
     }
 
-
     protected int getCheapestPath (PlayerColour colour){
 
         Map<Node, Integer> price = new HashMap<>();
         Map<Node, Integer> pathPrice = new HashMap<>();
         Map<Node, Integer> toEvaluate = new HashMap<>();
+        Map<Node, Node> parentMap = new HashMap<>();
         HashSet<Node> evaluated = new HashSet<>();
         PlayerColour opponentColour = null;
         Node startNode = null;
         Node endNode = null;
         Node currentMin = null;
-        
         
         if (colour == PlayerColour.WHITE){
             startNode = leftRow;
@@ -258,7 +251,6 @@ public class Board
             endNode = bottomRow;
             opponentColour = PlayerColour.WHITE;
         }
-
 
         // set each distance to a max value so that initially all will be correctly updated
         // set cost of bot colour to 0, empty to 1, and opponent colour to a large value
@@ -282,10 +274,6 @@ public class Board
                 pathPrice.put(node, Integer.MAX_VALUE);
 
             }
-
-
-
-            
         }
 
         toEvaluate.put(startNode, pathPrice.get(startNode));
@@ -307,8 +295,8 @@ public class Board
                 
                 
                 if (pathPrice.get(neighbour) > pathPrice.get(currentMin) + price.get(neighbour)){
-
                     pathPrice.put(neighbour, pathPrice.get(currentMin) + price.get(neighbour));
+                    parentMap.put(neighbour, currentMin);
                 }
             // once all neighbours path prices have been checked or altered, check if each neighbour has been evaluated already
             //  If not in evaluated don't check if already in toEvaluate as we want most updated value in toEvaluate,
@@ -325,16 +313,23 @@ public class Board
 
             evaluated.add(currentMin);
             toEvaluate.remove(currentMin);
-
-            
-            
-
-
-
         }
-
+        if(colour == PlayerColour.BLACK){
+            blackPath.clear();
+            Node currentNode = parentMap.get(endNode);
+            while (currentNode != null) {
+                blackPath.add(currentNode);
+                currentNode = parentMap.get(currentNode);
+            }
+        } else {
+            whitePath.clear();
+            Node currentNode = parentMap.get(endNode);
+            while (currentNode != null) {
+                whitePath.add(currentNode);
+                currentNode = parentMap.get(currentNode);
+            }
+        }
         return pathPrice.get(endNode);
-
     }
 
     // return the key in a hashmap that has the smallest value, helper method for getCheapestPath
@@ -345,8 +340,12 @@ public class Board
         return Collections.min(toEvaluate.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
-
-
-    
-
+    public static Stack<Node> getPath(PlayerColour colour){
+        if (colour == PlayerColour.BLACK){
+            return blackPath;
+        }
+        else{
+            return whitePath;
+        }
+    }
 }

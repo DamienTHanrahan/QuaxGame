@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ import javafx.util.Duration;
 public class BoardController
 {
     protected static Map<String, Polygon> tiles = new HashMap<>();
-
+    boolean showStrategyToggled = false;
     // gameManager reference
     protected final GameManager gameManager = new GameManager();
 
@@ -64,6 +65,9 @@ public class BoardController
 
     void callBotToMove()
     {
+        if(showStrategyToggled) {
+            showStrategyButtonClicked();
+        }
         PauseTransition pause = new PauseTransition(Duration.millis(650));
         // once pause is finished allow bot to move
         pause.setOnFinished(e -> {
@@ -206,9 +210,44 @@ public class BoardController
     }
 
     @FXML
-    void showStrategyButtonClicked()
-    {
-        System.out.println("showStrategyButtonClicked");
+    void showStrategyButtonClicked() {
+        System.out.println("Show strategy button clicked");
+        Stack<Node> black = Board.getPath(PlayerColour.BLACK);
+        Stack<Node> white = Board.getPath(PlayerColour.WHITE);
+        for(Node node : black) {
+            if (node.getOwner() == PlayerColour.EMPTY) {
+                if(!showStrategyToggled) {
+                    tiles.get(node.getId()).setFill(Color.web("#575757"));
+                } else {
+                    Polygon tile = tiles.get(node.getId());
+                    if(tile.getId().contains("Oct")) {
+                        tile.setFill(emptyOctColour);
+                    } else {
+                        tile.setFill(emptyRhoColour);
+                    }
+                }
+            }
+        }
+        for(Node node : white) {
+            if (node.getOwner() == PlayerColour.EMPTY) {
+                if(!showStrategyToggled) {
+                    Polygon tile = tiles.get(node.getId());
+                    if(tile.getFill() == Color.web("#575757")) {
+                        tile.setFill(Color.web("#808080"));
+                    } else {
+                        tiles.get(node.getId()).setFill(Color.web("#d4d4d4"));
+                    }
+                } else {
+                    Polygon tile = tiles.get(node.getId());
+                    if(tile.getId().contains("Oct")) {
+                        tile.setFill(emptyOctColour);
+                    } else {
+                        tile.setFill(emptyRhoColour);
+                    }
+                }
+            }
+        }
+        showStrategyToggled = !showStrategyToggled;
     }
 
     @FXML // ResourceBundle that was given to the FXMLLoader
