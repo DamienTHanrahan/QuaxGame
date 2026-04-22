@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BoardControllerTest {
@@ -32,6 +34,14 @@ class BoardControllerTest {
         if (!latch.await(5, TimeUnit.SECONDS)) {
             throw new IllegalStateException("JavaFX toolkit did not initialize in time.");
         }
+    }
+
+    @BeforeEach
+    void resetSharedBoardState() {
+        BoardController.tiles.clear();
+        Board.blackPath.clear();
+        Board.whitePath.clear();
+        controller.showStrategyToggled = false;
     }
 
     @Test
@@ -468,6 +478,89 @@ class BoardControllerTest {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    // --------------------------- showStrategyButtonClicked  ----------------------------------------------
+    @Test
+    void showStrategyButtonClicked_highlightsEmptyPathNodesAndSkipsOccupied() throws Exception {
+        runOnFxThread(() -> {
+            Polygon blackPathEmptyTile = tile("OctA01", Color.web("#ffd675"));
+            Polygon whitePathEmptyTile = tile("RhoA01", Color.web("#bcbcbc"));
+            Polygon occupiedTile = tile("OctA02", Color.web("#123456"));
+
+            BoardController.tiles.put("OctA01", blackPathEmptyTile);
+            BoardController.tiles.put("RhoA01", whitePathEmptyTile);
+            BoardController.tiles.put("OctA02", occupiedTile);
+
+            Node blackPathEmptyNode = new Node("OctA01");
+            Node occupiedNode = new Node("OctA02");
+            occupiedNode.setOwner(PlayerColour.BLACK);
+            Node whitePathEmptyNode = new Node("RhoA01");
+
+            Board.blackPath = new Stack<>();
+            Board.blackPath.push(blackPathEmptyNode);
+            Board.blackPath.push(occupiedNode);
+
+            Board.whitePath = new Stack<>();
+            Board.whitePath.push(whitePathEmptyNode);
+
+            controller.showStrategyButtonClicked();
+
+            assertEquals(Color.web("#575757"), blackPathEmptyTile.getFill());
+            assertEquals(Color.web("#d4d4d4"), whitePathEmptyTile.getFill());
+            assertEquals(Color.web("#123456"), occupiedTile.getFill());
+            assertTrue(controller.showStrategyToggled);
+        });
+    }
+
+    @Test
+    void showStrategyButtonClicked_secondClickResetsToDefaultTileColours() throws Exception {
+        runOnFxThread(() -> {
+            Polygon octTile = tile("OctB01", Color.web("#ffd675"));
+            Polygon rhoTile = tile("RhoB01", Color.web("#bcbcbc"));
+
+            BoardController.tiles.put("OctB01", octTile);
+            BoardController.tiles.put("RhoB01", rhoTile);
+
+            Node blackPathNode = new Node("OctB01");
+            Node whitePathNode = new Node("RhoB01");
+
+            Board.blackPath = new Stack<>();
+            Board.blackPath.push(blackPathNode);
+
+            Board.whitePath = new Stack<>();
+            Board.whitePath.push(whitePathNode);
+
+            controller.showStrategyButtonClicked();
+            controller.showStrategyButtonClicked();
+
+            assertEquals(Color.web("#ffd675"), octTile.getFill());
+            assertEquals(Color.web("#bcbcbc"), rhoTile.getFill());
+            assertFalse(controller.showStrategyToggled);
+        });
+    }
+
+    @Test
+    void showStrategyButtonClicked_doesNotChangeTilesOutsideSuggestedPaths() throws Exception {
+        runOnFxThread(() -> {
+            Polygon untouchedTile = tile("OctC01", Color.web("#aa33aa"));
+            BoardController.tiles.put("OctC01", untouchedTile);
+
+            Board.blackPath = new Stack<>();
+            Board.whitePath = new Stack<>();
+
+            controller.showStrategyButtonClicked();
+            controller.showStrategyButtonClicked();
+
+            assertEquals(Color.web("#aa33aa"), untouchedTile.getFill());
+        });
+    }
+
+    private static Polygon tile(String id, Color initialFill) {
+        Polygon polygon = new Polygon();
+        polygon.setId(id);
+        polygon.setFill(initialFill);
+        return polygon;
     }
 
 }
