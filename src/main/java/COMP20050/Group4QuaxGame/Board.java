@@ -330,8 +330,7 @@ public class Board
             }
         }
 
-        System.out.printf(pathPrice.get(endNode) + " needed for " + colour);
-        System.out.println();
+       
         return pathPrice.get(endNode);
     }
 

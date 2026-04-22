@@ -39,7 +39,7 @@ public class Bot extends Player
         PlayerColour oppColour = null;
         if (colour == PlayerColour.WHITE) {oppColour = PlayerColour.BLACK;}
         else{oppColour = PlayerColour.WHITE; }
-        System.out.println("Evaluation of situation before move considered");
+       
         int botPath = board.getCheapestPath(colour);
         int oppPath = board.getCheapestPath(oppColour);
         int scoreDifference = botPath - oppPath;
@@ -75,7 +75,7 @@ public class Bot extends Player
             // calculate improvements to bot in terms of improved path and decrease in opponents path 
             // order swaped for oppScore to ensure positive value.
 
-            System.out.println("State if the node: " + node.getId() + " is played.");
+        
             int botScore = botPath - board.getCheapestPath(colour);
             int oppScore = board.getCheapestPath(oppColour) - oppPath;
 
