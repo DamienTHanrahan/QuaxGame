@@ -100,7 +100,7 @@ public class GameManager
             return null;
         }
 
-        if(turnCount == 1 && bot.usePieRule())
+        if(turnCount == 1 && bot.usePieRule(board))
         {
             activatePieRule(bot);
             return null;

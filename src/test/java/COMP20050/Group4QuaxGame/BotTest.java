@@ -1,5 +1,6 @@
 package COMP20050.Group4QuaxGame;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,9 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class BotTest
 {
     Bot bot = new Bot(PlayerColour.WHITE);
-    Board board = new Board();
+    Board board;
 
-
+    @BeforeEach
+    void setupBoard()
+    {
+        board = new Board();
+    }
 
     // -------------------- chooseMove function TEST -------------------------
     // test if the bot chooses a move always is either a rhombus or an octagon
@@ -67,19 +72,54 @@ class BotTest
 
     // --------------------- usePieRule function TESTS -------------------------------
 
-    // currently bot choosing pie rule logic is fully random so this is temporary test
+    // test if bot uses pie rule for any center tile
     @Test
-    void usePieRule()
+    void usePieRuleCenterTile()
     {
-        boolean result = bot.usePieRule();
-        if(result)
-        {
-            assertTrue(result);
-        }
-        else
-        {
-            assertFalse(result);
-        }
+        // simulate first move was OctF06
+        board.getNode("OctF06").setOwner(PlayerColour.BLACK);
+
+        assertTrue(bot.usePieRule(board));
+    }
+
+    // test if bot uses pie rule on non center tile
+    @Test
+    void usePieRuleNonCenterTile()
+    {
+        // simulate first move was OctC06 - outside of center tile range
+        board.getNode("OctC06").setOwner(PlayerColour.BLACK);
+
+        assertFalse(bot.usePieRule(board));
+    }
+
+    @Test
+    void usePieRuleTopLeftCenterTile()
+    {
+        // simulate first move was OctD04
+        board.getNode("OctD04").setOwner(PlayerColour.BLACK);
+
+        assertTrue(bot.usePieRule(board));
+    }
+    @Test
+    void usePieRuleTopRightCenterTile()
+    {
+        board.getNode("OctH04").setOwner(PlayerColour.BLACK);
+
+        assertTrue(bot.usePieRule(board));
+    }
+
+    @Test
+    void  usePieRuleBottomLeftCenterTile()
+    {
+        board.getNode("OctD08").setOwner(PlayerColour.BLACK);
+        assertTrue(bot.usePieRule(board));
+    }
+
+    @Test
+    void usePieRuleBottomRightCenterTile()
+    {
+        board.getNode("OctH08").setOwner(PlayerColour.BLACK);
+        assertTrue(bot.usePieRule(board));
     }
 
 }

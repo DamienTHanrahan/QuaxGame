@@ -145,12 +145,27 @@ public class Bot extends Player
         return id.toString();
     }
 
-    // random 1 - 3 chance to use pie rule
-    // TEMP until further bot logic
-    protected boolean usePieRule()
+    // decision to use pie rule
+    protected boolean usePieRule(Board board)
     {
-        int rand = (int) (Math.random() * 2);
-        return (rand == 1);
+        if(playerColour != PlayerColour.WHITE)
+            return false;
+
+        // find the tile that was placed
+        for(Node node: board.getAllNodes())
+        {
+            if(node.getOwner() == PlayerColour.BLACK)
+            {
+                char column = node.getId().charAt(3);
+                char row =  node.getId().charAt(5);
+                // if the tile is a center tile use pie rule as it gives better control of the board
+                if(column >= 'D' && column <= 'H' && row >= '4' && row <= '8')
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     
