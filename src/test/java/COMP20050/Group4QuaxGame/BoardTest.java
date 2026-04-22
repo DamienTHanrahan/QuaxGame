@@ -6,11 +6,16 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Random;
+
 class BoardTest
 {
     Board board = new Board();
     // ----------------- board constructor tests ----------------------
     // test if creating new board sets ghost node on top row to black
+    
+    
+    
     @Test
     void boardTopRowBlack()
     {
@@ -475,5 +480,226 @@ class BoardTest
         }
     }
 
+    @Test 
+
+    void testgetAllNodes()
+    {
+
+        ArrayList<Node> nodes = board.getAllNodes();
+        assertEquals(225, nodes.size());
+
+    
+    }
+
+    @Test
+
+    void testgetEmptyNodes()
+    {
+
+        Random rand = new Random();
+
+        for (Node node : board.getAllNodes()) {
+        
+            if (node == board.topRow || node == board.bottomRow || node == board.leftRow || node == board.rightRow) {
+            
+             continue;
+            }
+
+            int i = rand.nextInt(3);
+            if( i == 1) {
+                
+                node.setOwner(PlayerColour.BLACK);
+            }
+            else if(i == 2) {
+                node.setOwner(PlayerColour.WHITE);
+            }
+        }
+
+        for (Node nodes : board.getEmptyNodes()) {
+
+            assertEquals(PlayerColour.EMPTY, nodes.getOwner());
+
+            
+
+
+        }
+
+
+
+        
+
+    
+    }
+
+    @Test
+    
+    void testGetCheapestPath()
+    {
+        for (Node node: board.getAllNodes()){
+
+            
+        if (node == board.topRow || node == board.bottomRow || node == board.leftRow || node == board.rightRow) {
+            continue;
+        }
+        
+        else {       
+            node.setOwner(PlayerColour.EMPTY);
+            System.out.println(node.getOwner());
+        }
+
+        }
+
+        for (Node node : board.getAllNodes()) {
+        
+            if (node == board.topRow || node == board.bottomRow || node == board.leftRow || node == board.rightRow) {
+            
+             continue;
+            }
+            else {
+                assertEquals(PlayerColour.EMPTY, node.getOwner());
+            }
+        }
+        
+       
+    /// test that empty board returns 11 for both 
+
+        assertEquals(11, board.getCheapestPath(PlayerColour.BLACK));
+        assertEquals(11, board.getCheapestPath(PlayerColour.WHITE));
+    
+    // test that colouring never decreases cheapest path of that colour
+
+    Random random = new Random(); 
+    Node randomNode = null; 
+    int currentWhiteScore = 11;
+    int currentBlackScore = 11;
+    int newWhiteScore = 0;
+    int newBlackScore = 0;
+     int i = 2;
+
+
+    // test that colouring never decreases cheapest path of that colour
+     
+
+    for (int j = 221; j>0; j--) {
+
+        
+        randomNode = board.getEmptyNodes().get((int)(Math.random() * board.getEmptyNodes().size()));
+        i = random.nextInt(2); 
+        
+        if (i == 0) {
+
+            currentWhiteScore = board.getCheapestPath(PlayerColour.WHITE);
+            randomNode.setOwner(PlayerColour.WHITE);
+            newWhiteScore = board.getCheapestPath(PlayerColour.WHITE);
+            assertTrue(newWhiteScore <= currentWhiteScore);
+            currentWhiteScore = newWhiteScore;
+
+
+        }
+
+        else {
+
+            currentBlackScore = board.getCheapestPath(PlayerColour.BLACK);
+            randomNode.setOwner(PlayerColour.BLACK);
+            newBlackScore = board.getCheapestPath(PlayerColour.BLACK);
+            assertTrue(newBlackScore <= currentBlackScore);
+            currentBlackScore = newBlackScore;
+
+
+        }
+
+    }
+
+    for (Node node: board.getAllNodes()){
+
+            
+        if (node == board.topRow || node == board.bottomRow || node == board.leftRow || node == board.rightRow) {
+            continue;
+        }
+        
+        else {       
+            node.setOwner(PlayerColour.EMPTY);
+            
+        }
+    }
+
+     for (Node nodes : board.getAllNodes()) {
+        
+            if (nodes == board.topRow || nodes == board.bottomRow || nodes == board.leftRow || nodes == board.rightRow) {
+            
+             continue;
+            }
+            else {
+                assertEquals(PlayerColour.EMPTY, nodes.getOwner());
+            }
+        }
+    
+
+    assertEquals(11, board.getCheapestPath(PlayerColour.WHITE));
+    assertEquals(11, board.getCheapestPath(PlayerColour.BLACK));
+
+
+    // test that changing colour of a rhombus before octagons have been placed doesn't change path
+
+
+    for ( Node rhombus : board.getEmptyNodes()){
+
+
+        if (rhombus.getId().startsWith("Rho")) {
+
+            rhombus.setOwner(PlayerColour.BLACK);
+            assertEquals(11, board.getCheapestPath(PlayerColour.BLACK));
+
+
+        }
+
+
+
+    }
+
+
+
+    for (Node node: board.getAllNodes()){
+
+            
+        if (node == board.topRow || node == board.bottomRow || node == board.leftRow || node == board.rightRow) {
+            continue;
+        }
+        
+        else {       
+            node.setOwner(PlayerColour.EMPTY);
+            
+        }
+    }
+
+
+    /// test that checks that a path needing only a rhombus to complete is given a price of 1. 
+    
+
+    for (i = 1; i<9; i++){
+
+        String id = "OctD" + String.format("%02d", i);
+
+        Node node1 = board.getNode(id);
+        node1.setOwner(PlayerColour.BLACK);
+    }
+
+    for (i = 9; i<12; i++){
+
+        String id = "OctE" + String.format("%02d", i);
+
+        Node node1 = board.getNode(id);
+        node1.setOwner(PlayerColour.BLACK);
+    }
+
+    Node node1 = board.getNode("OctD09");
+    node1.setOwner(PlayerColour.WHITE);
+    node1 = board.getNode("OctE08");
+    node1.setOwner(PlayerColour.WHITE);
+
+    assertEquals(1, board.getCheapestPath(PlayerColour.BLACK));
+    
+
+}
 
 }

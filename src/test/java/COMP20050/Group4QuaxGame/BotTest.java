@@ -3,6 +3,8 @@ package COMP20050.Group4QuaxGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import COMP20050.Group4QuaxGame.Bot.Strategy;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BotTest
@@ -121,5 +123,48 @@ class BotTest
         board.getNode("OctH08").setOwner(PlayerColour.BLACK);
         assertTrue(bot.usePieRule(board));
     }
+
+ @Test
+    
+ 
+    /// test that getScore is returning different values based on strategy
+    
+    void testGetScore()
+    
+    {
+        int a = 20;
+        int b = 10; 
+
+        assertEquals(bot.getScore(a, b, Strategy.AGGRESSIVE), 19);
+        assertEquals(bot.getScore(a, b, Strategy.ATTACKING), 17);
+        assertEquals(bot.getScore(a, b, Strategy.NEUTRAL), 15);
+        assertEquals(bot.getScore(a, b, Strategy.DEFENSIVE), 13);
+        assertEquals(bot.getScore(a, b, Strategy.STONEWALL), 11);
+
+
+        
+
+        assertEquals(bot.getScore(b, a, Strategy.STONEWALL), 19);
+        assertEquals(bot.getScore(b, a, Strategy.DEFENSIVE), 17);
+        assertEquals(bot.getScore(b, a, Strategy.NEUTRAL), 15);
+        assertEquals(bot.getScore(b, a, Strategy.ATTACKING), 13);
+        assertEquals(bot.getScore(b, a, Strategy.AGGRESSIVE), 11);
+
+        a = b;
+
+        assertEquals(bot.getScore(b, a, Strategy.STONEWALL), 10);
+        assertEquals(bot.getScore(b, a, Strategy.DEFENSIVE), 10);
+        assertEquals(bot.getScore(b, a, Strategy.NEUTRAL), 10);
+        assertEquals(bot.getScore(b, a, Strategy.ATTACKING), 10);
+        assertEquals(bot.getScore(b, a, Strategy.AGGRESSIVE), 10);
+
+
+
+
+        
+        
+    }
+
+    
 
 }
