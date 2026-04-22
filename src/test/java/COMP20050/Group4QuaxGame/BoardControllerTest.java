@@ -484,6 +484,22 @@ class BoardControllerTest {
     @Test
     void showStrategyButtonClicked_highlightsEmptyPathNodesAndSkipsOccupied() throws Exception {
         runOnFxThread(() -> {
+            BoardController.DEV_MODE = true;
+
+            Button strategyButton = new Button();
+            Field strategyField = null;
+            try {
+                strategyField = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            strategyField.setAccessible(true);
+            try {
+                strategyField.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon blackPathEmptyTile = tile("OctA01", Color.web("#ffd675"));
             Polygon whitePathEmptyTile = tile("RhoA01", Color.web("#bcbcbc"));
             Polygon occupiedTile = tile("OctA02", Color.web("#123456"));
@@ -516,6 +532,22 @@ class BoardControllerTest {
     @Test
     void showStrategyButtonClicked_secondClickResetsToDefaultTileColours() throws Exception {
         runOnFxThread(() -> {
+            BoardController.DEV_MODE = true;
+
+            Button strategyButton = new Button();
+            Field strategyField = null;
+            try {
+                strategyField = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            strategyField.setAccessible(true);
+            try {
+                strategyField.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon octTile = tile("OctB01", Color.web("#ffd675"));
             Polygon rhoTile = tile("RhoB01", Color.web("#bcbcbc"));
 
@@ -543,6 +575,22 @@ class BoardControllerTest {
     @Test
     void showStrategyButtonClicked_doesNotChangeTilesOutsideSuggestedPaths() throws Exception {
         runOnFxThread(() -> {
+            BoardController.DEV_MODE = true;
+
+            Button strategyButton = new Button();
+            Field strategyField = null;
+            try {
+                strategyField = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            strategyField.setAccessible(true);
+            try {
+                strategyField.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+
             Polygon untouchedTile = tile("OctC01", Color.web("#aa33aa"));
             BoardController.tiles.put("OctC01", untouchedTile);
 
@@ -553,6 +601,87 @@ class BoardControllerTest {
             controller.showStrategyButtonClicked();
 
             assertEquals(Color.web("#aa33aa"), untouchedTile.getFill());
+        });
+    }
+
+    // check that the text for it displays show strategy before clicked
+    @Test
+    void showStrategyButtonClickedShowText() throws Exception {
+        runOnFxThread(() -> {
+
+            BoardController.DEV_MODE = true;
+
+            // get button
+            Button strategyButton = new Button();
+            strategyButton.setText("SHOW STRATEGY");
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try {
+                field.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            assertEquals("SHOW STRATEGY", strategyButton.getText() );
+        });
+    }
+
+    // check that text displays hide strategy when clicked
+    @Test
+    void showStrategyButtonClickedHideText() throws Exception {
+        runOnFxThread(() -> {
+
+            BoardController.DEV_MODE = true;
+
+            // get button
+            Button strategyButton = new Button();
+            strategyButton.setText("SHOW STRATEGY");
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try {
+                field.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            controller.showStrategyButtonClicked();
+            assertEquals("HIDE STRATEGY", strategyButton.getText() );
+        });
+    }
+
+    // test that dev mode is needed for any changes to work
+    @Test
+    void showStrategyButtonClickedDevModeFalse() throws Exception {
+        runOnFxThread(() -> {
+
+            BoardController.DEV_MODE = false;
+
+            // get button
+            Button strategyButton = new Button();
+            strategyButton.setText("SHOW STRATEGY");
+            Field field = null;
+            try {
+                field = BoardController.class.getDeclaredField("strategyButton");
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
+            field.setAccessible(true);
+            try {
+                field.set(controller, strategyButton);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            // if method works text should change however as dev mode is false it should stay the same
+            controller.showStrategyButtonClicked();
+            assertEquals("SHOW STRATEGY", strategyButton.getText() );
         });
     }
 

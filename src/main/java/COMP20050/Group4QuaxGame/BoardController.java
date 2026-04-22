@@ -211,7 +211,18 @@ public class BoardController
 
     @FXML
     void showStrategyButtonClicked() {
-        System.out.println("Show strategy button clicked");
+        if(!DEV_MODE)
+        {
+            return;
+        }
+        if(showStrategyToggled)
+        {
+            strategyButton.setText("SHOW STRATEGY");
+        }
+        else
+        {
+            strategyButton.setText("HIDE STRATEGY");
+        }
         Stack<Node> black = Board.getPath(PlayerColour.BLACK);
         Stack<Node> white = Board.getPath(PlayerColour.WHITE);
         for(Node node : black) {
