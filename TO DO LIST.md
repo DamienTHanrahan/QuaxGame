@@ -16,19 +16,19 @@
 * USER GUIDE
 * VIDEO (10 MINS MAX)
 
-### Guidelines all penelties 
-### Meaningful Names:
+### Guidelines all penalties
+### Meaningful Names: -22% penalty
 * Variable, function, class, method names are confusing
 * Names are not pronounceable
 
-### Functions:
+### Functions: -44% penalty
 * Functions too long  (20 - 30 lines max)
 * Duplicate code
 * Functions have too many arguments
 * Functions have output arguments? 
 * Magic numbers - use constants instead ( i < 11 for example should be i < NUM_ROWS)
 
-### Comments and Formatting:
+### Comments and Formatting: -22% penalty
 **Mentioned deleting all comments avoids penalty??**
 * Comments are frivolous and dogmatic
 * Comments are inaccurate and out-of-date
@@ -36,13 +36,13 @@
 * TODO comments found
 * Commented-out code found
 
-### Classes and Data structures:
+### Classes and Data structures: -22% penalty
 * Class methods violate the law of Demeter (A.B.C.D.E)
 * Standard java convention for organising classes not followed -> Class begins with in order 1) public static constants, private static variables, private instance variables, public variables(BAD dont have), 2) public functions, 3) private functions called by public functions are placed after the respective public function
 * Classes are too small
 * Classes have too many instance variables and are not cohesive
 
-### Error Handling:
+### Error Handling: -22% penalty
 * Errors are not handled (returns or exceptions)
 * Methods/functions have too many NULL checks
 * Overuse of checked exceptions
