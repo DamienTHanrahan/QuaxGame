@@ -10,7 +10,7 @@
 * Video - run of board game focusing on explaining bot strategy, Walkthrough of the tests and our testing strategy
 
 ### ZIP FOLDER
-<yourgroupnumber>_<yourgroupname>_final.zip
+**yourgroupnumber_yourgroupname_final.zip**
 * JAR FILE
 * SOURCE CODE
 * USER GUIDE
