@@ -135,28 +135,28 @@ class BotTest
         int a = 20;
         int b = 10; 
 
-        assertEquals(bot.getScore(a, b, Strategy.AGGRESSIVE), 19);
-        assertEquals(bot.getScore(a, b, Strategy.ATTACKING), 17);
-        assertEquals(bot.getScore(a, b, Strategy.NEUTRAL), 15);
-        assertEquals(bot.getScore(a, b, Strategy.DEFENSIVE), 13);
-        assertEquals(bot.getScore(a, b, Strategy.STONEWALL), 11);
+        assertEquals(19, bot.getScore(a, b, Strategy.AGGRESSIVE));
+        assertEquals(17, bot.getScore(a, b, Strategy.ATTACKING));
+        assertEquals(15, bot.getScore(a, b, Strategy.NEUTRAL));
+        assertEquals(13, bot.getScore(a, b, Strategy.DEFENSIVE));
+        assertEquals(11, bot.getScore(a, b, Strategy.STONEWALL));
 
 
         
 
-        assertEquals(bot.getScore(b, a, Strategy.STONEWALL), 19);
-        assertEquals(bot.getScore(b, a, Strategy.DEFENSIVE), 17);
-        assertEquals(bot.getScore(b, a, Strategy.NEUTRAL), 15);
-        assertEquals(bot.getScore(b, a, Strategy.ATTACKING), 13);
-        assertEquals(bot.getScore(b, a, Strategy.AGGRESSIVE), 11);
+        assertEquals(19, bot.getScore(b, a, Strategy.STONEWALL));
+        assertEquals(17, bot.getScore(b, a, Strategy.DEFENSIVE));
+        assertEquals(15, bot.getScore(b, a, Strategy.NEUTRAL));
+        assertEquals(13, bot.getScore(b, a, Strategy.ATTACKING));
+        assertEquals(11, bot.getScore(b, a, Strategy.AGGRESSIVE));
 
         a = b;
 
-        assertEquals(bot.getScore(b, a, Strategy.STONEWALL), 10);
-        assertEquals(bot.getScore(b, a, Strategy.DEFENSIVE), 10);
-        assertEquals(bot.getScore(b, a, Strategy.NEUTRAL), 10);
-        assertEquals(bot.getScore(b, a, Strategy.ATTACKING), 10);
-        assertEquals(bot.getScore(b, a, Strategy.AGGRESSIVE), 10);
+        assertEquals(10, bot.getScore(b, a, Strategy.STONEWALL));
+        assertEquals(10, bot.getScore(b, a, Strategy.DEFENSIVE));
+        assertEquals(10, bot.getScore(b, a, Strategy.NEUTRAL));
+        assertEquals(10, bot.getScore(b, a, Strategy.ATTACKING));
+        assertEquals(10, bot.getScore(b, a, Strategy.AGGRESSIVE));
 
 
 
