@@ -10,11 +10,11 @@ public class Bot extends Player
 
     protected enum Strategy {
 
-        AGGRESSIVE("Focusing primarily on finding shortest path to win"),
-        ATTACKING("Finding shortest path while slightly hindering opponent"),
-        NEUTRAL("Balancing shortest path to win and defending equally"),
-        DEFENSIVE("Focusing on blocking the opponent"),
-        STONEWALL("Focusing heavily on blocking the opponent");
+        AGGRESSIVE("Focusing primarily on finding shortest path to win \nPath Weights: bot 90% | opponent 10%"),
+        ATTACKING("Finding shortest path while slightly hindering opponent \nPath Weights: bot 70% | opponent 30%"),
+        NEUTRAL("Balancing shortest path to win and defending equally \nPath Weights: bot 50% | opponent 50%"),
+        DEFENSIVE("Focusing on blocking the opponent \nPath Weights: bot 30% | opponent 70%"),
+        STONEWALL("Focusing heavily on blocking the opponent\nPath Weights: bot 10% | opponent 90%");
 
         private final String description;
 
