@@ -544,7 +544,6 @@ class BoardTest
         
         else {       
             node.setOwner(PlayerColour.EMPTY);
-            System.out.println(node.getOwner());
         }
 
         }
