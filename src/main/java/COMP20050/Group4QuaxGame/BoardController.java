@@ -223,7 +223,7 @@ public class BoardController
         else
         {
             botStratLabel.setVisible(true);
-            botStratLabel.setText("BOT STRATEGY: " + gameManager.bot.getStrategy());
+            botStratLabel.setText("BOT STRATEGY: " + gameManager.bot.getStrategy() + "\n" + gameManager.bot.getStrategy().getDescription());
             strategyButton.setText("HIDE STRATEGY");
         }
         Stack<Node> black = Board.getPath(PlayerColour.BLACK);

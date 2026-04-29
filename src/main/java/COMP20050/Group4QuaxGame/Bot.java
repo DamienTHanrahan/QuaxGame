@@ -10,11 +10,21 @@ public class Bot extends Player
 
     protected enum Strategy {
 
-        AGGRESSIVE,
-        ATTACKING,
-        NEUTRAL,
-        DEFENSIVE,
-        STONEWALL
+        AGGRESSIVE("Focusing primarily on finding shortest path to win"),
+        ATTACKING("Finding shortest path while slightly hindering opponent"),
+        NEUTRAL("Balancing shortest path to win and defending equally"),
+        DEFENSIVE("Focusing on blocking the opponent"),
+        STONEWALL("Focusing heavily on blocking the opponent");
+
+        private final String description;
+
+        Strategy(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
     
     
