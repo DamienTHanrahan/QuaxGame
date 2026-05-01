@@ -273,14 +273,14 @@ public class Board
 
         if (colour == PlayerColour.WHITE){
             
-            PlayerColour opponentColour = PlayerColour.BLACK;
+            return PlayerColour.BLACK;
 
-            return opponentColour;
+            
         }
         if (colour == PlayerColour.BLACK){
             
-            PlayerColour opponentColour = PlayerColour.WHITE;
-            return opponentColour;
+            return PlayerColour.WHITE;
+          
         }
 
         return null;

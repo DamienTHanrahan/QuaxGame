@@ -46,65 +46,17 @@ public class Bot extends Player
         
         
         String move;
-        PlayerColour oppColour = null;
-        if (colour == PlayerColour.WHITE) {oppColour = PlayerColour.BLACK;}
-        else{oppColour = PlayerColour.WHITE; }
+        PlayerColour oppColour = getOppColour(colour);
        
         int botPath = board.getCheapestPath(colour);
         int oppPath = board.getCheapestPath(oppColour);
         int scoreDifference = botPath - oppPath;
-        double bestScore = 0.0;
-        ArrayList<Node> bestNodes = new ArrayList<>();
+        
 
         // select strategy depending on who is currently winning (shortest path to win)
-        if(scoreDifference >= 3)
-        {
-            setStrategy(Strategy.STONEWALL);
-        }
-        else if(scoreDifference >= 1)
-        {
-            setStrategy(Strategy.DEFENSIVE);
-        }
-        else if(scoreDifference <= -3)
-        {
-            setStrategy(Strategy.AGGRESSIVE);
-        }
-        else if(scoreDifference == -1)
-        {
-            setStrategy(Strategy.ATTACKING);
-        }
-        else
-        {
-            setStrategy(Strategy.NEUTRAL);
-        }
+        updateStrategy(scoreDifference);
 
-        for (Node node: board.getEmptyNodes()){
-
-            node.setOwner(colour);
-
-            // calculate improvements to bot in terms of improved path and decrease in opponents path 
-            // order swaped for oppScore to ensure positive value.
-
-        
-            int botScore = botPath - board.getCheapestPath(colour);
-            int oppScore = board.getCheapestPath(oppColour) - oppPath;
-
-            double moveScore = getScore(botScore, oppScore, strategy);
-
-            if (moveScore == bestScore) {
-                
-                bestNodes.add(node);
-            }
-            else if(moveScore > bestScore){
-                bestScore = moveScore;
-                bestNodes.clear();
-                bestNodes.add(node);
-            }
-
-
-        node.setOwner(PlayerColour.EMPTY);
-
-        }
+        ArrayList<Node> bestNodes = getBestNodes(board, botPath, oppPath, colour);
 
        // bestNodes contains all the nodes with best possible score. Pick one at random
             move = bestNodes.get((int)(Math.random() * bestNodes.size())).getId();
@@ -157,7 +109,6 @@ public class Bot extends Player
         return id.toString();
     }
 
-    // decision to use pie rule
     protected boolean usePieRule(Board board)
     {
         if(playerColour != PlayerColour.WHITE)
@@ -206,5 +157,79 @@ public class Bot extends Player
 
         }
         return score;
+    }
+
+    protected void updateStrategy(int scoreDifference){
+
+        if(scoreDifference >= 3)
+        {
+            setStrategy(Strategy.STONEWALL);
+        }
+        else if(scoreDifference >= 1)
+        {
+            setStrategy(Strategy.DEFENSIVE);
+        }
+        else if(scoreDifference <= -3)
+        {
+            setStrategy(Strategy.AGGRESSIVE);
+        }
+        else if(scoreDifference <= -1)
+        {
+            setStrategy(Strategy.ATTACKING);
+        }
+        else
+        {
+            setStrategy(Strategy.NEUTRAL);
+        }
+    }
+
+    private PlayerColour getOppColour(PlayerColour colour) {
+
+        if (colour == PlayerColour.WHITE){
+            
+            return PlayerColour.BLACK;
+
+            
+        }
+        if (colour == PlayerColour.BLACK){
+            
+            return PlayerColour.WHITE;
+          
+        }
+
+        return null;
+    }
+
+
+    protected ArrayList<Node> getBestNodes(Board board, int botPath, int oppPath, PlayerColour colour) {
+
+        double bestScore = 0.0;
+        ArrayList<Node> bestNodes = new ArrayList<>();
+
+        for (Node node: board.getEmptyNodes()){
+
+            node.setOwner(colour);
+
+            // calculate improvements to bot in terms of improved path and decrease in opponents path 
+            // order swaped for oppScore to ensure positive value.
+            int botScore = botPath - board.getCheapestPath(colour);
+            int oppScore = board.getCheapestPath(getOppColour(colour)) - oppPath;
+            double moveScore = getScore(botScore, oppScore, strategy);
+
+            if (moveScore == bestScore) {
+                
+                bestNodes.add(node);
+            }
+            else if(moveScore > bestScore){
+                bestScore = moveScore;
+                bestNodes.clear();
+                bestNodes.add(node);
+            }
+            
+        node.setOwner(PlayerColour.EMPTY);
+
+        }
+
+        return bestNodes;
     }
 }
