@@ -43,7 +43,7 @@ public class GameManager
         winner = null;
         botEnabled = true;
 
-        for(Node node : board.nodeMap.values())
+        for(Node node : board.getAllTileNodes())
         {
             node.setOwner(PlayerColour.EMPTY);
         }
@@ -128,10 +128,9 @@ public class GameManager
         return move;
     }
 
-    // method to check if board is full to prevent bot infinite loop
     protected boolean isBoardFull()
     {
-        for(Node node : board.nodeMap.values())
+        for(Node node : board.getAllTileNodes())
         {
             if (node.getOwner() == PlayerColour.EMPTY)
             {
@@ -141,7 +140,6 @@ public class GameManager
         return true;
     }
 
-    // switches turns
     protected void switchTurns()
     {
         turnCount++;
@@ -151,7 +149,6 @@ public class GameManager
         otherPlayer = temp;
     }
 
-    // swap player colours for pie rule
     protected void activatePieRule(Player playerWhoUsedPieRule)
     {
         if(pieRuleUsed || turnCount != 1 || playerWhoUsedPieRule != currentPlayer)
@@ -165,7 +162,6 @@ public class GameManager
         switchTurns();
     }
 
-    // check if tile is valid
     protected boolean validateMove(Move move)
     {
         if(move.getTile() == null || move.getPlayer() == null || move.getNode() == null)
@@ -201,48 +197,29 @@ public class GameManager
         return true;
     }
 
-    // check for winner given the player colour
     protected boolean checkWinner(PlayerColour playerColour)
     {
-        Node startNode;
-        Node endNode;
+        Node startNode = board.getStartNode(playerColour);
+        Node endNode = board.getEndNode(playerColour);
 
-        // match starting and ending node based on player colours win conditions
-        if(playerColour == PlayerColour.BLACK)
-        {
-            startNode = board.topRow;
-            endNode = board.bottomRow;
-        }
-        else if(playerColour == PlayerColour.WHITE)
-        {
-            startNode = board.leftRow;
-            endNode = board.rightRow;
-        }
-        else
-        {
-            return false;
-        }
+    
 
-        // try traverse board from start to end to check for win
         ArrayList<Node> visitedNodes = new ArrayList<>();
         if(canTraverseBoard(startNode, endNode, visitedNodes, playerColour))
         {
             return true;
         }
 
-        // no winning path found
         return false;
     }
 
     // helper method for checkWinner to check if you can traverse board to reach a node in the ending node list
     private boolean canTraverseBoard(Node currentNode, Node endingNode, ArrayList<Node> visitedNodes, PlayerColour playerColour)
     {
-        // check if the current node is the end node
         if(currentNode == endingNode)
         {
             return true;
         }
-        // mark current node as visited
         visitedNodes.add(currentNode);
         // check for each of its neighbours if it is a new node not visited before and matches the player colour
         for(Node neighbour : currentNode.getNeighbours())

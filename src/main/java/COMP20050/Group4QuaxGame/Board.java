@@ -196,6 +196,17 @@ public class Board
         return allNodes;
     }
 
+    protected ArrayList<Node> getAllTileNodes(){
+
+        ArrayList<Node> allNodes = new ArrayList<>(nodeMap.values());
+        allNodes.add(bottomRow);
+        allNodes.add(topRow);
+        allNodes.add(leftRow);
+        allNodes.add(rightRow);
+
+        return allNodes;
+    }
+
     protected ArrayList<Node> getEmptyNodes(){
 
         ArrayList<Node> emptyNodes = new ArrayList<>();
@@ -286,7 +297,7 @@ public class Board
         return null;
     }
 
-    private Node getStartNode(PlayerColour colour) {
+    protected Node getStartNode(PlayerColour colour) {
 
         if (colour == PlayerColour.WHITE){
             
@@ -306,7 +317,7 @@ public class Board
         return null;
     }
 
-      private Node getEndNode(PlayerColour colour) {
+      protected Node getEndNode(PlayerColour colour) {
 
         if (colour == PlayerColour.WHITE){
             
