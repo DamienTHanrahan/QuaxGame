@@ -39,8 +39,8 @@ class BoardControllerTest {
     @BeforeEach
     void resetSharedBoardState() {
         BoardController.tiles.clear();
-        Board.blackPath.clear();
-        Board.whitePath.clear();
+        controller.gameManager.getPath(PlayerColour.BLACK).clear();
+        controller.gameManager.getPath(PlayerColour.WHITE).clear();
         controller.showStrategyToggled = false;
     }
 
@@ -528,12 +528,12 @@ class BoardControllerTest {
             occupiedNode.setOwner(PlayerColour.BLACK);
             Node whitePathEmptyNode = new Node("RhoA01");
 
-            Board.blackPath = new Stack<>();
-            Board.blackPath.push(blackPathEmptyNode);
-            Board.blackPath.push(occupiedNode);
+            controller.getBoard().blackPath.clear();
+            controller.getBoard().blackPath.push(blackPathEmptyNode);
+            controller.getBoard().blackPath.push(occupiedNode);
 
-            Board.whitePath = new Stack<>();
-            Board.whitePath.push(whitePathEmptyNode);
+            controller.getBoard().whitePath.clear();
+            controller.getBoard().whitePath.push(whitePathEmptyNode);
 
             controller.showStrategyButtonClicked();
 
@@ -587,11 +587,11 @@ class BoardControllerTest {
             Node blackPathNode = new Node("OctB01");
             Node whitePathNode = new Node("RhoB01");
 
-            Board.blackPath = new Stack<>();
-            Board.blackPath.push(blackPathNode);
+            controller.getBoard().blackPath.clear();
+            controller.getBoard().blackPath.push(blackPathNode);
 
-            Board.whitePath = new Stack<>();
-            Board.whitePath.push(whitePathNode);
+            controller.getBoard().whitePath.clear();
+            controller.getBoard().whitePath.push(whitePathNode);
 
             controller.showStrategyButtonClicked();
             controller.showStrategyButtonClicked();
@@ -639,8 +639,8 @@ class BoardControllerTest {
             Polygon untouchedTile = tile("OctC01", Color.web("#aa33aa"));
             BoardController.tiles.put("OctC01", untouchedTile);
 
-            Board.blackPath = new Stack<>();
-            Board.whitePath = new Stack<>();
+            controller.getBoard().blackPath.clear();
+            controller.getBoard().whitePath.clear();
 
             controller.showStrategyButtonClicked();
             controller.showStrategyButtonClicked();

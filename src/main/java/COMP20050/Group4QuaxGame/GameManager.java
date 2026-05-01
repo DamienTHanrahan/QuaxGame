@@ -278,4 +278,17 @@ public class GameManager
     {
         this.botEnabled = botEnabled;
     }
+
+    protected Stack<Node> getPath(PlayerColour colour) {
+
+        return board.getPath(colour);
+
+        
+    
+    }
+
+    public Board getBoard() {
+
+        return board;
+    }
 }

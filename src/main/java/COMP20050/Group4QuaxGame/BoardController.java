@@ -29,6 +29,9 @@ public class BoardController
 
     private static final Color emptyOctColour = Color.web("#ffd675");
     private static final Color emptyRhoColour = Color.web("#bcbcbc");
+    private static final Color BLACK_PATH_COLOUR = Color.web("#575757");
+    private static final Color WHITE_PATH_COLOUR = Color.web("#d4d4d4");
+    private static final Color SHARED_PATH_COLOUR = Color.web("#808080");
 
     public static boolean DEV_MODE = Boolean.getBoolean("devMode");
 
@@ -91,10 +94,8 @@ public class BoardController
         // start pause
         pause.play();
 
-
     }
 
-    // paint a tile
     void paintTile(Move move)
     {
         Polygon tile = move.getTile();
@@ -102,11 +103,9 @@ public class BoardController
         tile.setFill(playerColour.switchToFXColour());
     }
 
-    // activate pie rule
     @FXML
     void pieButtonClicked(MouseEvent event)
     {
-        // activate pie rule then get bot to move
         gameManager.activatePieRule(gameManager.human);
         updateTurnLabel();
         pieButton.setVisible(false);
@@ -219,50 +218,94 @@ public class BoardController
         {
             strategyButton.setText("SHOW STRATEGY");
             botStratLabel.setVisible(false);
+            hideStrategy();
         }
         else
         {
             botStratLabel.setVisible(true);
             botStratLabel.setText("BOT STRATEGY: " + gameManager.bot.getStrategy() + "\n" + gameManager.bot.getStrategy().getDescription());
             strategyButton.setText("HIDE STRATEGY");
+            showStrategy();
         }
-        Stack<Node> black = Board.getPath(PlayerColour.BLACK);
-        Stack<Node> white = Board.getPath(PlayerColour.WHITE);
-        for(Node node : black) {
-            if (node.getOwner() == PlayerColour.EMPTY) {
-                if(!showStrategyToggled) {
-                    tiles.get(node.getId()).setFill(Color.web("#575757"));
-                } else {
-                    Polygon tile = tiles.get(node.getId());
-                    if(tile.getId().contains("Oct")) {
-                        tile.setFill(emptyOctColour);
-                    } else {
-                        tile.setFill(emptyRhoColour);
-                    }
-                }
-            }
-        }
-        for(Node node : white) {
-            if (node.getOwner() == PlayerColour.EMPTY) {
-                if(!showStrategyToggled) {
-                    Polygon tile = tiles.get(node.getId());
-                    if(tile.getFill() == Color.web("#575757")) {
-                        tile.setFill(Color.web("#808080"));
-                    } else {
-                        tiles.get(node.getId()).setFill(Color.web("#d4d4d4"));
-                    }
-                } else {
-                    Polygon tile = tiles.get(node.getId());
-                    if(tile.getId().contains("Oct")) {
-                        tile.setFill(emptyOctColour);
-                    } else {
-                        tile.setFill(emptyRhoColour);
-                    }
-                }
-            }
-        }
+        
+        
+        
         showStrategyToggled = !showStrategyToggled;
     }
+
+
+    protected void showStrategy(){
+
+        Stack<Node> black = gameManager.getPath(PlayerColour.BLACK);
+        Stack<Node> white = gameManager.getPath(PlayerColour.WHITE);
+        
+
+        for(Node node : black) {
+            if (node.getOwner() == PlayerColour.EMPTY) {
+                
+                    tiles.get(node.getId()).setFill(BLACK_PATH_COLOUR);
+                }
+        }
+        
+        for( Node node : white) {
+            if (node.getOwner() == PlayerColour.EMPTY) {
+               
+                    Polygon tile = tiles.get(node.getId());
+                    if(tile.getFill().equals(BLACK_PATH_COLOUR)) {
+                        tile.setFill(SHARED_PATH_COLOUR);
+                    } else {
+                        tiles.get(node.getId()).setFill(WHITE_PATH_COLOUR);
+                    }
+                 
+            }
+        }
+
+    }
+
+    protected void hideStrategy(){
+
+        Stack<Node> black = gameManager.getPath(PlayerColour.BLACK);
+        Stack<Node> white = gameManager.getPath(PlayerColour.WHITE);
+
+        resetPathColours(black);
+        resetPathColours(white);   
+
+
+
+
+    }
+
+    private void resetPathColours(Stack<Node> path) {
+
+        for(Node node : path) {
+            if (node.getOwner() == PlayerColour.EMPTY) {
+                
+                    Polygon tile = tiles.get(node.getId());
+                    if(tile.getId().contains("Oct")) {
+                        tile.setFill(emptyOctColour);
+                    } else {
+                        tile.setFill(emptyRhoColour);
+                    }
+                }
+        }
+
+    
+
+
+
+    }
+
+
+    public Board getBoard() {
+
+        return gameManager.getBoard();
+    }
+
+
+
+
+
+    
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;

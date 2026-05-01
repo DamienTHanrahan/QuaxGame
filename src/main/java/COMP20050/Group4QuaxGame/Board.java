@@ -10,8 +10,8 @@ public class Board
     protected Node bottomRow = new Node("bottomRow");
     protected Node leftRow = new Node("leftRow");
     protected Node rightRow = new Node("rightRow");
-    protected static Stack<Node> blackPath = new Stack<>();
-    protected static Stack<Node> whitePath = new Stack<>();
+    protected Stack<Node> blackPath = new Stack<>();
+    protected Stack<Node> whitePath = new Stack<>();
 
     public Board()
     {
@@ -38,8 +38,6 @@ public class Board
             {
                 
                 String id = formatOctagonID(col, row);
-
-                
                 Node newNode = new Node(id);
                 nodeMap.put(id, newNode);
 
@@ -64,28 +62,20 @@ public class Board
                     rightRow.addNeighbour(newNode);
                     newNode.addNeighbour(rightRow);
                 }
-
             }
         }
-
-        
         for (char col = 'A'; col <= 'J'; col++)
         {
             for (int row = 1; row <= NUM_OF_ROWS - 1; row++)
             {
-                
                 String id = formatRhombusID(col, row);
-
-                
                 Node newNode = new Node(id);
                 nodeMap.put(id, newNode);
             }
         }
-
         
         constructNeighbours();
     }
-
     
     protected void constructNeighbours()
     {
@@ -94,13 +84,9 @@ public class Board
         {
             for (int row = 1; row <= NUM_OF_ROWS; row++)
             {
-                
                 String id = formatOctagonID(col, row);
-                
                 Node node = nodeMap.get(id);
-                
                 ArrayList<String> neighbourIDList = getOctagonNodeNeighbours(col, row);
-
                 
                 for(String neighbourID : neighbourIDList)
                 {
@@ -108,19 +94,14 @@ public class Board
                 }
             }
         }
-
         
         for (char col = 'A'; col <= 'J'; col++)
         {
             for (int row = 1; row <= NUM_OF_ROWS - 1; row++)
             {
-                
                 String id = formatRhombusID(col, row);
-                
                 Node node = nodeMap.get(id);
-                
                 ArrayList<String> neighbourIDList = getRhombusNodeNeighbours(col, row);
-
                 
                 for(String neighbourID : neighbourIDList)
                 {
@@ -279,7 +260,7 @@ public class Board
         return Collections.min(toEvaluate.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
-    public static Stack<Node> getPath(PlayerColour colour){
+    public Stack<Node> getPath(PlayerColour colour){
         if (colour == PlayerColour.BLACK){
             return blackPath;
         }
