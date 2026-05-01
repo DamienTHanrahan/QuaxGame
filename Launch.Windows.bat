@@ -1,1 +1,1 @@
-java --enable-native-access=ALL-UNNAMED -jar target/QuaxGame-1.0-SNAPSHOT.jar
+java --enable-native-access=ALL-UNNAMED -jar QuaxGame-1.0-SNAPSHOT-shaded.jar
