@@ -4,6 +4,8 @@ import javafx.scene.shape.Polygon;
 
 import java.util.*;
 
+import COMP20050.Group4QuaxGame.Bot.Strategy;
+
 import static COMP20050.Group4QuaxGame.BoardController.tiles;
 
 public class GameManager
@@ -267,5 +269,17 @@ public class GameManager
     public Board getBoard() {
 
         return board;
+    }
+
+    public Strategy getBotStrategy() {
+
+        return bot.getStrategy();
+
+    }
+
+    public String getBotStrategyDescription() {
+
+        return bot.getStrategy().getDescription();
+
     }
 }

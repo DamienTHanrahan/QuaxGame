@@ -223,7 +223,7 @@ public class BoardController
         else
         {
             botStratLabel.setVisible(true);
-            botStratLabel.setText("BOT STRATEGY: " + gameManager.bot.getStrategy() + "\n" + gameManager.bot.getStrategy().getDescription());
+            botStratLabel.setText("BOT STRATEGY: " + gameManager.getBotStrategy() + "\n" + gameManager.getBotStrategyDescription());
             strategyButton.setText("HIDE STRATEGY");
             showStrategy();
         }
